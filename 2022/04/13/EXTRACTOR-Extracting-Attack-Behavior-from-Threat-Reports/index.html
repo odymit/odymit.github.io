@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"odymit.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="EXTRACTOR: Extracting Attack Behavior from Threat Reports 摘要。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EXTRACTOR: Extracting Attack Behavior from Threat Reports">
+<meta property="og:url" content="http://odymit.github.io/2022/04/13/EXTRACTOR-Extracting-Attack-Behavior-from-Threat-Reports/index.html">
+<meta property="og:site_name" content="odymit&#39;s blog">
+<meta property="og:description" content="EXTRACTOR: Extracting Attack Behavior from Threat Reports 摘要。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://odymit.github.io/2022/04/13/EXTRACTOR-Extracting-Attack-Behavior-from-Threat-Reports/arch.png">
+<meta property="og:image" content="http://odymit.github.io/2022/04/13/EXTRACTOR-Extracting-Attack-Behavior-from-Threat-Reports/eg1.png">
+<meta property="og:image" content="http://odymit.github.io/2022/04/13/EXTRACTOR-Extracting-Attack-Behavior-from-Threat-Reports/arch-summarizer.png">
+<meta property="og:image" content="http://odymit.github.io/2022/04/13/EXTRACTOR-Extracting-Attack-Behavior-from-Threat-Reports/eg-srl.png">
+<meta property="article:published_time" content="2022-04-13T09:20:03.000Z">
+<meta property="article:modified_time" content="2022-04-13T09:20:03.667Z">
+<meta property="article:author" content="odymit">
+<meta property="article:tag" content="威胁情报">
+<meta property="article:tag" content="信息提取">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://odymit.github.io/2022/04/13/EXTRACTOR-Extracting-Attack-Behavior-from-Threat-Reports/arch.png">
+
+<link rel="canonical" href="http://odymit.github.io/2022/04/13/EXTRACTOR-Extracting-Attack-Behavior-from-Threat-Reports/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>EXTRACTOR: Extracting Attack Behavior from Threat Reports | odymit's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">odymit's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://odymit.github.io/2022/04/13/EXTRACTOR-Extracting-Attack-Behavior-from-Threat-Reports/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="odymit">
+      <meta itemprop="description" content="读书 思考 写点东西">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="odymit's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          EXTRACTOR: Extracting Attack Behavior from Threat Reports
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-13 17:20:03" itemprop="dateCreated datePublished" datetime="2022-04-13T17:20:03+08:00">2022-04-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A7%91%E7%A0%94%E8%AE%BA%E6%96%87/" itemprop="url" rel="index"><span itemprop="name">科研论文</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A7%91%E7%A0%94%E8%AE%BA%E6%96%87/%E6%91%98%E8%A6%81/" itemprop="url" rel="index"><span itemprop="name">摘要</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>EXTRACTOR: Extracting Attack Behavior from Threat Reports 摘要。</p>
+<span id="more"></span>
+<h2 id="解决的问题"><a href="#解决的问题" class="headerlink" title="解决的问题"></a>解决的问题</h2><p>威胁情报对于有效识别和快速反应网络攻击来说十分重要，但是这些知识通常在大量的文本中，很难对其加以利用。<br>为了解决此问题，提出本文方法。</p>
+<h2 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h2><p><img src="/2022/04/13/EXTRACTOR-Extracting-Attack-Behavior-from-Threat-Reports/arch.png" alt="arch"></p>
+<p>本文提供了一种新的方法和工具，可以从 威胁情报 报告中精确地自动提取简洁的攻击行为。</p>
+<p>并且 EXRACTOR 对于文本不做强假设，能够从非结构化文本中提取攻击行为作为溯源图。</p>
+<p>存在的挑战：</p>
+<ul>
+<li>文本冗长</li>
+<li>威胁情报文本复杂</li>
+<li>关系提取</li>
+</ul>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="标准化"><a href="#标准化" class="headerlink" title="标准化"></a>标准化</h3><p>为了有效解决 威胁情报 CTI 的文本复杂性，必须找到一些重要句型，在此通过标准化实现。<br><strong>标签化</strong>:</p>
+<p><img src="/2022/04/13/EXTRACTOR-Extracting-Attack-Behavior-from-Threat-Reports/eg1.png" alt="eg1"></p>
+<p><strong>同质化</strong>：<br>使用两个专门构造的词典对名词断语和动词执行同质化，将 CTI 报告中存在的名词和动词的不同行话和同义词映射到可以在审计日志中观察到的实体和操作。<br><strong>转换</strong>：<br>在此处 将被动语态转换成主动语态，有助于发现系统主体（过程）和系统对象，使因果关系推断更加准确。<br>使用 POS 和 DP 标记检测句子语态，然后进行转换。<br>经过此处的转换，长难句可以被转化为主动的短句。</p>
+<h3 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h3><p>解析部分将引用同一实体的隐式引用与实际引用相协调。出于两个原因，隐式引用必须被转换为显式的：</p>
+<ul>
+<li>隐式引用降低了后续步骤的准确性</li>
+<li>审计日志仅包含明确命名的实体，并且 威胁搜寻方法 无法与系统进程与代词和其他隐式引用相匹配</li>
+</ul>
+<p><strong>省略主体解析</strong>：<br>省略主语的句子大量存在在 CTI 报告中，因此该模块使用 POS 和 DP 解析以及系统调用字典解决这个问题。第一步检测缺少主语的句子，然后构建候选主语列表，挑选最有可能的候选者。</p>
+<p><strong>代词解析</strong>：<br>为了解析代词，采用了一种流行的共指解析模型，在解析代词时效果最好，特别是经过前面的 ESR 和标记化步骤之后。</p>
+<p><strong>实体解析</strong>：<br>给出了三种模式。为了识别句子中的实体，将 POS 标记与包含在 CTI 名词词典或每种情况下出现的常用短语语料库中的领域只是结合使用。一般是先检测上述罗列的三种形式之一，然后进行不同的处理。</p>
+<h3 id="汇总"><a href="#汇总" class="headerlink" title="汇总"></a>汇总</h3><p>去冗余，语句层次和字词层次。<br><img src="/2022/04/13/EXTRACTOR-Extracting-Attack-Behavior-from-Threat-Reports/arch-summarizer.png" alt="arch"></p>
+<h3 id="图生成"><a href="#图生成" class="headerlink" title="图生成"></a>图生成</h3><h4 id="语义角色标签-Semantic-Role-Labeling-SRL"><a href="#语义角色标签-Semantic-Role-Labeling-SRL" class="headerlink" title="语义角色标签 Semantic Role Labeling, SRL"></a>语义角色标签 Semantic Role Labeling, SRL</h4><p><img src="/2022/04/13/EXTRACTOR-Extracting-Attack-Behavior-from-Threat-Reports/eg-srl.png" alt="arch"><br>在进行完了 RAW SRL 之后还需要进行 动作到系统调用的转换。</p>
+<h4 id="图生成器"><a href="#图生成器" class="headerlink" title="图生成器"></a>图生成器</h4><p>先合并具有相同文本 SRL 参数到同一个几点钟，然后使用 SEE 修剪不是系统实体的单词。接下来，通过一下步骤生成图：</p>
+<ul>
+<li>点边点三元组</li>
+<li>边方向</li>
+</ul>
+<h4 id="系统实体抽取器-System-Entity-Extractor-SEE"><a href="#系统实体抽取器-System-Entity-Extractor-SEE" class="headerlink" title="系统实体抽取器 System Entity Extractor, SEE"></a>系统实体抽取器 System Entity Extractor, SEE</h4><p>使用 SEE 来抽取 SRL 生成的角色生成系统实体的简洁节点，并且修剪掉无法构成可能的系统实体的部分。</p>
+<h4 id="因果推理-casual-inference"><a href="#因果推理-casual-inference" class="headerlink" title="因果推理 casual inference"></a>因果推理 casual inference</h4><p>此步骤中确定图中边的正确方向，以表示节点之间的因果关系和信息流。</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/" rel="tag"># 威胁情报</a>
+              <a href="/tags/%E4%BF%A1%E6%81%AF%E6%8F%90%E5%8F%96/" rel="tag"># 信息提取</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/13/AIQL-Enabling-Efficient-Attack-Investigation-from-System-Monitoring-Data/" rel="prev" title="AIQL: Enabling Efficient Attack Investigation from System Monitoring Data">
+      <i class="fa fa-chevron-left"></i> AIQL: Enabling Efficient Attack Investigation from System Monitoring Data
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/14/General-Efficient-and-Real-Time-Data-Compaction-Strategy-for-APT-Forensic-Analysis/" rel="next" title="General, Efficient, and Real-Time Data Compaction Strategy for APT Forensic Analysis">
+      General, Efficient, and Real-Time Data Compaction Strategy for APT Forensic Analysis <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">解决的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Architecture"><span class="nav-number">2.</span> <span class="nav-text">Architecture</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E5%8C%96"><span class="nav-number">3.1.</span> <span class="nav-text">标准化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90"><span class="nav-number">3.2.</span> <span class="nav-text">解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B1%87%E6%80%BB"><span class="nav-number">3.3.</span> <span class="nav-text">汇总</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E7%94%9F%E6%88%90"><span class="nav-number">3.4.</span> <span class="nav-text">图生成</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%AD%E4%B9%89%E8%A7%92%E8%89%B2%E6%A0%87%E7%AD%BE-Semantic-Role-Labeling-SRL"><span class="nav-number">3.4.1.</span> <span class="nav-text">语义角色标签 Semantic Role Labeling, SRL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BE%E7%94%9F%E6%88%90%E5%99%A8"><span class="nav-number">3.4.2.</span> <span class="nav-text">图生成器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E5%AE%9E%E4%BD%93%E6%8A%BD%E5%8F%96%E5%99%A8-System-Entity-Extractor-SEE"><span class="nav-number">3.4.3.</span> <span class="nav-text">系统实体抽取器 System Entity Extractor, SEE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%A0%E6%9E%9C%E6%8E%A8%E7%90%86-casual-inference"><span class="nav-number">3.4.4.</span> <span class="nav-text">因果推理 casual inference</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="odymit"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">odymit</p>
+  <div class="site-description" itemprop="description">读书 思考 写点东西</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/odymit" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;odymit" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/15737405/odymit" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;15737405&#x2F;odymit" rel="noopener" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">odymit</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

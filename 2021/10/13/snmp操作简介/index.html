@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"odymit.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="主要介绍了以下操作：  snmp服务的安装 snmp相关的一些简单操作  Windows下可以开启snmp服务的代理端，不过如果要进行网络管理需要安装专用的nms软件，如果是简单的操作则需要安装net-snmp或者snmputil来实现.Linux下主要使用到的软件是snmp snmpd snmp-mibs-downloader">
+<meta property="og:type" content="article">
+<meta property="og:title" content="snmp操作简介">
+<meta property="og:url" content="http://odymit.github.io/2021/10/13/snmp%E6%93%8D%E4%BD%9C%E7%AE%80%E4%BB%8B/index.html">
+<meta property="og:site_name" content="odymit&#39;s blog">
+<meta property="og:description" content="主要介绍了以下操作：  snmp服务的安装 snmp相关的一些简单操作  Windows下可以开启snmp服务的代理端，不过如果要进行网络管理需要安装专用的nms软件，如果是简单的操作则需要安装net-snmp或者snmputil来实现.Linux下主要使用到的软件是snmp snmpd snmp-mibs-downloader">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-13T07:57:01.000Z">
+<meta property="article:modified_time" content="2021-10-13T08:15:37.528Z">
+<meta property="article:author" content="odymit">
+<meta property="article:tag" content="snmp">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://odymit.github.io/2021/10/13/snmp%E6%93%8D%E4%BD%9C%E7%AE%80%E4%BB%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>snmp操作简介 | odymit's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">odymit's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://odymit.github.io/2021/10/13/snmp%E6%93%8D%E4%BD%9C%E7%AE%80%E4%BB%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="odymit">
+      <meta itemprop="description" content="读书 思考 写点东西">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="odymit's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          snmp操作简介
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-10-13 15:57:01 / 修改时间：16:15:37" itemprop="dateCreated datePublished" datetime="2021-10-13T15:57:01+08:00">2021-10-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E9%9A%8F%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">技术随记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E9%9A%8F%E8%AE%B0/snmp/" itemprop="url" rel="index"><span itemprop="name">snmp</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>主要介绍了以下操作：</p>
+<ol>
+<li>snmp服务的安装</li>
+<li>snmp相关的一些简单操作</li>
+</ol>
+<p>Windows下可以开启snmp服务的代理端，不过如果要进行网络管理需要安装专用的nms软件，如果是简单的操作则需要安装net-snmp或者snmputil来实现.<br>Linux下主要使用到的软件是snmp snmpd snmp-mibs-downloader</p>
+<span id="more"></span>
+
+<h3 id="系统信息及操作"><a href="#系统信息及操作" class="headerlink" title="系统信息及操作"></a>系统信息及操作</h3><p>系统信息：Linux  4.15.0-70-generic #79~16.04.1-Ubuntu SMP x86_64</p>
+<h3 id="本地测试"><a href="#本地测试" class="headerlink" title="本地测试"></a>本地测试</h3><ol>
+<li><p>安装snmp</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install snmp snmpd</span><br></pre></td></tr></table></figure></li>
+<li><p>查看安装版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">user@flyinfort:~$ snmpd -v</span><br><span class="line"></span><br><span class="line">NET-SNMP version:  5.7.3</span><br><span class="line">Web:               http://www.net-snmp.org/</span><br><span class="line">Email:             net-snmp-coders@lists.sourceforge.net</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>启动和查看snmpd服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">user@flyinfort:~$ sudo service snmpd start </span><br><span class="line">user@flyinfort:~$ sudo service snmpd status </span><br><span class="line">● snmpd.service - LSB: SNMP agents</span><br><span class="line">   Loaded: loaded (/etc/init.d/snmpd; bad; vendor preset: enabled)</span><br><span class="line">   Active: active (running) since 三 2019-11-20 16:36:04 CST; 11s ago</span><br><span class="line">     Docs: man:systemd-sysv-generator(8)</span><br><span class="line">  Process: 19003 ExecStop=/etc/init.d/snmpd stop (code=exited, status=0/SUCCESS)</span><br><span class="line">  Process: 19047 ExecStart=/etc/init.d/snmpd start (code=exited, status=0/SUCCES</span><br><span class="line">   CGroup: /system.slice/snmpd.service</span><br><span class="line">           └─19053 /usr/sbin/snmpd -Lsd -Lf /dev/null -u snmp -g snmp -I -smux m</span><br><span class="line"></span><br><span class="line">11月 20 16:36:04 flyinfort systemd[1]: Starting LSB: SNMP agents...</span><br><span class="line">11月 20 16:36:04 flyinfort snmpd[19047]:  * Starting SNMP services:</span><br><span class="line">11月 20 16:36:04 flyinfort snmpd[19051]: /etc/snmp/snmpd.conf: line 145: Warning</span><br><span class="line">11月 20 16:36:04 flyinfort snmpd[19051]: /etc/snmp/snmpd.conf: line 147: Warning</span><br><span class="line">11月 20 16:36:04 flyinfort snmpd[19051]: Turning on AgentX master support.</span><br><span class="line">11月 20 16:36:04 flyinfort systemd[1]: Started LSB: SNMP agents.</span><br><span class="line">11月 20 16:36:04 flyinfort snmpd[19053]: NET-SNMP version 5.7.3</span><br></pre></td></tr></table></figure></li>
+<li><p>walk命令查看MIB信息库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">user@flyinfort:~$ snmpwalk -v 2c -c public localhost 1.3.6.1.2.1.1.1</span><br><span class="line">iso.3.6.1.2.1.1.1.0 = STRING: &quot;Linux flyinfort 4.15.0-70-generic #79~16.04.1-Ubuntu SMP Tue Nov 12 14:01:10 UTC 2019 x86_64&quot;</span><br></pre></td></tr></table></figure>
+<p>在这个命令中localhost之后的一串数字就是我们之前学到的OID，这一个OID：1.3.6.1.2.1.1.1是MIB中对象标识符，在这个对象里面会存储一些跟系统主机相关的一些信息。<br>在网上会有相关的OID的具体含义的网页，例如： <code>http://www.ttlsa.com/monitor/snmp-oid/</code>可以对应查找</p>
+</li>
+<li><p>安装启动trapd监听trap信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install snmptrapd</span><br><span class="line"></span><br><span class="line">sudo snmptrapd -d -f -Lo</span><br></pre></td></tr></table></figure>
+<p>上面命令中的选项表示：</p>
+</li>
+</ol>
+<p>-C ： 表示不使用net-snmp默认路径下的配置文件snmptrapd.conf；<br>-c ： 指定snmptrapd.conf文件；<br>-d ： 显示收到和发送的数据报，通过这个选项可以看到数据报文；<br>-f ： 默认情况下，snmptrapd是在后台中运行的，加上这个选项，表示在前台运行；<br>-L ： 指定日志记录在哪里，后面的o表示直接输出到屏幕上，如果是跟着f表示日志记录到指定的文件中；<br>可通过snmptrapd -h查看命令帮助了解该命令的使用。<br>6. 本机发送trap信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo snmptrap -v1 -c public localhost 1.3.6.1.4.1.1 10.10.12.219 2 3 1000 1.3.6.1.9.9.44.1.2.1 i 12 1.3.4.1.2.3.1 s test_snmptrap</span><br></pre></td></tr></table></figure>
+<p>下面是snmpdtrapd接受到的我们发送的trap</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Received 82 byte packet from UDP: [127.0.0.1]:48964-&gt;[127.0.0.1]:162</span><br><span class="line">0000: 30 50 02 01  00 04 06 70  75 62 6C 69  63 A4 43 06    0P.....public.C.</span><br><span class="line">0016: 06 2B 06 01  04 01 01 40  04 0A 0A 0C  DB 02 01 02    .+.....@........</span><br><span class="line">0032: 02 01 03 43  02 03 E8 30  29 30 0E 06  09 2B 06 01    ...C...0)0...+..</span><br><span class="line">0048: 09 09 2C 01  02 01 02 01  0C 30 17 06  06 2B 04 01    ..,......0...+..</span><br><span class="line">0064: 02 03 01 04  0D 74 65 73  74 5F 73 6E  6D 70 74 72    .....test_snmptr</span><br><span class="line">0080: 61 70                                                 ap</span><br><span class="line"></span><br><span class="line">No access configuration - dropping trap.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="网络测试"><a href="#网络测试" class="headerlink" title="网络测试"></a>网络测试</h3><p>由于我们之前是在自己本机进行的一些操作，所以现在进行网络测试，网络测试需要对snmpd的配置进行一些修改。</p>
+<ol>
+<li>配置节点<br>修改配置文件</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/snmp/snmpd.conf</span><br></pre></td></tr></table></figure>
+<p>注意在修改配置文件的时候需要管理员权限。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">view   systemonly  included   .1.3.6.1.2.1.1</span><br><span class="line">view   systemonly  included   .1.3.6.1.2.1.25.1</span><br></pre></td></tr></table></figure>
+<p>将上面两句注释掉，注释完了之后，在下面添加新的一句</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">view   systemonly  included   .1</span><br></pre></td></tr></table></figure>
+<p>这样子就可以获取更多节点的信息了，我们修改的是对应的OID如果是之前的那两句的意思是只获取那两个的对应的实体的信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">user@flyinfort:/etc/snmp$ service snmpd restart </span><br><span class="line">user@flyinfort:/etc/snmp$ snmpwalk -v 2c -c public localhost .1.3.6.1.4.1.2021.4.3.0</span><br><span class="line">iso.3.6.1.4.1.2021.4.3.0 = INTEGER: 8169468</span><br></pre></td></tr></table></figure>
+<p>这是查看了一下内存的使用<br>2. 允许远程主机访问</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#  Listen for connections from the local system only</span><br><span class="line">agentAddress  udp:127.0.0.1:161</span><br><span class="line">#  Listen for connections on all interfaces (both IPv4 *and* IPv6)</span><br><span class="line">#agentAddress udp:161,udp6:[::1]:161</span><br></pre></td></tr></table></figure>
+<p>snmpd默认的设置是只对本地主机开放的，远程无法获取我们本地的snmp的信息修改config文件使其可以远程访问<br>将上面的<code>agentAddress  udp:127.0.0.1:161</code>注释掉，将<code>agentAddress udp:161,udp6:[::1]:161</code>取消注释即可，然后重新启动snmpd服务<br>此时最好再次查看确保snmpd服务已经启动。<br>3. 在windows上开启snmp服务远程获取Linux主机信息<br>在Windows上开启snmp服务的一般的功能上，控制面板-&gt;程序和功能-&gt;启用和关闭windows功能-&gt;选择snmp服务。可以打开服务面板重启snmp服务。<br>想要查看我们远程linux主机的MIB信息需要用到其他工具，在这里使用的snmputil（net-snmp在win上安装麻烦些，暂时还没安装成功），支持get walk等命令。在此处查看远程主机的系统信息。可以看到和我们在本地看到的信息是一致的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">D:\workspace\softwares\snmputil&gt;SNMPUTIL.EXE walk 10.164.222.198 public .1.3.6.1.2.1.1.1</span><br><span class="line">Variable = system.sysDescr.0</span><br><span class="line">Value    = String Linux flyinfort 4.15.0-70-generic #79~16.04.1-Ubuntu SMP Tue Nov 12 14:01:10 UTC 2019 x86_64</span><br><span class="line"></span><br><span class="line">End of MIB subtree.</span><br><span class="line"></span><br><span class="line">D:\workspace\softwares\snmputil&gt;SNMPUTIL.EXE walk 10.164.222.198 public .1.3.6.1.4.1.77.1.2.25.1.1</span><br><span class="line">End of MIB subtree.</span><br></pre></td></tr></table></figure>
+<h3 id="环境搭建简介"><a href="#环境搭建简介" class="headerlink" title="环境搭建简介"></a>环境搭建简介</h3><p>环境：Linux flyinfort 4.15.0-96-generic #97~16.04.1-Ubuntu SMP Wed Apr 1 03:03:31 UTC 2020 x86_64<br>在这里使用easysnmp简单演示一下。<br>easysnmp使用手册：<a target="_blank" rel="noopener" href="https://easysnmp.readthedocs.io/en/latest/">https://easysnmp.readthedocs.io/en/latest/</a><br>如果没有net-snmp的话，easysnmp是基于net-snmp的，首先要安装net-snmp。<br>安装了net-snmp的话直接安装就可以了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libsnmp-dev snmp-mibs-downloader</span><br></pre></td></tr></table></figure>
+
+<p>net-snmp下载地址：<a target="_blank" rel="noopener" href="http://www.net-snmp.org/">http://www.net-snmp.org/</a><br>按照net-snmp的安装指南安装net-snmp：</p>
+<ol>
+<li>Run ./configure</li>
+<li>Optionally edit include/net-snmp/net-snmp-config.h</li>
+<li>make</li>
+<li>Run the next command as root:</li>
+<li>make install</li>
+<li>configure the agent  </li>
+</ol>
+<p>根据easysnmp的使用手册安装easysnmp：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install gcc python-dev</span><br><span class="line">pip install easysnmp</span><br></pre></td></tr></table></figure>
+<p>easysnmp安装完了之后就可以使用easysnmp来进行一些操作了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from easysnmp import snmp_walk</span><br><span class="line">res = snmp_walk(&#x27;1.3.6.1.2.1.1.1&#x27;, hostname=&#x27;localhost&#x27;, community=&#x27;public&#x27;, version=2)</span><br><span class="line">print(res)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&lt;SNMPVariable value=&#x27;Linux flyinfort 4.15.0-96-generic #97~16.04.1-Ubuntu SMP Wed Apr 1 03:03:31 UTC 2020 x86_64&#x27; (oid=&#x27;iso.3.6.1.2.1.1.1.0&#x27;, oid_index=&#x27;&#x27;, snmp_type=&#x27;OCTETSTR&#x27;)&gt;]</span><br></pre></td></tr></table></figure>
+<p>关于更多easysnmp的操作可以在<code>https://easysnmp.readthedocs.io/en/latest/</code>,easysnmp的使用手册上查阅。  </p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/snmp/" rel="tag"># snmp</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/08/mitre-attack-%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/" rel="prev" title="mitre-attack 工具调研">
+      <i class="fa fa-chevron-left"></i> mitre-attack 工具调研
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/01/16/%E8%BD%AF%E4%BB%B6%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF%EF%BC%9A%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/" rel="next" title="软件漏洞分析技术：漏洞分析基础">
+      软件漏洞分析技术：漏洞分析基础 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E5%8F%8A%E6%93%8D%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">系统信息及操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E6%B5%8B%E8%AF%95"><span class="nav-number">2.</span> <span class="nav-text">本地测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95"><span class="nav-number">3.</span> <span class="nav-text">网络测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E7%AE%80%E4%BB%8B"><span class="nav-number">4.</span> <span class="nav-text">环境搭建简介</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="odymit"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">odymit</p>
+  <div class="site-description" itemprop="description">读书 思考 写点东西</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/odymit" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;odymit" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/15737405/odymit" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;15737405&#x2F;odymit" rel="noopener" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">odymit</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

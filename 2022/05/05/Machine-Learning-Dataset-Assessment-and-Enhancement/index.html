@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"odymit.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="数据集异常值检测相关工作。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据集异常值检测相关工作调研">
+<meta property="og:url" content="http://odymit.github.io/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/index.html">
+<meta property="og:site_name" content="odymit&#39;s blog">
+<meta property="og:description" content="数据集异常值检测相关工作。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://odymit.github.io/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/research1.png">
+<meta property="og:image" content="http://odymit.github.io/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/classification.png">
+<meta property="og:image" content="http://odymit.github.io/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/nearest-neighbor.png">
+<meta property="og:image" content="http://odymit.github.io/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/clustering.png">
+<meta property="og:image" content="http://odymit.github.io/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/projection.png">
+<meta property="og:image" content="http://odymit.github.io/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/high-dimension.png">
+<meta property="og:image" content="http://odymit.github.io/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/distance-based-in-datastreams.png">
+<meta property="og:image" content="http://odymit.github.io/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/density-based-in-datastreams.png">
+<meta property="og:image" content="http://odymit.github.io/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/clustering-in-datastreams.png">
+<meta property="og:image" content="http://odymit.github.io/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/distributed.png">
+<meta property="og:image" content="http://odymit.github.io/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/deep-learning.png">
+<meta property="og:image" content="http://odymit.github.io/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/feedback.png">
+<meta property="article:published_time" content="2022-05-05T09:45:31.000Z">
+<meta property="article:modified_time" content="2022-05-06T08:53:07.456Z">
+<meta property="article:author" content="odymit">
+<meta property="article:tag" content="robustness">
+<meta property="article:tag" content="异常值检测">
+<meta property="article:tag" content="dataset">
+<meta property="article:tag" content="assessment">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://odymit.github.io/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/research1.png">
+
+<link rel="canonical" href="http://odymit.github.io/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>数据集异常值检测相关工作调研 | odymit's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">odymit's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://odymit.github.io/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="odymit">
+      <meta itemprop="description" content="读书 思考 写点东西">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="odymit's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据集异常值检测相关工作调研
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-05 17:45:31" itemprop="dateCreated datePublished" datetime="2022-05-05T17:45:31+08:00">2022-05-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-06 16:53:07" itemprop="dateModified" datetime="2022-05-06T16:53:07+08:00">2022-05-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A7%91%E7%A0%94%E8%AE%BA%E6%96%87/" itemprop="url" rel="index"><span itemprop="name">科研论文</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A7%91%E7%A0%94%E8%AE%BA%E6%96%87/%E6%80%9D%E8%B7%AF%E6%95%B4%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">思路整理</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>数据集异常值检测相关工作。</p>
+<span id="more"></span>
+
+<h2 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h2><p>通过几篇文章简单调研投毒攻击与异常值检测相关工作：</p>
+<ul>
+<li><code>Dataset Security for Machine Learning: Data Poisoning, Backdoor Attacks, and Defenses</code></li>
+<li><code>Robust Learning-Enabled Intelligence for the Internet of Things: A Survey From the Perspectives of Noisy Data and Adversarial Examples</code></li>
+<li><code>Outlier Detection: Methods, Models, and Classification</code></li>
+</ul>
+<h3 id="Dataset-Security-for-Machine-Learning-Data-Poisoning-Backdoor-Attacks-and-Defenses"><a href="#Dataset-Security-for-Machine-Learning-Data-Poisoning-Backdoor-Attacks-and-Defenses" class="headerlink" title="Dataset Security for Machine Learning: Data Poisoning, Backdoor Attacks, and Defenses"></a>Dataset Security for Machine Learning: Data Poisoning, Backdoor Attacks, and Defenses</h3><p>在 <code>Dataset Security for Machine Learning: Data Poisoning, Backdoor Attacks, and Defenses</code> 中的对抗投毒攻击部分，提到可以通过识别投毒数据和训练阶段阻止投毒样本。除此之外，还提到了针对联邦学习的防御。</p>
+<p>文章在该部分建议读者参考下列两篇文章获得更多资料：</p>
+<ul>
+<li><code>V. Barnett and T. Lewis, “Outliers in statistical data,” Wiley Series in Probability and Mathematical Statistics. Applied Probability and Statistics, 1984.</code></li>
+<li><code>A. Boukerche, L. Zheng, and O. Alfandi, “Outlier detection: Methods, models, and classification,” ACM Computing Surveys (CSUR), vol. 53, no. 3, pp. 1–37, 2020.</code></li>
+</ul>
+<h4 id="识别投毒攻击-Identifying-Poisoned-Data"><a href="#识别投毒攻击-Identifying-Poisoned-Data" class="headerlink" title="识别投毒攻击 Identifying Poisoned Data"></a>识别投毒攻击 Identifying Poisoned Data</h4><h5 id="输入空间内的检测-Outliers-in-input-space"><a href="#输入空间内的检测-Outliers-in-input-space" class="headerlink" title="输入空间内的检测 Outliers in input space"></a>输入空间内的检测 Outliers in input space</h5><p>在防御现代机器学习数据集中毒的背景下，<code>J. Steinhardt, P. W. W. Koh, and P. S. Liang, “Certified defenses for data poisoning attacks,” in Advances in neural information processing systems, 2017, pp. 3517–3529.</code> 专注于二进制分类情况并删除远离其各自质心的数据点，该方法直接在输入空间测量或在将数据投影到两个质心之间的线上后测量。</p>
+<p>基于假设：如果单个数据点对模型有着很大的影响，它将被识别为异常值。这个假设可以防止攻击者注入一些输入来显著改变模型的行为。以下两篇文章采用鲁棒性均值估计工具(tools from robust mean estimation)来稳健估计数据集上的平均风险梯度(average risk gradient)：</p>
+<ul>
+<li><code>I. Diakonikolas, G. Kamath, D. Kane, J. Li, J. Steinhardt, and A. Stewart, “Sever: A robust meta-algorithm for stochastic opti- mization,” in International Conference on Machine Learning, 2019, pp. 1596–1606.</code></li>
+<li><code>A. Prasad, A. S. Suggala, S. Balakrishnan, and P. Ravikumar, “Robust estimation via robust gradient estimation,” arXiv preprint arXiv:1802.06485, 2018.</code></li>
+</ul>
+<p><code>A. Paudice, L. Muñoz-González, A. Gyorgy, and E. C. Lupu, “Detection of adversarial training examples in poisoning attacks through anomaly detection,” arXiv preprint arXiv:1802.03041, 2018.</code> 提出了一种用于线性分类器的具有异常值检测的数据预过滤方法。首先分离一个可信的数据集，然后使用该数据集为每个类别训练一个基于距离的异常值检测器，当使用新的不受信任的数据集进行重新训练时，异常检测器会删除超过某个分数阈值的样本。</p>
+<p><code>A. Paudice, L. Muñoz-González, and E. C. Lupu, “Label saniti- zation against label flipping poisoning attacks,” in Joint European Conference on Machine Learning and Knowledge Discovery in Databases. Springer, 2018, pp. 5–15.</code> 通过使用 KNN 重新标记训练集中的每个数据点来减轻标签翻转攻击的危害。具体来说，就是用 k 个最近邻中最常见的标签重新标记每个数据点。但是值得注意的是，自适应攻击可以绕过某些基于异常值的防御。<br>具体来说，在 <code>P. W. Koh, J. Steinhardt, and P. Liang, “Stronger data poison- ing attacks break data sanitization defenses,” arXiv preprint arXiv:1811.00741, 2018.</code> 设计了一种欺骗异常检测器的攻击，方法是将中毒输入彼此靠近，并将中毒攻击改写为受约束的优化问题以逃避检测。</p>
+<h5 id="特征空间内的检测-Outliers-in-latent-space"><a href="#特征空间内的检测-Outliers-in-latent-space" class="headerlink" title="特征空间内的检测 Outliers in latent space"></a>特征空间内的检测 Outliers in latent space</h5><p>虽然在输入空间进行异常值检测简单只管，但它只对简单的地位输入域有效，在复杂的领域，如图像或者文本数据，直接比较原始输入数据可能不会传达任何有意义的相似性概念。因此，最近的工作集中在基于深度神经网络的潜在嵌入表达上检测异常值。原理是：潜在嵌入表达捕获了分类所需的信号，使得好的输入和污染输入之间的差异更加明显。</p>
+<p><code>B. Tran, J. Li, and A. Madry, “Spectral signatures in backdoor attacks,” in Advances in Neural Information Processing Systems, 2018, pp. 8000–8010.</code> 使用来自鲁棒性平均估计的攻击找到特征表示的协方差显著偏差的方向。测量这些方向上的变化可以更好地检测标准后门攻击，而不是简单的指标，例如特征空间中的 $L_2$ 距离。</p>
+<p>检测算法 NIC <code>S. Ma and Y. Liu, “Nic: Detecting adversarial samples with neural network invariant checking,” in Proceedings of the 26th Network and Distributed System Security Symposium (NDSS 2019), 2019.</code> 近似神经元激活模式的分布，并通过将其激活与该近似分布进行比较来检测包含触发器的输入。</p>
+<p><code>B. Chen, W. Carvalho, N. Baracaldo, H. Ludwig, B. Edwards, T. Lee, I. Molloy, and B. Srivastava, “Detecting backdoor attacks on deep neural networks by activation clustering,” arXiv preprint arXiv:1811.03728, 2018.</code> 将聚类算法应用于潜在表示并识别其成员，在训练中被学习模型删除时将以不同的标记聚类。</p>
+<p><code>N. Peri, N. Gupta, W. R. Huang, L. Fowl, C. Zhu, S. Feizi, T. Goldstein, and J. P. Dickerson, “Deep k-nn defense against clean-label data poisoning attacks,” arXiv preprint arXiv:1909.13374, 2019.</code> 中提到，污染输入的深层特征通常位于目标类的分布附近，而不是靠近具有相同标签其他数据的分布。他们使用这种观察来检测数据集中的污染数据。</p>
+<p><code>P. W. Koh and P. Liang, “Understanding black-box predictions via influence functions,” in International Conference on Machine Learning, 2017, pp. 1885–1894.</code> 使用模型的潜在嵌入表示来计算影响函数，这些函数测量每个训练样本对测试集性能的影响。他们发现这些影响估计可以有效地标记可能被错误标记的示例，以便进行手动检查。</p>
+<h4 id="训练阶段阻止投毒攻击-Preventing-Poisoning-during-Training"><a href="#训练阶段阻止投毒攻击-Preventing-Poisoning-during-Training" class="headerlink" title="训练阶段阻止投毒攻击 Preventing Poisoning during Training"></a>训练阶段阻止投毒攻击 Preventing Poisoning during Training</h4><h5 id="鲁棒性统计-Robust-Statics"><a href="#鲁棒性统计-Robust-Statics" class="headerlink" title="鲁棒性统计 Robust Statics"></a>鲁棒性统计 Robust Statics</h5><p>总的来说，在存在异常值的情况下，估计数据的统计特性是鲁棒性统计(Robust Statistics)领域的核心问题。<br>领域内大量的工作证明，从信息论的角度来看，对于各种各样的任务和数据分布，这个问题确实易于处理：</p>
+<ul>
+<li><code>J. W. Tukey, “A survey of sampling from contaminated distribu- tions,” Contributions to probability and statistics, 1960.</code></li>
+<li><code>P. J. Huber, “Robust estimation of a location parameter,” The Annals of Mathematical Statistics, pp. 73–101, 1964.</code></li>
+<li><code>D. L. Donoho and R. C. Liu, “The&quot; automatic&quot; robustness of minimum distance functionals,” The Annals of Statistics, 1988.</code></li>
+<li><code>Y. Zuo and R. Serfling, “General notions of statistical depth function,” Annals of statistics, 2000.</code></li>
+<li><code>M. Chen, C. Gao, Z. Ren et al., “Robust covariance and scatter matrix estimation under huber’s contamination model,” The Annals of Statistics, 2018.</code></li>
+<li><code>J. Steinhardt, M. Charikar, and G. Valiant, “Resilience: A criterion for learning in the presence of arbitrary outliers,” in Innovations in Theoretical Computer Science Conference (ITCS), 2018.</code></li>
+<li><code>B. Zhu, J. Jiao, and J. Steinhardt, “Generalized resilience and robust statistics,” arXiv preprint arXiv:1909.08755, 2019.</code></li>
+</ul>
+<p>然而，从计算的角度来看，这些方法中的大多数都没有为高维数据集提供有效的实现。最近，有一系列研究专注于在这种环境中设计计算高校的算法。</p>
+<p><code>A. R. Klivans, P. M. Long, and R. A. Servedio, “Learning halfspaces with malicious noise.” Journal of Machine Learning Research, vol. 10, no. 12, 2009.</code> 提出了第一个在对抗性噪声下学习线性分类器的算法。</p>
+<p>以下两篇文章，在小部分数据被任意破坏的情况下，开发了有效的算法来学习许多参数分布：</p>
+<ul>
+<li><code>I. Diakonikolas, G. Kamath, D. Kane, J. Li, A. Moitra, and A. Stewart, “Robust estimators in high-dimensions without the computational intractability,” SIAM Journal on Computing, vol. 48, no. 2, pp. 742–864, 2019.</code></li>
+<li><code>K. A. Lai, A. B. Rao, and S. Vempala, “Agnostic estimation of mean and covariance,” in 2016 IEEE 57th Annual Symposium on Foundations of Computer Science (FOCS). IEEE, 2016, pp. 665–674.</code></li>
+</ul>
+<p>这些算法依赖于相对简单的原语，因此即使对于高维分布也可以有效地实现。</p>
+<p>在正交的方向上，<code>C. Gao, J. Liu, Y. Yao, and W. Zhu, “Robust estimation and generative adversarial nets,” arXiv preprint arXiv:1810.02030, 2018.</code> 在鲁棒性评估和GANs之间建立了联系。<code>C. Gao, Y. Yao, andW. Zhu, “Generative adversarial nets for robust scatter estimation: A proper scoring rule perspective,” Journal of Machine Learning Research (JMLR), 2020.</code> 允许人们有效地逼近复杂的鲁棒性估计器。</p>
+<p>这些算法专注于估计数据的特定统计量，但是其他工作优化来存在异常值时的情况，例如：<code>M. Charikar, J. Steinhardt, and G. Valiant, “Learning from un- trusted data,” in Symposium on Theory of Computing (STOC), 2017.</code> 提出了基于回复可能模型列表和使用可选小型未损坏数据集在他们之间进行选择的风险最小化算法。</p>
+<p>更多的参考资料，见：</p>
+<ul>
+<li><code>J. Z. Li, “Principled approaches to robust machine learning and be- yond,” Ph.D. dissertation, Massachusetts Institute of Technology, 2018.</code></li>
+<li><code>J. Steinhardt, “Robust learning: Information theory and algo- rithms,” Ph.D. dissertation, Stanford University, 2018.</code></li>
+<li><code>I. Diakonikolas and D. M. Kane, “Recent advances in algorithmic high-dimensional robust statistics,” arXiv preprint arXiv:1911.05911, 2019.</code> </li>
+</ul>
+<h5 id="差分隐私-Differential-Privacy"><a href="#差分隐私-Differential-Privacy" class="headerlink" title="差分隐私 Differential Privacy"></a>差分隐私 Differential Privacy</h5><p>差分隐私（Differency Privacy）最初旨在保护提供数据的个人的隐私。核心思想是如果在添加或者减去一个单独的输入点时算法的输出基本保持不变，那么每个人的隐私都会得到保护。从数据投毒攻击的角度，由于差分隐私确保了模型的预测不会过多地依赖于单个数据点，因此模型不会受到中毒样本的过度影响。</p>
+<p><code>Y. Ma, X. Zhu, and J. Hsu, “Data poisoning against differentially-private learners: attacks and defenses,” in Proceedings of the 28th International Joint Conference on Artificial Intelligence. AAAI Press, 2019, pp. 4732–4738.</code> 从实践和理论的角度研究了基于DP的数据中毒防御。</p>
+<p><code>S. Hong, V. Chandrasekaran, Y. Kaya, T. Dumitra¸s, and N. Paper not, “On the effectiveness of mitigating data poisoning attacks with gradient shaping,” arXiv preprint arXiv:2002.11497, 2020.</code> 实验表明，现成的DP-SGD机制在训练期间对梯度进行剪辑和噪声处理，可以作为一种防御手段防范数据投毒攻击。他们指出，在存在污染数据的情况下计算的梯度主要特点（main artifacts）是：（1）$L_2$ 范数具有更高的量级（2）并且方向不同。</p>
+<p><code>S. Hong, V. Chandrasekaran, Y. Kaya, T. Dumitra¸s, and N. Paper- not, “On the effectiveness of mitigating data poisoning attacks with gradient shaping,” arXiv preprint arXiv:2002.11497, 2020.</code> 中说明，由于DP-SGD通过裁剪来限制梯度幅度，并通过添加随即噪声来最小化方向差异，因此它可以成功地防御数据投毒攻击。</p>
+<p>以下工作证明，基于数据投毒攻击和后门攻击经验的数据增强也可以在不降低模型性能的情况下增强差分隐私性能：</p>
+<ul>
+<li><code>E. Borgnia, V. Cherepanova, L. Fowl, A. Ghiasi, J. Geiping, M. Goldblum, T. Goldstein, and A. Gupta, “Strong data aug- mentation sanitizes poisoning and backdoor attacks without an accuracy tradeoff,” arXiv preprint arXiv:2011.09527, 2020.</code></li>
+<li><code>E. Borgnia, J. Geiping, V. Cherepanova, L. Fowl, A. Gupta, A. Ghiasi, F. Huang, M. Goldblum, and T. Goldstein, “Dpinstahide: Provably defusing poisoning and backdoor attacks with differentially private data augmentations,” arXiv preprint arXiv:2103.02079, 2021.</code></li>
+</ul>
+<h4 id="联邦学习的防御-Defense-for-Federated-Learning"><a href="#联邦学习的防御-Defense-for-Federated-Learning" class="headerlink" title="联邦学习的防御 Defense for Federated Learning"></a>联邦学习的防御 Defense for Federated Learning</h4><p>因为联邦学习的特点，为数据投毒攻击提供了新的攻击路径，因此针对联邦学习环境下的数据投毒攻击，提出了一系列的防御措施，其中包括：</p>
+<ul>
+<li>鲁棒性联邦聚合</li>
+<li>鲁棒性联邦训练</li>
+<li>训练后防御</li>
+</ul>
+<h5 id="Robust-Federated-Aggregation"><a href="#Robust-Federated-Aggregation" class="headerlink" title="Robust Federated Aggregation"></a>Robust Federated Aggregation</h5><p>鲁棒性联邦聚合可以分为两类：</p>
+<ul>
+<li>识别并且降低恶意更新的权重</li>
+<li>设计可以抵抗投毒聚合算法</li>
+</ul>
+<p>具体的方法有：</p>
+<ul>
+<li><code>C. Fung, C. J. Yoon, and I. Beschastnikh, “Mitigating sybils in federated learning poisoning,” arXiv preprint arXiv:1808.04866, 2018.</code></li>
+<li><code>S. Li, Y. Cheng, W. Wang, Y. Liu, and T. Chen, “Learning to detect malicious clients for robust federated learning,” arXiv preprint arXiv:2002.00211, 2020.</code></li>
+<li><code>D. P. Kingma and M. Welling, “Auto-encoding variational bayes,” arXiv preprint arXiv:1312.6114, 2013.</code></li>
+<li><code>P. Blanchard, R. Guerraoui, J. Stainer et al., “Machine learning with adversaries: Byzantine tolerant gradient descent,” in Advances in Neural Information Processing Systems, 2017, pp. 119–129.</code></li>
+<li><code>E. M. E. Mhamdi, R. Guerraoui, and S. Rouault, “The hiddenvulnerability of distributed learning in byzantium,” arXiv preprint arXiv:1802.07927, 2018.</code></li>
+<li><code>D. Yin, Y. Chen, K. Ramchandran, and P. Bartlett, “Byzantine- robust distributed learning: Towards optimal statistical rates,” arXiv preprint arXiv:1803.01498, 2018.</code></li>
+<li><code>Y. Chen, L. Su, and J. Xu, “Distributed statistical machine learning in adversarial settings: Byzantine gradient descent,” Proceedings of the ACM on Measurement and Analysis of Computing Systems, vol. 1, no. 2, pp. 1–25, 2017.</code></li>
+<li><code>K. Pillutla, S. M. Kakade, and Z. Harchaoui, “Robust aggregation for federated learning,” arXiv preprint arXiv:1912.13445, 2019.</code></li>
+<li><code>L. Li, W. Xu, T. Chen, G. B. Giannakis, and Q. Ling, “Rsa: Byzantine-robust stochastic aggregation methods for distributed learning from heterogeneous datasets,” in Proceedings of the AAAI Conference on Artificial Intelligence, vol. 33, 2019, pp. 1544–1551.</code></li>
+<li><code>S. Fu, C. Xie, B. Li, and Q. Chen, “Attack-resistant feder- ated learning with residual-based reweighting,” arXiv preprint arXiv:1912.11464, 2019.</code></li>
+<li><code>A. F. Siegel, “Robust regression using repeated medians,” Biometrika, vol. 69, no. 1, pp. 242–244, 1982.</code></li>
+</ul>
+<h5 id="Robust-Federated-Training"><a href="#Robust-Federated-Training" class="headerlink" title="Robust Federated Training"></a>Robust Federated Training</h5><p>在训练中提高联邦学习抵抗数据投毒攻击能力的论文有：</p>
+<ul>
+<li><code>E. Bagdasaryan, A. Veit, Y. Hua, D. Estrin, and V. Shmatikov, “How to backdoor federated learning,” in International Conference on Artificial Intelligence and Statistics. PMLR, 2020, pp. 2938–2948</code></li>
+<li><code>Z. Sun, P. Kairouz, A. T. Suresh, and H. B. McMahan, “Can you really backdoor federated learning?” arXiv preprint arXiv:1911.07963, 2019.</code></li>
+<li><code>S. Andreina, G. A. Marson, H. Möllering, and G. Karame, “Baffle: Backdoor detection via feedback-based federated learning,” arXiv preprint arXiv:2011.02167, 2020</code><h5 id="Post-Training-Defenses"><a href="#Post-Training-Defenses" class="headerlink" title="Post-Training Defenses"></a>Post-Training Defenses</h5>其他的防御措施关注于在训练后将被投毒污染的模型恢复，具体论文有：</li>
+<li><code>C. Wu, X. Yang, S. Zhu, and P. Mitra, “Mitigating backdoor attacks in federated learning,” arXiv preprint arXiv:2011.01767, 2020.</code></li>
+</ul>
+<h3 id="Robust-Estimators-in-High-Dimensions-without-the-Computational-Intractability"><a href="#Robust-Estimators-in-High-Dimensions-without-the-Computational-Intractability" class="headerlink" title="Robust Estimators in High Dimensions without the Computational Intractability"></a>Robust Estimators in High Dimensions without the Computational Intractability</h3><p>文章关于数据部分提到了两个方向：</p>
+<ul>
+<li>缺值 incomplete data</li>
+<li>异常值 outlier data</li>
+</ul>
+<p><img src="/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/research1.png" alt="outliers and missing data"></p>
+<h3 id="Outlier-Detection-Methods-Models-and-Classification"><a href="#Outlier-Detection-Methods-Models-and-Classification" class="headerlink" title="Outlier Detection: Methods, Models, and Classification"></a>Outlier Detection: Methods, Models, and Classification</h3><p>本文是针对数值类型的异常值检测，主要针对无监督的异常值检测方法做的调研，当然也包括部分最新的半监督异常值检测。</p>
+<p>具体的异常值检测按照下图分类：</p>
+<p><img src="/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/classification.png" alt="classification"></p>
+<h4 id="基于近似的方法-Proximity-based-Approaches"><a href="#基于近似的方法-Proximity-based-Approaches" class="headerlink" title="基于近似的方法 Proximity-based Approaches"></a>基于近似的方法 Proximity-based Approaches</h4><p>基于近似的方法通过数据点与附近数据的关系来识别异常点。</p>
+<h5 id="基于最近邻的算法-Nearest-neighbor-based-Approaches"><a href="#基于最近邻的算法-Nearest-neighbor-based-Approaches" class="headerlink" title="基于最近邻的算法 Nearest-neighbor-based Approaches"></a>基于最近邻的算法 Nearest-neighbor-based Approaches</h5><p>最近邻的异常值检测基于数据点与其最近的邻居之间的关系来衡量其异常等级。<br>有两种主要的定义邻居的方法：</p>
+<ul>
+<li>k nearest neighbors</li>
+<li>pre-specified radius</li>
+</ul>
+<p>潜在的假设是：正常数据与他的邻居相邻更近，然而异常值距离其邻居更远。</p>
+<p>在此部分调研了几种基于最近邻的经典异常值检测方法，以及利用了子样本采样和集成的最新方法。<br><img src="/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/nearest-neighbor.png" alt="Nearest Neighbor"></p>
+<h5 id="基于集群的算法-Clustering-based-Approaches"><a href="#基于集群的算法-Clustering-based-Approaches" class="headerlink" title="基于集群的算法 Clustering-based Approaches"></a>基于集群的算法 Clustering-based Approaches</h5><p>基于集群的算法通常分为两个步骤：</p>
+<ul>
+<li>通过集群算法对数据点进行聚合</li>
+<li>分析聚合后结果的偏离程度</li>
+</ul>
+<p><img src="/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/clustering.png" alt="Clustering"></p>
+<h4 id="基于投影的方法-Projection-based-Approaches"><a href="#基于投影的方法-Projection-based-Approaches" class="headerlink" title="基于投影的方法 Projection-based Approaches"></a>基于投影的方法 Projection-based Approaches</h4><p>很多流行的异常检测通常需要计算成对的距离或者搜索 k-NN，这会导致极大的时间复杂度。在此处介绍一些基于投影的方法，如随机投影、LSH等。</p>
+<p><img src="/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/projection.png" alt="Projection"></p>
+<h4 id="高维度异常检测-High-Dimensional-Outlier-Detection"><a href="#高维度异常检测-High-Dimensional-Outlier-Detection" class="headerlink" title="高维度异常检测 High-Dimensional Outlier Detection"></a>高维度异常检测 High-Dimensional Outlier Detection</h4><p>如 Zimek 在其论文中总结的，高维度数据异常检测有两个：效率方面和有效性方面。导致这两方面是因为：</p>
+<ul>
+<li>基于相似度搜索的方法在高维数据上计算代价过高</li>
+<li>一些用于加速异常检测的方法效果不好</li>
+</ul>
+<p><img src="/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/high-dimension.png" alt="High-Dimension"></p>
+<h4 id="数据流异常值检测-Outlier-Detection-in-Data-Streams"><a href="#数据流异常值检测-Outlier-Detection-in-Data-Streams" class="headerlink" title="数据流异常值检测 Outlier Detection in Data Streams"></a>数据流异常值检测 Outlier Detection in Data Streams</h4><p>对于数据流检测来说有两个主要的挑战：</p>
+<ul>
+<li>数据存储挑战</li>
+<li>效率挑战，一些动态应用对检测效率有要求，例如攻击检测</li>
+</ul>
+<p>对于上述挑战，使用窗口来进行解决，对于窗口有研究对其进行了总结，有四种不同的滑动窗口：</p>
+<ul>
+<li>地标窗口</li>
+<li>滑动窗口</li>
+<li>阻尼窗口</li>
+<li>自适应窗口</li>
+</ul>
+<h5 id="数据流中基于距离的异常值检测-Distance-based-Outlier-Detection-in-Data-Streams"><a href="#数据流中基于距离的异常值检测-Distance-based-Outlier-Detection-in-Data-Streams" class="headerlink" title="数据流中基于距离的异常值检测 Distance-based Outlier Detection in Data Streams"></a>数据流中基于距离的异常值检测 Distance-based Outlier Detection in Data Streams</h5><p><img src="/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/distance-based-in-datastreams.png" alt="Distance-based"></p>
+<h5 id="数据流中基于密度的异常值检测-Density-based-Outlier-Detection-in-Data-Streams"><a href="#数据流中基于密度的异常值检测-Density-based-Outlier-Detection-in-Data-Streams" class="headerlink" title="数据流中基于密度的异常值检测 Density-based Outlier Detection in Data Streams"></a>数据流中基于密度的异常值检测 Density-based Outlier Detection in Data Streams</h5><p><img src="/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/density-based-in-datastreams.png" alt="Density-based"></p>
+<h6 id="数据流中基于集群的异常值检测-Clustering-based-Outlier-Detection-in-Data-Streams"><a href="#数据流中基于集群的异常值检测-Clustering-based-Outlier-Detection-in-Data-Streams" class="headerlink" title="数据流中基于集群的异常值检测 Clustering-based Outlier Detection in Data Streams"></a>数据流中基于集群的异常值检测 Clustering-based Outlier Detection in Data Streams</h6><p><img src="/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/clustering-in-datastreams.png" alt="Clustering-based"></p>
+<h4 id="分布式异常检测"><a href="#分布式异常检测" class="headerlink" title="分布式异常检测"></a>分布式异常检测</h4><p>传统机器学习和数据挖掘方法在大数据时代存在的缺点是由几个方面造成的：</p>
+<ul>
+<li>第一个是单个主机的性能不足</li>
+<li>第二个是中心式的算法可能达不到许多现代应用的实时性要求</li>
+</ul>
+<p><img src="/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/distributed.png" alt="Distributed"></p>
+<h4 id="基于深度学习的异常值检测-Deep-Learning-based-Outlier-Detection"><a href="#基于深度学习的异常值检测-Deep-Learning-based-Outlier-Detection" class="headerlink" title="基于深度学习的异常值检测 Deep Learning-based Outlier Detection"></a>基于深度学习的异常值检测 Deep Learning-based Outlier Detection</h4><p><img src="/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/deep-learning.png" alt="Deep Learning"></p>
+<h4 id="反馈式异常值检测-Outlier-Detection-with-Feedback"><a href="#反馈式异常值检测-Outlier-Detection-with-Feedback" class="headerlink" title="反馈式异常值检测 Outlier Detection with Feedback"></a>反馈式异常值检测 Outlier Detection with Feedback</h4><p><img src="/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/feedback.png" alt="Feedback"></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/robustness/" rel="tag"># robustness</a>
+              <a href="/tags/%E5%BC%82%E5%B8%B8%E5%80%BC%E6%A3%80%E6%B5%8B/" rel="tag"># 异常值检测</a>
+              <a href="/tags/dataset/" rel="tag"># dataset</a>
+              <a href="/tags/assessment/" rel="tag"># assessment</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/27/Enabling-Efficient-Cyber-Threat-Hunting-With-Cyber-Threat-Intelligence/" rel="prev" title="Enabling Efficient Cyber Threat Hunting With Cyber Threat Intelligence">
+      <i class="fa fa-chevron-left"></i> Enabling Efficient Cyber Threat Hunting With Cyber Threat Intelligence
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/07/Privacy-and-Robustness-in-Federated-Learning-Attacks-and-Defenses/" rel="next" title="Privacy and Robustness in Federated Learning: Attacks and Defenses">
+      Privacy and Robustness in Federated Learning: Attacks and Defenses <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">相关工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dataset-Security-for-Machine-Learning-Data-Poisoning-Backdoor-Attacks-and-Defenses"><span class="nav-number">1.1.</span> <span class="nav-text">Dataset Security for Machine Learning: Data Poisoning, Backdoor Attacks, and Defenses</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%86%E5%88%AB%E6%8A%95%E6%AF%92%E6%94%BB%E5%87%BB-Identifying-Poisoned-Data"><span class="nav-number">1.1.1.</span> <span class="nav-text">识别投毒攻击 Identifying Poisoned Data</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E7%A9%BA%E9%97%B4%E5%86%85%E7%9A%84%E6%A3%80%E6%B5%8B-Outliers-in-input-space"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">输入空间内的检测 Outliers in input space</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E7%A9%BA%E9%97%B4%E5%86%85%E7%9A%84%E6%A3%80%E6%B5%8B-Outliers-in-latent-space"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">特征空间内的检测 Outliers in latent space</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E9%98%B6%E6%AE%B5%E9%98%BB%E6%AD%A2%E6%8A%95%E6%AF%92%E6%94%BB%E5%87%BB-Preventing-Poisoning-during-Training"><span class="nav-number">1.1.2.</span> <span class="nav-text">训练阶段阻止投毒攻击 Preventing Poisoning during Training</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%B2%81%E6%A3%92%E6%80%A7%E7%BB%9F%E8%AE%A1-Robust-Statics"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">鲁棒性统计 Robust Statics</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81-Differential-Privacy"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">差分隐私 Differential Privacy</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E9%98%B2%E5%BE%A1-Defense-for-Federated-Learning"><span class="nav-number">1.1.3.</span> <span class="nav-text">联邦学习的防御 Defense for Federated Learning</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Robust-Federated-Aggregation"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">Robust Federated Aggregation</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Robust-Federated-Training"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">Robust Federated Training</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Post-Training-Defenses"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">Post-Training Defenses</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Robust-Estimators-in-High-Dimensions-without-the-Computational-Intractability"><span class="nav-number">1.2.</span> <span class="nav-text">Robust Estimators in High Dimensions without the Computational Intractability</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Outlier-Detection-Methods-Models-and-Classification"><span class="nav-number">1.3.</span> <span class="nav-text">Outlier Detection: Methods, Models, and Classification</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E8%BF%91%E4%BC%BC%E7%9A%84%E6%96%B9%E6%B3%95-Proximity-based-Approaches"><span class="nav-number">1.3.1.</span> <span class="nav-text">基于近似的方法 Proximity-based Approaches</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%9C%80%E8%BF%91%E9%82%BB%E7%9A%84%E7%AE%97%E6%B3%95-Nearest-neighbor-based-Approaches"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">基于最近邻的算法 Nearest-neighbor-based Approaches</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E9%9B%86%E7%BE%A4%E7%9A%84%E7%AE%97%E6%B3%95-Clustering-based-Approaches"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">基于集群的算法 Clustering-based Approaches</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%8A%95%E5%BD%B1%E7%9A%84%E6%96%B9%E6%B3%95-Projection-based-Approaches"><span class="nav-number">1.3.2.</span> <span class="nav-text">基于投影的方法 Projection-based Approaches</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AB%98%E7%BB%B4%E5%BA%A6%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B-High-Dimensional-Outlier-Detection"><span class="nav-number">1.3.3.</span> <span class="nav-text">高维度异常检测 High-Dimensional Outlier Detection</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%B5%81%E5%BC%82%E5%B8%B8%E5%80%BC%E6%A3%80%E6%B5%8B-Outlier-Detection-in-Data-Streams"><span class="nav-number">1.3.4.</span> <span class="nav-text">数据流异常值检测 Outlier Detection in Data Streams</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%B5%81%E4%B8%AD%E5%9F%BA%E4%BA%8E%E8%B7%9D%E7%A6%BB%E7%9A%84%E5%BC%82%E5%B8%B8%E5%80%BC%E6%A3%80%E6%B5%8B-Distance-based-Outlier-Detection-in-Data-Streams"><span class="nav-number">1.3.4.1.</span> <span class="nav-text">数据流中基于距离的异常值检测 Distance-based Outlier Detection in Data Streams</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%B5%81%E4%B8%AD%E5%9F%BA%E4%BA%8E%E5%AF%86%E5%BA%A6%E7%9A%84%E5%BC%82%E5%B8%B8%E5%80%BC%E6%A3%80%E6%B5%8B-Density-based-Outlier-Detection-in-Data-Streams"><span class="nav-number">1.3.4.2.</span> <span class="nav-text">数据流中基于密度的异常值检测 Density-based Outlier Detection in Data Streams</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%B5%81%E4%B8%AD%E5%9F%BA%E4%BA%8E%E9%9B%86%E7%BE%A4%E7%9A%84%E5%BC%82%E5%B8%B8%E5%80%BC%E6%A3%80%E6%B5%8B-Clustering-based-Outlier-Detection-in-Data-Streams"><span class="nav-number">1.3.4.2.1.</span> <span class="nav-text">数据流中基于集群的异常值检测 Clustering-based Outlier Detection in Data Streams</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B"><span class="nav-number">1.3.5.</span> <span class="nav-text">分布式异常检测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%BC%82%E5%B8%B8%E5%80%BC%E6%A3%80%E6%B5%8B-Deep-Learning-based-Outlier-Detection"><span class="nav-number">1.3.6.</span> <span class="nav-text">基于深度学习的异常值检测 Deep Learning-based Outlier Detection</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%8D%E9%A6%88%E5%BC%8F%E5%BC%82%E5%B8%B8%E5%80%BC%E6%A3%80%E6%B5%8B-Outlier-Detection-with-Feedback"><span class="nav-number">1.3.7.</span> <span class="nav-text">反馈式异常值检测 Outlier Detection with Feedback</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="odymit"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">odymit</p>
+  <div class="site-description" itemprop="description">读书 思考 写点东西</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/odymit" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;odymit" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/15737405/odymit" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;15737405&#x2F;odymit" rel="noopener" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">odymit</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

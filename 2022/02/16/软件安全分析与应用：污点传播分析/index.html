@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"odymit.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="软件安全分析与应用第7章污点传播分析读书笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件安全分析与应用：污点传播分析">
+<meta property="og:url" content="http://odymit.github.io/2022/02/16/%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E4%B8%8E%E5%BA%94%E7%94%A8%EF%BC%9A%E6%B1%A1%E7%82%B9%E4%BC%A0%E6%92%AD%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="odymit&#39;s blog">
+<meta property="og:description" content="软件安全分析与应用第7章污点传播分析读书笔记。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-16T11:41:22.000Z">
+<meta property="article:modified_time" content="2022-02-16T11:41:22.931Z">
+<meta property="article:author" content="odymit">
+<meta property="article:tag" content="漏洞分析">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://odymit.github.io/2022/02/16/%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E4%B8%8E%E5%BA%94%E7%94%A8%EF%BC%9A%E6%B1%A1%E7%82%B9%E4%BC%A0%E6%92%AD%E5%88%86%E6%9E%90/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>软件安全分析与应用：污点传播分析 | odymit's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">odymit's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://odymit.github.io/2022/02/16/%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E4%B8%8E%E5%BA%94%E7%94%A8%EF%BC%9A%E6%B1%A1%E7%82%B9%E4%BC%A0%E6%92%AD%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="odymit">
+      <meta itemprop="description" content="读书 思考 写点东西">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="odymit's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          软件安全分析与应用：污点传播分析
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-02-16 19:41:22" itemprop="dateCreated datePublished" datetime="2022-02-16T19:41:22+08:00">2022-02-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">漏洞分析</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>软件安全分析与应用第7章污点传播分析读书笔记。</p>
+<span id="more"></span>
+<blockquote class="pullquote mindmap mindmap-md"><ul>
+<li>污点传播分析<ul>
+<li>基本原理</li>
+<li>主要方法<ul>
+<li>污点源识别</li>
+<li>污点内存映射</li>
+<li>污点动态跟踪</li>
+<li>传播规则设计</li>
+<li>污点误用检测</li>
+</ul>
+</li>
+<li>典型系统<ul>
+<li>TaintCheck 系统</li>
+<li>TEMU 系统</li>
+<li>AOTA 系统</li>
+</ul>
+</li>
+<li>典型实例分析<ul>
+<li>分析环境搭建</li>
+<li>污点传播过程</li>
+<li>污点回溯分析</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h2 id="应用领域"><a href="#应用领域" class="headerlink" title="应用领域"></a>应用领域</h2><p>主要应用领域有：</p>
+<ul>
+<li>恶意代码检测(恶意代码通常依赖特定的外部数据)</li>
+<li>软件漏洞挖掘(构造测试样本触发漏洞)</li>
+<li>敏感数据泄漏(跟踪敏感数据)<h2 id="主要方法"><a href="#主要方法" class="headerlink" title="主要方法"></a>主要方法</h2><h4 id="污点源识别"><a href="#污点源识别" class="headerlink" title="污点源识别"></a>污点源识别</h4>污点分析的第一项工作就是进行污点源的识别，而完整、高效的污点源识别是保证后续污点分析正确性的前提。<br>目前，主要的污点源识别方法分为两类：</li>
+<li>无约束识别，所有外部数据识别为污点数据</li>
+<li>有约束识别，只将特定数据识别为污点数据</li>
+</ul>
+<h4 id="污点内存映射"><a href="#污点内存映射" class="headerlink" title="污点内存映射"></a>污点内存映射</h4><p>映射过程可以分为三种方法：</p>
+<ul>
+<li>简单映射</li>
+<li>页表映射</li>
+<li>复杂映射</li>
+</ul>
+<h4 id="污点动态跟踪"><a href="#污点动态跟踪" class="headerlink" title="污点动态跟踪"></a>污点动态跟踪</h4><p>污点动态跟踪是污点分析主要的中间过程，也是整个分析过程中最为复杂的一项。在动态跟踪过程中，一般需要涉及3个阶段，即：</p>
+<ul>
+<li>污点指令监控</li>
+<li>污点传播计算</li>
+<li>污点状态更新（影子内存更新）</li>
+</ul>
+<h4 id="传播规则设计"><a href="#传播规则设计" class="headerlink" title="传播规则设计"></a>传播规则设计</h4><ul>
+<li>规则的完备性和精确性</li>
+<li>面向原始指令或者中间指令</li>
+<li>规则的分类和表示形式</li>
+</ul>
+<h4 id="污点误用检测"><a href="#污点误用检测" class="headerlink" title="污点误用检测"></a>污点误用检测</h4><p>在污点传播计算的过程中，不仅要时刻跟踪记录污点的扩散情况，同时还需要在程序的“关键点”检测是否有污点数据被错误使用，即污点误用检测。<br>另外在确定程序的关键点后，还需要给出相关的误用检测规则。</p>
+<h2 id="典型系统"><a href="#典型系统" class="headerlink" title="典型系统"></a>典型系统</h2><p>TaintCheck 是一套面向恶意代码自动检查、分析以及攻击特征生成的动态污点分析系统，接住了二进制代码插桩工具 Valgrind 来实现程序的动态跟踪。<br>该工具主要由3个功能模块组成：</p>
+<ul>
+<li>TaintSeed</li>
+<li>TaintTracker</li>
+<li>TaintAssert</li>
+</ul>
+<p>TEMU 系统是著名的开元二进制分析平台 BitBlaze 的重要组成部分，主要负责完成程序的动态分析任务。与 TaintCheck 相比，TEMU 不仅在硬件模拟器 QEMU 的基础上实现了面向全系统跟踪的污点分析功能，同时通过基础污点分析引擎和丰富的调用接口实现了一套高可用的插件机制，利用该机制可以快速构建面向不同应用领域的污点分析应用系统。</p>
+<p>AOTA 系统是一套面向 windows 大规模二进制应用程序的高实用性动态污点分析系统。该系统主要有以下特点：</p>
+<ul>
+<li>在硬件虚拟化平台上构建完全透明的动态分析环境</li>
+<li>提供离线或者半在线污点分析，保证了对于大规模程序的分析效率</li>
+<li>在系统级重放的基础上构建自动化分析与并行化分析过程</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" rel="tag"># 漏洞分析</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/14/%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E4%B8%8E%E5%BA%94%E7%94%A8%EF%BC%9A%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95/" rel="prev" title="软件安全分析与应用：模糊测试">
+      <i class="fa fa-chevron-left"></i> 软件安全分析与应用：模糊测试
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/02/17/%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E4%B8%8E%E5%BA%94%E7%94%A8%EF%BC%9A%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%88%86%E6%9E%90/" rel="next" title="软件安全分析与应用：恶意代码检测与分析">
+      软件安全分析与应用：恶意代码检测与分析 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E9%A2%86%E5%9F%9F"><span class="nav-number">1.</span> <span class="nav-text">应用领域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">主要方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B1%A1%E7%82%B9%E6%BA%90%E8%AF%86%E5%88%AB"><span class="nav-number">2.0.1.</span> <span class="nav-text">污点源识别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B1%A1%E7%82%B9%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84"><span class="nav-number">2.0.2.</span> <span class="nav-text">污点内存映射</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B1%A1%E7%82%B9%E5%8A%A8%E6%80%81%E8%B7%9F%E8%B8%AA"><span class="nav-number">2.0.3.</span> <span class="nav-text">污点动态跟踪</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%A0%E6%92%AD%E8%A7%84%E5%88%99%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.0.4.</span> <span class="nav-text">传播规则设计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B1%A1%E7%82%B9%E8%AF%AF%E7%94%A8%E6%A3%80%E6%B5%8B"><span class="nav-number">2.0.5.</span> <span class="nav-text">污点误用检测</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B8%E5%9E%8B%E7%B3%BB%E7%BB%9F"><span class="nav-number">3.</span> <span class="nav-text">典型系统</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="odymit"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">odymit</p>
+  <div class="site-description" itemprop="description">读书 思考 写点东西</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/odymit" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;odymit" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/15737405/odymit" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;15737405&#x2F;odymit" rel="noopener" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">odymit</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

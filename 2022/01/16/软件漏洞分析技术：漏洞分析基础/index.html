@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"odymit.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="软件漏洞分析技术漏洞分析基础部分读书笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件漏洞分析技术：漏洞分析基础">
+<meta property="og:url" content="http://odymit.github.io/2022/01/16/%E8%BD%AF%E4%BB%B6%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF%EF%BC%9A%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="odymit&#39;s blog">
+<meta property="og:description" content="软件漏洞分析技术漏洞分析基础部分读书笔记。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://odymit.github.io/2022/01/16/%E8%BD%AF%E4%BB%B6%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF%EF%BC%9A%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/%E8%BD%AF%E4%BB%B6%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%BD%93%E7%B3%BB.png">
+<meta property="article:published_time" content="2022-01-16T11:06:14.000Z">
+<meta property="article:modified_time" content="2022-01-18T07:13:55.578Z">
+<meta property="article:author" content="odymit">
+<meta property="article:tag" content="漏洞分析">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://odymit.github.io/2022/01/16/%E8%BD%AF%E4%BB%B6%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF%EF%BC%9A%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/%E8%BD%AF%E4%BB%B6%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%BD%93%E7%B3%BB.png">
+
+<link rel="canonical" href="http://odymit.github.io/2022/01/16/%E8%BD%AF%E4%BB%B6%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF%EF%BC%9A%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>软件漏洞分析技术：漏洞分析基础 | odymit's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">odymit's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://odymit.github.io/2022/01/16/%E8%BD%AF%E4%BB%B6%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF%EF%BC%9A%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="odymit">
+      <meta itemprop="description" content="读书 思考 写点东西">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="odymit's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          软件漏洞分析技术：漏洞分析基础
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-16 19:06:14" itemprop="dateCreated datePublished" datetime="2022-01-16T19:06:14+08:00">2022-01-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-18 15:13:55" itemprop="dateModified" datetime="2022-01-18T15:13:55+08:00">2022-01-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">漏洞分析</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>软件漏洞分析技术漏洞分析基础部分读书笔记。</p>
+<span id="more"></span>
+<h2 id="软件漏洞"><a href="#软件漏洞" class="headerlink" title="软件漏洞"></a>软件漏洞</h2><blockquote class="pullquote mindmap mindmap-md"><ul>
+<li>漏洞<ul>
+<li>漏洞概述<ul>
+<li>漏洞定义</li>
+<li>漏洞特点<ul>
+<li>持久性与时效性</li>
+<li>广泛性与具体性</li>
+<li>可利用性与隐蔽性</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>漏洞分类与分级<ul>
+<li>漏洞分类<ul>
+<li>早期漏洞分类</li>
+<li>多维度漏洞分类</li>
+<li>综合性漏洞分类</li>
+<li>漏洞库中的漏洞分类</li>
+</ul>
+</li>
+<li>漏洞分级<ul>
+<li>CNNVD</li>
+<li>微软</li>
+<li>US-CERT</li>
+<li>CVSS</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>漏洞的影响</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h2 id="漏洞分析发展历程"><a href="#漏洞分析发展历程" class="headerlink" title="漏洞分析发展历程"></a>漏洞分析发展历程</h2><blockquote class="pullquote mindmap mindmap-md"><ul>
+<li>漏洞分析发展历程<ul>
+<li>软件漏洞分析<ul>
+<li>广义漏洞分析<ul>
+<li>漏洞挖掘</li>
+<li>漏洞检测</li>
+<li>漏洞应用</li>
+<li>漏洞消除</li>
+<li>漏洞管控</li>
+</ul>
+</li>
+<li>狭义漏洞分析<ul>
+<li>特指漏洞挖掘</li>
+<li>架构安全分析</li>
+<li>源代码漏洞分析</li>
+<li>二进制漏洞分析</li>
+<li>运行系统漏洞分析</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>原始萌芽阶段<ul>
+<li>通信安全</li>
+<li>分析萌芽</li>
+<li>信息加密</li>
+</ul>
+</li>
+<li>初步发展阶段<ul>
+<li>计算机安全</li>
+<li>单一化漏洞挖掘</li>
+<li>操作系统防护</li>
+</ul>
+</li>
+<li>高速发展阶段<ul>
+<li>互联网安全</li>
+<li>多样化漏洞分析</li>
+<li>信息系统防护</li>
+</ul>
+</li>
+<li>综合治理阶段<ul>
+<li>网际安全</li>
+<li>系统化漏洞管控</li>
+<li>防御体系建设</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h2 id="漏洞分析技术概述"><a href="#漏洞分析技术概述" class="headerlink" title="漏洞分析技术概述"></a>漏洞分析技术概述</h2><blockquote class="pullquote mindmap mindmap-md"><ul>
+<li>漏洞分析技术概述<ul>
+<li>漏洞分析技术体系</li>
+<li>软件架构安全分析<ul>
+<li>形式化架构分析技术</li>
+<li>工程化架构分析技术</li>
+</ul>
+</li>
+<li>源代码漏洞分析<ul>
+<li>基于中间表示的分析技术<ul>
+<li>数据流分析</li>
+<li>符号执行</li>
+<li>污点分析</li>
+</ul>
+</li>
+<li>基于逻辑推理的分析技术<ul>
+<li>模型检测</li>
+<li>定理证明</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>二进制漏洞分析<ul>
+<li>静态漏洞分析技术</li>
+<li>动态漏洞分析技术</li>
+<li>动静结合的漏洞分析技术</li>
+</ul>
+</li>
+<li>运行系统漏洞分析<ul>
+<li>信息收集<ul>
+<li>网络拓扑</li>
+<li>操作系统</li>
+<li>应用软件</li>
+<li>公开资产</li>
+</ul>
+</li>
+<li>漏洞检测<ul>
+<li>配置管理检测<ul>
+<li>MBSA</li>
+<li>Metasploit</li>
+</ul>
+</li>
+<li>通信协议验证<ul>
+<li>Nessus</li>
+<li>Nmap</li>
+</ul>
+</li>
+<li>授权认证检测<ul>
+<li>Nessus</li>
+<li>WebScarab</li>
+</ul>
+</li>
+<li>数据验证测试<ul>
+<li>WVS</li>
+<li>AppScan</li>
+</ul>
+</li>
+<li>数据安全性验证<ul>
+<li>Wireshark</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>漏洞确认</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h3 id="漏洞分析技术体系"><a href="#漏洞分析技术体系" class="headerlink" title="漏洞分析技术体系"></a>漏洞分析技术体系</h3><p><img src="/2022/01/16/%E8%BD%AF%E4%BB%B6%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF%EF%BC%9A%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/%E8%BD%AF%E4%BB%B6%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%BD%93%E7%B3%BB.png" alt="软件漏洞分析体系图"></p>
+<h3 id="软件架构安全分析"><a href="#软件架构安全分析" class="headerlink" title="软件架构安全分析"></a>软件架构安全分析</h3><p>软件架构安全分析研究在软件设计构成中发现缺陷并且避免设计有缺陷的软件。  </p>
+<h4 id="形式化架构分析技术"><a href="#形式化架构分析技术" class="headerlink" title="形式化架构分析技术"></a>形式化架构分析技术</h4><p>形式化分析技术主要使用形式化方法统一描述软件架构和安全需求，然后检测软件架构是否满足安全需求。形式化分析技术主要包括UMLsec建模描述分析法、软件架构模型法、离散时间马尔可夫转移链法和组件系统架构描述法。  </p>
+<h4 id="工程化分析技术"><a href="#工程化分析技术" class="headerlink" title="工程化分析技术"></a>工程化分析技术</h4><p>工程化分析技术从攻击者的角度考虑软件面临的安全问题，实用性强，但是自动化程度较低。工程化分析技术包括场景分析法、错误用例分析法、威胁建模法。  </p>
+<h3 id="源代码漏洞分析"><a href="#源代码漏洞分析" class="headerlink" title="源代码漏洞分析"></a>源代码漏洞分析</h3><p>源代码漏洞分析是针对高级语言编写的程序进行分析以发现漏洞的方法。<br>源代码漏洞分析通常使用静态分析方法。源代码分析在不运行软件的前提下进行分析，分析对象可以是源代码，也可以是其他形式的中间代码，例如 Java 程序的字节码。静态漏洞分析系统或者缺陷分析系统通常选择源代码作为分析对象，这是因为：  </p>
+<ol>
+<li>该类工具通常在程序开发阶段使用，源代码是可见的。  </li>
+<li>相比于编译后的中间代码，源代码有着更丰富的语义信息。  </li>
+</ol>
+<h4 id="基于中间表示的分析技术"><a href="#基于中间表示的分析技术" class="headerlink" title="基于中间表示的分析技术"></a>基于中间表示的分析技术</h4><p>基于中间表示的分析技术以编译原理为主要基础技术，基本思想是先将源代码翻译为便于分析的中间表示，同时根据需要构建一些用于分析的数据结构，如控制流图、调用图等，然后根据一些预定义的分析规则对中间表示进行遍历，以判断分析规则所描述的漏洞是否存在。<br>基于中间表示的分析技术包括数据流分析、符号执行和污点传播等。  </p>
+<h5 id="数据流分析"><a href="#数据流分析" class="headerlink" title="数据流分析"></a>数据流分析</h5><p>数据流分析是一种用来获取有关数据如何沿着程序执行路径流动的相关信息的分析技术，被广泛用于编译构成中的代码优化。<br>数据流分析一般从程序的一个控制流图开始，数据流分析主要有前向分析（forward analysis）、后向分析（backward analysis）两种。基于格（lattice）与不动点（fixpoint）理论的数据流分析是目前被广泛使用的技术。  </p>
+<h5 id="符号执行"><a href="#符号执行" class="headerlink" title="符号执行"></a>符号执行</h5><p>符号执行是使用符号值代替数字值执行程序的技术，在使用符号执行技术的分析过程中，分析系统将程序中变量的取值表示为符号和常量组成的计算表达式，将程序计算的输出表示为符号的函数。</p>
+<h5 id="污点分析"><a href="#污点分析" class="headerlink" title="污点分析"></a>污点分析</h5><p>污点分析是一种跟踪并分析污点信息在程序中流动的技术，污点分析技术将所感兴趣的信息标记为污点信息（tainted information），通过跟踪污点信息的刘翔，检测这些信息是否会影响某些关键的操作。</p>
+<h4 id="基于逻辑推理的分析技术"><a href="#基于逻辑推理的分析技术" class="headerlink" title="基于逻辑推理的分析技术"></a>基于逻辑推理的分析技术</h4><p>此类方法以数学推理为基础，该方法将源代码进行形式化的描述，并在形式化描述的基础上，利用推理、证明等数学方法验证或者发现形式化描述的一些性质，以此推断程序是否存在某种类型的漏洞。  </p>
+<h5 id="模型检测"><a href="#模型检测" class="headerlink" title="模型检测"></a>模型检测</h5><p>为了提高分析的准确度，获取关于程序的更多性质，许多研究人员借用形式化方法来拓展基本分析技术，其中代表性的技术有模型检测（model checking）、定理证明等。模型检测使用状态歉意系统表示系统行为，用模态/时序逻辑公式描述系统的性质，通过系统性质是否符合预期来判断是否存在漏洞。<br>此类方法在检查硬件设计错误方面简单明了且自动化程度较高，但是应用在软件程序分析与验证时存在状态空间爆炸的问题。另外分析对象是形式化描述，如果形式化描述与程序不完全一致，可能导致检查结果无法反应程序中真实错误的情况。  </p>
+<h5 id="定理证明"><a href="#定理证明" class="headerlink" title="定理证明"></a>定理证明</h5><p>定理证明通过将验证问题转化为数学上的定理证明问题来判断待分析程序是否满足指定属性，是较为复杂但准确的方法。但是为了获取指定的属性以实现有效的证明，需要向程序源代码中添加特殊形式的注释，增加了程序员的工作量，无法广泛应用于大型程序中。</p>
+<h3 id="二进制漏洞分析"><a href="#二进制漏洞分析" class="headerlink" title="二进制漏洞分析"></a>二进制漏洞分析</h3><p>二进制漏洞分析技术是一种面向二进制可执行代码的软件安全性分析技术，通过对二进制可执行代码进行多层次（指令级、结构规划、形式化等）、多角度（外部接口测试、内部结构测试等）的分析，发现软件中的安全漏洞。分析主要涵盖的技术环节包括反汇编逆向分析、汇编代码结构化、中间表示、漏洞建模、动态数据流分析/污点分析、控制流分析/符号执行等。  </p>
+<h4 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h4><p>二进制漏洞静态分析是以人为定义的漏洞模型为指导，在二进制可执行程序中进行漏洞检测的一种方法，包括基于模式的漏洞分析和二进制代码对比。<br>基于模式的漏洞分析是一项较为简单、自动化程度较高且非常适用于安全漏洞检测的技术。<br>二进制代码对比通过将二进制文件进行不同层次的对比，从得到的差异之间发现安全漏洞。根据对比的深度不同，可以分为字符级别比较、指令级别比较和结构化比较。  </p>
+<h4 id="动态分析"><a href="#动态分析" class="headerlink" title="动态分析"></a>动态分析</h4><p>二进制漏洞动态分析是通过记录二进制程序的执行轨迹，并进一步分析程序在运行时的内存读写操作、函数调用关系、内存分配/释放等信息的一种漏洞检测方法，主要的技术为模糊测试。  </p>
+<h4 id="动静结合的分析技术"><a href="#动静结合的分析技术" class="headerlink" title="动静结合的分析技术"></a>动静结合的分析技术</h4><p>动静结合的漏洞分析技术结合了动态漏洞分析技术的准确性和静态漏洞分析的路径完备性，代表性技术为动态污点分析和智能灰盒测试。<br>动态污点分析作为一种新兴的程序分析技术，已经在恶意软件分析、网络协议逆向、软件漏洞挖掘等领域得到应用。<br>智能灰盒测试是在传统模糊测试的基础上发展而来的一种在测试过程中引入目标系统的内在知识来辅助测试的漏洞分析技术，通过静态、动态等分析过程，获得一定程度的目标程序的结构、语义、控制流等辅助信息，然后有针对性地设计测试用例。灰盒测试一般使用符号执行和污点分析等技术，大大增加了代码的覆盖率，且有针对性地检测某些安全敏感点的行为也大大增加了漏洞发现的概率，提高了分析效率。</p>
+<h3 id="运行系统漏洞分析"><a href="#运行系统漏洞分析" class="headerlink" title="运行系统漏洞分析"></a>运行系统漏洞分析</h3><p>运行系统是多种软件的有机整体，运行系统的漏洞分析相较于单个软件的漏洞分析有着其特殊性。具体体现在：  </p>
+<ul>
+<li>运行系统比单个软件更为复杂  </li>
+<li>黑盒（没有源代码和程序文档）  </li>
+<li>运行系统内部信息不公开，需要漏洞分析人员手动提取  </li>
+</ul>
+<p>目前，漏洞分析人员通过信息搜集、漏洞检测和漏洞确认三个步骤对运行系统进行漏洞分析。  </p>
+<h4 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h4><p>在此阶段，分析人员可以利用社会工程学、主机扫描技术、端口扫描技术等多项技术，通过人工或者一些自动化的工具手机有关运行系统架构、运行系统所部署机器的网络拓扑结构及其上面运行的操作系统类型版本、开启的端口及服务信息。  </p>
+<h4 id="漏洞检测"><a href="#漏洞检测" class="headerlink" title="漏洞检测"></a>漏洞检测</h4><p>配置管理测试是对系统配置进行检测，常用工具有：  </p>
+<ul>
+<li>MBSA  </li>
+<li>Metasploit  </li>
+<li>天珣安全配置审核系统  </li>
+</ul>
+<p>通信协议验证是对系统中的通信协议潜在的安全漏洞进行检测，有形式化方法和攻击验证方法两种，常用的工具有：  </p>
+<ul>
+<li>Nessus  </li>
+<li>Nmap  </li>
+</ul>
+<p>授权认证检测主要检测系统授权机制，主要工具有：  </p>
+<ul>
+<li>Nessus  </li>
+<li>WebScarab  </li>
+</ul>
+<p>数据验证测试主要发现外部数据可能产生的安全漏洞，主要工具有：  </p>
+<ul>
+<li>Acunetix Web Vulnerability Scanner(WVS)  </li>
+<li>AppScan  </li>
+<li>极光漏洞扫描工具  </li>
+<li>明鉴Web应用弱点扫描器  </li>
+</ul>
+<p>数据安全性验证主要检查系统内部数据自身安全，该类技术通常采用密码分析、在线密码破解、模拟物理入侵等方式来验证数据在系统上的安全性，主要工具是 Wireshark.  </p>
+<h4 id="漏洞确认"><a href="#漏洞确认" class="headerlink" title="漏洞确认"></a>漏洞确认</h4><p>在此阶段，分析人员对疑似漏洞列表中的漏洞进行逐一验证。</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" rel="tag"># 漏洞分析</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/13/snmp%E6%93%8D%E4%BD%9C%E7%AE%80%E4%BB%8B/" rel="prev" title="snmp操作简介">
+      <i class="fa fa-chevron-left"></i> snmp操作简介
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/01/19/%E8%BD%AF%E4%BB%B6%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF%EF%BC%9A%E6%95%B0%E6%8D%AE%E6%B5%81%E5%88%86%E6%9E%90/" rel="next" title="软件漏洞分析技术：数据流分析">
+      软件漏洞分析技术：数据流分析 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E6%BC%8F%E6%B4%9E"><span class="nav-number">1.</span> <span class="nav-text">软件漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E5%8F%91%E5%B1%95%E5%8E%86%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">漏洞分析发展历程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF%E6%A6%82%E8%BF%B0"><span class="nav-number">3.</span> <span class="nav-text">漏洞分析技术概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB"><span class="nav-number">3.1.</span> <span class="nav-text">漏洞分析技术体系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90"><span class="nav-number">3.2.</span> <span class="nav-text">软件架构安全分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BD%A2%E5%BC%8F%E5%8C%96%E6%9E%B6%E6%9E%84%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF"><span class="nav-number">3.2.1.</span> <span class="nav-text">形式化架构分析技术</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E7%A8%8B%E5%8C%96%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF"><span class="nav-number">3.2.2.</span> <span class="nav-text">工程化分析技术</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BA%90%E4%BB%A3%E7%A0%81%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90"><span class="nav-number">3.3.</span> <span class="nav-text">源代码漏洞分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E4%B8%AD%E9%97%B4%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF"><span class="nav-number">3.3.1.</span> <span class="nav-text">基于中间表示的分析技术</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%B5%81%E5%88%86%E6%9E%90"><span class="nav-number">3.3.1.1.</span> <span class="nav-text">数据流分析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C"><span class="nav-number">3.3.1.2.</span> <span class="nav-text">符号执行</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B1%A1%E7%82%B9%E5%88%86%E6%9E%90"><span class="nav-number">3.3.1.3.</span> <span class="nav-text">污点分析</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF"><span class="nav-number">3.3.2.</span> <span class="nav-text">基于逻辑推理的分析技术</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E6%A3%80%E6%B5%8B"><span class="nav-number">3.3.2.1.</span> <span class="nav-text">模型检测</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9A%E7%90%86%E8%AF%81%E6%98%8E"><span class="nav-number">3.3.2.2.</span> <span class="nav-text">定理证明</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90"><span class="nav-number">3.4.</span> <span class="nav-text">二进制漏洞分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90"><span class="nav-number">3.4.1.</span> <span class="nav-text">静态分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%88%86%E6%9E%90"><span class="nav-number">3.4.2.</span> <span class="nav-text">动态分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A8%E9%9D%99%E7%BB%93%E5%90%88%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF"><span class="nav-number">3.4.3.</span> <span class="nav-text">动静结合的分析技术</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E7%B3%BB%E7%BB%9F%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90"><span class="nav-number">3.5.</span> <span class="nav-text">运行系统漏洞分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="nav-number">3.5.1.</span> <span class="nav-text">信息收集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B"><span class="nav-number">3.5.2.</span> <span class="nav-text">漏洞检测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E7%A1%AE%E8%AE%A4"><span class="nav-number">3.5.3.</span> <span class="nav-text">漏洞确认</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="odymit"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">odymit</p>
+  <div class="site-description" itemprop="description">读书 思考 写点东西</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/odymit" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;odymit" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/15737405/odymit" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;15737405&#x2F;odymit" rel="noopener" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">odymit</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

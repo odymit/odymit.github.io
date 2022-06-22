@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"odymit.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="软件安全分析与应用第1章第2章绪论与基础知识读书笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件安全分析与应用：绪论与基础知识">
+<meta property="og:url" content="http://odymit.github.io/2022/01/24/%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E4%B8%8E%E5%BA%94%E7%94%A8%EF%BC%9A%E7%BB%AA%E8%AE%BA%E4%B8%8E%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:site_name" content="odymit&#39;s blog">
+<meta property="og:description" content="软件安全分析与应用第1章第2章绪论与基础知识读书笔记。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-24T08:10:40.000Z">
+<meta property="article:modified_time" content="2022-01-24T08:10:40.100Z">
+<meta property="article:author" content="odymit">
+<meta property="article:tag" content="漏洞分析">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://odymit.github.io/2022/01/24/%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E4%B8%8E%E5%BA%94%E7%94%A8%EF%BC%9A%E7%BB%AA%E8%AE%BA%E4%B8%8E%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>软件安全分析与应用：绪论与基础知识 | odymit's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">odymit's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://odymit.github.io/2022/01/24/%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E4%B8%8E%E5%BA%94%E7%94%A8%EF%BC%9A%E7%BB%AA%E8%AE%BA%E4%B8%8E%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="odymit">
+      <meta itemprop="description" content="读书 思考 写点东西">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="odymit's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          软件安全分析与应用：绪论与基础知识
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-24 16:10:40" itemprop="dateCreated datePublished" datetime="2022-01-24T16:10:40+08:00">2022-01-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">漏洞分析</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>软件安全分析与应用第1章第2章绪论与基础知识读书笔记。</p>
+<span id="more"></span>
+<blockquote class="pullquote mindmap mindmap-md"><ul>
+<li>基础知识<ul>
+<li>处理器硬件架构基础<ul>
+<li>CPU结构介绍</li>
+<li>保护模式</li>
+<li>特权级</li>
+<li>中断处理与异常处理</li>
+<li>调试支持</li>
+<li>虚拟化支持</li>
+</ul>
+</li>
+<li>反汇编及对抗技术<ul>
+<li>汇编语言</li>
+<li>反汇编</li>
+<li>代码混淆</li>
+<li>反调试</li>
+</ul>
+</li>
+<li>Windows操作系统基础<ul>
+<li>PE文件结构</li>
+<li>进程管理</li>
+<li>线程管理</li>
+<li>内存管理</li>
+<li>对象与句柄管理</li>
+<li>文件系统</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h2 id="处理器硬件架构基础"><a href="#处理器硬件架构基础" class="headerlink" title="处理器硬件架构基础"></a>处理器硬件架构基础</h2><h4 id="保护模式"><a href="#保护模式" class="headerlink" title="保护模式"></a>保护模式</h4><p>IA-32架构的 CPU 有两种工作模式：实模式和保护模式，工作模式受到 CR0 和 PE 标志位控制。</p>
+<p>CPU 刚开始初始化后工作在实模式下，PE 标志位值为0，使用20位地址，寻址空间1MB；当操作系统启动时，将 CPU 的 PE 标志位置1，开启保护模式，使用32为地址，内存寻址空间拓展到4GB。</p>
+<p>实模式不支持多线程，不能实现权限分级；保护模式下引入内存的分页和分段管理机制，实现了内存分页和权限分级，并支持多线程、多任务。</p>
+<h4 id="特权级"><a href="#特权级" class="headerlink" title="特权级"></a>特权级</h4><p>CPU 支持 Ring0, Ring1, Ring2, Ring3 共 4 个权限级别， windows 只使用了 Ring0 和 Ring3 两个。<br>为了进行代码段和数据段间的特权级校验，需要 3 种类型的特权级支持：当前特权级、描述符特权级和请求特权级。</p>
+<h4 id="调试支持"><a href="#调试支持" class="headerlink" title="调试支持"></a>调试支持</h4><p>程序调试是软件开发过程中进行排错和查错的过程，需要 CPU 架构的支持。</p>
+<p>IA-32 架构的 CPU 中，标志位寄存器 EFLAGS 中的 IF、TF 标志用于调试模式的开启，将 TF 置 1 使 CPU 处于单步执行状态，即调试状态，同时需要将 IF 置 1，开启 CPU 的中断响应。</p>
+<h2 id="反汇编及对抗技术"><a href="#反汇编及对抗技术" class="headerlink" title="反汇编及对抗技术"></a>反汇编及对抗技术</h2><h4 id="反汇编"><a href="#反汇编" class="headerlink" title="反汇编"></a>反汇编</h4><p>反汇编是将机器语言转换成汇编代码的过程，将人类难以理解的机器语言转换成具有符号语义的指令语言。<br>基本的反汇编流程包括4个步骤：</p>
+<ol>
+<li>确定反汇编代码区域，区分程序的代码和数据段。</li>
+<li>确定了程序代码入口后，读取该位置的二进制机器指令，执行表查找，将机器码的值与它对应的汇编语言助记符提取出来，然后根据指令状态机提取操作数。</li>
+<li>获取指令并解码出所有的操作数后，需要对它的汇编语言等价形式进行格式化，输出反汇编代码。</li>
+<li>完成一条指令的反汇编之后，重复上述过程，直到反汇编完整个程序中的指令代码。</li>
+</ol>
+<p>对于如何选择下一条指令，有两种方法：</p>
+<ol>
+<li>线性扫描</li>
+<li>递归下降</li>
+</ol>
+<h4 id="代码混淆"><a href="#代码混淆" class="headerlink" title="代码混淆"></a>代码混淆</h4><p>代码混淆是一种将计算机程序代码转换成一种功能上等价，但是难以阅读和理解的变形。代码混淆可以分为程序源代码混淆和二进制代码混淆。 </p>
+<p>二进制代码混淆是应用最广泛的混淆手段，大致可以分为两大类：</p>
+<ol>
+<li>反反汇编，代码加密或者使反汇编出错</li>
+<li>指令控制流混淆，加大反汇编和理解分析难度</li>
+</ol>
+<p>反反汇编又分为对抗静态和动态反汇编技术两种，针对对抗静态反汇编技术，主要方法是插入不完整指令或者数据，例如花指令。<br>另外，加密、加壳技术对代码进行保护也是常用的方法。</p>
+<h2 id="反调试"><a href="#反调试" class="headerlink" title="反调试"></a>反调试</h2><p>在程序逆向分析行业里，动态调试分析是最常用的分析方法之一，它能够弥补静态分析中难以处理代码加壳和花指令等混淆的不足。<br>常见的反调试技术：</p>
+<ol>
+<li>基于调试特征检测的反调试，检测程序 PEB 结构中的标志位 beingDebug 是否被置为非 0，除此之外还有多个同样功能的标志位。</li>
+<li>基于调试特征隐藏代码，使用异常中断指令 int3，并在异常处理中执行核心代码，以隐藏核心代码</li>
+</ol>
+<h2 id="Windows-操作系统"><a href="#Windows-操作系统" class="headerlink" title="Windows 操作系统"></a>Windows 操作系统</h2><h4 id="进程管理"><a href="#进程管理" class="headerlink" title="进程管理"></a>进程管理</h4><p>进程是计算机中的程序关于特定数据集合上的一次运行活动，是系统进行资源调度和分配的基本单位。</p>
+<p><strong>EPROCESS结构</strong>包括内核进程块、进程标识、退出状态、创建时间、退出时间、工作集信息、虚拟内存信息、异常端口、调试器端口、访问令牌、句柄表、设备映射表、进程环境块、映像基地址、进程优先级、windows 子系统进程块、作业对象等属性。</p>
+<p><strong>KPROCESS</strong>内核进程块是EPROCESS块的一个组成部分，包含了进程对象的额外属性信息，也被成为进程控制块（PCB），包含了Windows内核在调度线程时所需的基本信息。</p>
+<p><strong>PEB</strong>进程环境块是 EPROCESS 块中指针指向的一个结构，其中包括了有关进程对象的额外信息，该结构处于进程的用户态内存中，部分信息需要用户代码维护。</p>
+<h4 id="线程管理"><a href="#线程管理" class="headerlink" title="线程管理"></a>线程管理</h4><p>线程是程序执行流的最小单元，是进程中的一个实体，是被操作系统独立调度和分派的基本单位。线程本身独占系统资源，与同属一个进程的其他线程共享进程所拥有的全部资源。</p>
+<p><strong>ETHREAD</strong>是线程的基本结构，包含了内核线程块指针、创建时间和退出时间、所属进程的id标识、线程启动地址、定时器等属性。</p>
+<p><strong>KTHREAD</strong>是线程结构中关键的数据结构，位于系统内存内核空间，包含了windows内核为正在运行的线程执行线程调度和同步而需要访问的信息。</p>
+<p><strong>TEB</strong>线程环境块也位于进程的用户地址空间。</p>
+<h4 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h4><p>windows中内存空间分为用户太内存地址和内核空间地址。<br>windows系统使用内存管理器进行内存管理，主要负责两个任务：</p>
+<ol>
+<li>将进程虚拟地址空间转译到物理内存</li>
+<li>内存不足时将数据换页到磁盘</li>
+</ol>
+<h4 id="对象与句柄管理"><a href="#对象与句柄管理" class="headerlink" title="对象与句柄管理"></a>对象与句柄管理</h4><p>Windows 使用对象模型为执行体中实现的各种内部服务提供一致的、安全的访问途径，并设计了对象管理器负责创建、删除、保护和跟踪对象。</p>
+<p>当一个进程根据名称来创建或者打开对象时，系统返回一个句柄，进程需要根据该句柄对该对象进行访问和管理。<br>对象句柄是一个索引，只想与对象相关的句柄表中的表项，通过句柄访问对象比直接使用名称访问对象高想，因为对象管理器可以跳过名称查找过程直接找到目标对象。</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" rel="tag"># 漏洞分析</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/23/%E8%BD%AF%E4%BB%B6%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF%EF%BC%9A%E8%BF%90%E8%A1%8C%E7%B3%BB%E7%BB%9F%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" rel="prev" title="软件漏洞分析技术：运行系统漏洞分析">
+      <i class="fa fa-chevron-left"></i> 软件漏洞分析技术：运行系统漏洞分析
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/01/26/%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E4%B8%8E%E5%BA%94%E7%94%A8%EF%BC%9A%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80%E5%B7%A5%E5%85%B7/" rel="next" title="软件安全分析与应用：软件安全分析基础工具">
+      软件安全分析与应用：软件安全分析基础工具 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E5%99%A8%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">处理器硬件架构基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.0.1.</span> <span class="nav-text">保护模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E6%9D%83%E7%BA%A7"><span class="nav-number">1.0.2.</span> <span class="nav-text">特权级</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E6%94%AF%E6%8C%81"><span class="nav-number">1.0.3.</span> <span class="nav-text">调试支持</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E6%B1%87%E7%BC%96%E5%8F%8A%E5%AF%B9%E6%8A%97%E6%8A%80%E6%9C%AF"><span class="nav-number">2.</span> <span class="nav-text">反汇编及对抗技术</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%8D%E6%B1%87%E7%BC%96"><span class="nav-number">2.0.1.</span> <span class="nav-text">反汇编</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86"><span class="nav-number">2.0.2.</span> <span class="nav-text">代码混淆</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E8%B0%83%E8%AF%95"><span class="nav-number">3.</span> <span class="nav-text">反调试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="nav-number">4.</span> <span class="nav-text">Windows 操作系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86"><span class="nav-number">4.0.1.</span> <span class="nav-text">进程管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%AE%A1%E7%90%86"><span class="nav-number">4.0.2.</span> <span class="nav-text">线程管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="nav-number">4.0.3.</span> <span class="nav-text">内存管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E4%B8%8E%E5%8F%A5%E6%9F%84%E7%AE%A1%E7%90%86"><span class="nav-number">4.0.4.</span> <span class="nav-text">对象与句柄管理</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="odymit"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">odymit</p>
+  <div class="site-description" itemprop="description">读书 思考 写点东西</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/odymit" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;odymit" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/15737405/odymit" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;15737405&#x2F;odymit" rel="noopener" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">odymit</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

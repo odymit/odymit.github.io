@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"odymit.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="摘要1In this paper, we present ATLAS, a framework that constructs an end-to-end attack story from off-the-shelf audit logs. Our key observation is that different attacks may share similar abstract attac">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ATLAS: A Sequence-based Learning Approach for Attack Investigation">
+<meta property="og:url" content="http://odymit.github.io/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/index.html">
+<meta property="og:site_name" content="odymit&#39;s blog">
+<meta property="og:description" content="摘要1In this paper, we present ATLAS, a framework that constructs an end-to-end attack story from off-the-shelf audit logs. Our key observation is that different attacks may share similar abstract attac">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://odymit.github.io/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/casual_grpah.png">
+<meta property="og:image" content="http://odymit.github.io/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/ATLAS_architecture.png">
+<meta property="og:image" content="http://odymit.github.io/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/graph_preprocess.png">
+<meta property="og:image" content="http://odymit.github.io/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/sequence_extraction.png">
+<meta property="og:image" content="http://odymit.github.io/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/lemmatization.png">
+<meta property="og:image" content="http://odymit.github.io/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/attack_recovery.png">
+<meta property="og:image" content="http://odymit.github.io/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/results.png">
+<meta property="og:image" content="http://odymit.github.io/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/graph_optimization.png">
+<meta property="og:image" content="http://odymit.github.io/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/sampling.png">
+<meta property="article:published_time" content="2021-08-10T16:03:09.000Z">
+<meta property="article:modified_time" content="2021-08-10T16:03:59.623Z">
+<meta property="article:author" content="odymit">
+<meta property="article:tag" content="攻击检测">
+<meta property="article:tag" content="自然语言处理">
+<meta property="article:tag" content="机器学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://odymit.github.io/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/casual_grpah.png">
+
+<link rel="canonical" href="http://odymit.github.io/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>ATLAS: A Sequence-based Learning Approach for Attack Investigation | odymit's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">odymit's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://odymit.github.io/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="odymit">
+      <meta itemprop="description" content="读书 思考 写点东西">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="odymit's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ATLAS: A Sequence-based Learning Approach for Attack Investigation
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-11 00:03:09 / 修改时间：00:03:59" itemprop="dateCreated datePublished" datetime="2021-08-11T00:03:09+08:00">2021-08-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A7%91%E7%A0%94%E8%AE%BA%E6%96%87/" itemprop="url" rel="index"><span itemprop="name">科研论文</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A7%91%E7%A0%94%E8%AE%BA%E6%96%87/%E6%91%98%E8%A6%81/" itemprop="url" rel="index"><span itemprop="name">摘要</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">In this paper, we present ATLAS, a framework that constructs an end-to-end attack story from off-the-shelf audit logs. Our key observation is that different attacks may share similar abstract attack strategies, regardless of the vulnerabilities exploited and payloads executed. ATLAS leverages a novel combination of causality analysis, natural language processing, and machine learning techniques to build a sequence-based model, which establishes key patterns of attack and non-attack behaviors from a causal graph. At inference time, given a threat alert event, an attack symptom node in a causal graph is identified. ATLAS then constructs a set of candidate sequences associated with the symptom node, uses the sequence-based model to identify nodes in a sequence that contribute to the attack, and unifies the identified attack nodes to construct an attack story.</span><br></pre></td></tr></table></figure>
+
+<p>文章摘要中指出：</p>
+<ul>
+<li>提出一个端到端攻击事件构建框架，该框架基于审计日志来进行攻击事件的构建；</li>
+<li>此框架的主要原理是不同的技术用于实现相同的战术目的；</li>
+<li>ATLAS框架集成了因果分析、自然语言处理和机器学习来构建基于序列的模型，该序列模型是从因果图中识别攻击的主要特征；</li>
+<li>在推理阶段，给出威胁告警，该框架可以在因果图上识别出攻击节点（attack symptom node）；</li>
+<li>使用识别出的攻击节点可以构建攻击事件和攻击因果图。</li>
+</ul>
+<p>本文是发表在信安顶会 USENIX 2021 上的文章，结合了自然语言处理、机器学习方法，值得借鉴学习。源码和数据在：<a target="_blank" rel="noopener" href="https://github.com/purseclab/ATLAS">https://github.com/purseclab/ATLAS</a>.</p>
+<span id="more"></span>
+
+<h2 id="通过案例来解释框架"><a href="#通过案例来解释框架" class="headerlink" title="通过案例来解释框架"></a>通过案例来解释框架</h2><p><img src="/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/casual_grpah.png" alt="因果图"></p>
+<p>如上图<code>a</code> 所示，框架首先会构建因果图，然后基于因果图进行攻击行为的识别，如虚线红框中的 <code>alpha</code> 虚线所代表的行为即为识别出的攻击。  </p>
+<p>作者认为在一系列攻击中每个攻击都跟上下文有关，这跟自然语言中每一句话都跟上下文有关是相同的。基于此原理，他们认为提取出的三元组序列可以训练获得在不同APT攻击上有效的模型。因为即使底层的审计记录不同，他们还是拥有相同的上下文语义，或者说战术目的。  </p>
+<p>在推理阶段会定义攻击节点（attack symptom node），表示这些节点出现在攻击告警中，可能发动攻击行为。以攻击节点为基础，拓展攻击节点的候选节点序列，这些候选节点是跟攻击节点相邻的节点，然后使用模型来识别这些节点是否有助于完成进一步攻击。</p>
+<p>如上图中 <code>b</code> 所示，通过这些攻击节点就可以构建攻击事件记录了。而图中 <code>c</code> 则是攻击事件的因果图表示，为完整因果图的子图，描述攻击行为因果关系。</p>
+<h2 id="ATLAS架构"><a href="#ATLAS架构" class="headerlink" title="ATLAS架构"></a>ATLAS架构</h2><p><img src="/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/ATLAS_architecture.png" alt="架构图"></p>
+<p>整个 <code>ATLAS</code> 分为两个部分，一个部分是训练，另一个部分是使用该模型进行攻击识别。</p>
+<p>在训练部分：</p>
+<ul>
+<li>审计记录作为输入，从审计记录中抽取实体和关系构建因果图</li>
+<li>从图中抽取并构建序列</li>
+<li>对序列进行词形还原</li>
+<li>选择性序列抽样</li>
+<li>序列嵌入，将序列转换成数值向量的表示形式</li>
+<li>将向量送入 <code>LSTM</code> 中进行训练得到模型</li>
+</ul>
+<h2 id="设计中存在的挑战"><a href="#设计中存在的挑战" class="headerlink" title="设计中存在的挑战"></a>设计中存在的挑战</h2><ol>
+<li><p>如何构建序列来对合法活动和可以活动建模</p>
+<p>目的是找到更好的序列表示方式，可以更好地区分合法活动和恶意攻击，并且从不同的审计日志类型中提取出来。</p>
+<p>在传统的序列提取方式中，存在两个问题，一个是存在着大量的单一实体，比如一个进程具有多个实例；相同的攻击特征出现在不同的进程中会导致不同的序列会出现相同或者极度相似的上下文。</p>
+<p>这两个问题会影响模型收敛和学习的精度，可能导致梯度消失或者梯度爆炸。</p>
+<p><code>ATLAS</code> 对此进行了图优化，来降低图的复杂度。</p>
+</li>
+<li><p>攻击模型训练时数据集中的非攻击序列过多而攻击序列过少，这是由于攻击和日志的特点导致的</p>
+<p>在这样数据集下训练出来的模型会倾向于非公集序列，会导致大量攻击序列未被检测到。</p>
+<p>对于此问题，<code>ATLAS</code> 对非攻击序列欠采样对攻击序列过采样，平衡两类攻击的比例。</p>
+</li>
+<li><p>尽管训练好的模型可以进行任意序列的预测，但是输入的序列是专家临时生成的，可能需要大量的序列发现</p>
+<p>对于此问题，<code>ATLAS</code> 引入了攻击调查阶段（attack investigate phase），在该阶段将会对审计日志进行攻击识别等操作。</p>
+<p>因此可以恢复出攻击实体来帮助进行构建攻击事件。</p>
+</li>
+</ol>
+<h2 id="审计日志预处理"><a href="#审计日志预处理" class="headerlink" title="审计日志预处理"></a>审计日志预处理</h2><p><img src="/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/graph_preprocess.png" alt="因果图优化"></p>
+<p>此处解决挑战1中提出的问题，存在大量单一实体，例子是同一个进程具有多个线程实例。在此处将多个节点聚合为一个节点，降低图的复杂度。</p>
+<p>为了优化因果图的复杂度，<code>ATLAS</code> 使用了三种方法：取消所有不跟攻击节点相连的点和边；去除所有重复的边；合并同类节点和边。</p>
+<h2 id="序列构建和训练学习"><a href="#序列构建和训练学习" class="headerlink" title="序列构建和训练学习"></a>序列构建和训练学习</h2><p>在本步骤内会进行：打标签、攻击序列提取、数据平衡采样、词嵌入，然后训练学习。</p>
+<h3 id="因果图构建与攻击序列提取"><a href="#因果图构建与攻击序列提取" class="headerlink" title="因果图构建与攻击序列提取"></a>因果图构建与攻击序列提取</h3><p><img src="/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/sequence_extraction.png" alt="攻击序列提取"></p>
+<p>攻击实体子集，集合中全为因果图中攻击实体的集合，且实体个数 <code>&lt;= 2</code>  .</p>
+<p>因果图构建与攻击序列提取步骤如下：</p>
+<ul>
+<li>对于每一个攻击实体子集中的攻击实体， 获得他们的邻居图，此步骤将会使 <code>ATLAS</code> 捕获所有与攻击实体有因果关系的实体</li>
+<li><code>ATLAS</code> 从邻居图中获取带有时间戳的攻击事件</li>
+<li>将提取出来的带有时间戳的攻击事件转化成攻击序列</li>
+</ul>
+<p>非攻击序列的提取与攻击序列相似，但是由于非攻击序列非常多，所以会遇到处理时指数爆炸的问题。而 <code>ATLAS</code> 不会从非攻击序列上学习特征，只会学习攻击学列和非攻击序列的边界。因此在攻击序列中添加一个非攻击节点，这样子会提取出一个非攻击序列。这样子 <code>ATLAS</code> 不但能够获得非攻击序列，而且能够准确地学习到攻击序列和非攻击序列的相似性和不同点。</p>
+<p>如上图 <code>c</code> 部分，序列 <code>&#123;A, B&#125;</code> 不跟任何事件匹配，所以标记为非攻击序列。</p>
+<h3 id="词形还原"><a href="#词形还原" class="headerlink" title="词形还原"></a>词形还原</h3><p><code>ATLAS</code> 使用词形还原的方式将序列转化为归一化的文本来表示序列特征。词形还原在自然语言中常用来处理同一个词的不同形式。如：将 <code>drove</code> 处理为 <code>drive</code>，将 <code>driving</code> 处理为 <code>drive</code>。</p>
+<p>这个处理将会获得序列的原始语义，有利于基于序列的模型学习。</p>
+<p><img src="/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/lemmatization.png" alt="词形还原表"></p>
+<p>举个例子：<code>&lt;/system/process/malicious.exe read /user/secret.pdf&gt; is transformed to &lt;system_process read user_file&gt;</code></p>
+<p>这些类型足以捕获因果图中实体的上下文、语义和句法相似性以及与其他单词的关系。</p>
+<h3 id="选择性序列取样"><a href="#选择性序列取样" class="headerlink" title="选择性序列取样"></a>选择性序列取样</h3><p>为了平衡训练集，<code>ATLAS</code> 首先使用相似度欠采样了非攻击序列，然后使用过采样机制随机变异了攻击序列，最后使得攻击序列数量和非攻击序列数量基本相同。</p>
+<p>当然最简单的方法是随机去除非攻击序列和重复攻击序列，但是论文中提及，这样处理会导致模型对攻击序列过拟合并且丢失了重要的非攻击序列的特征。</p>
+<p>具体的欠采样的做法如下：</p>
+<ul>
+<li>欠采样做法通过编辑距离（Levenshtein Distance）来进行样本欠采样，编辑距离用于两个字符串的差异程度的量化测量。以此确保了数据集中去除的是冗余的重复样本。</li>
+<li>编辑距离通常比较两个字符串之间的差异，在此处 <code>ATLAS</code>  计算的是编辑步骤的数量，例如在序列中添加或删除词汇表中的单词，来将序列转换为另一个词形还原序列。以此获得序列的编辑距离。</li>
+<li>实验发现 <code>80%</code> 准确率下的能获得好的采样比和去除高度相似的甚至相同的序列。</li>
+</ul>
+<p>具体的过采样方法如下：</p>
+<ul>
+<li>为了给训练用的攻击序列提供更好的多样性，采用了基于变异的过采样方法。</li>
+<li>在此项还原表中，有同一类型下的不同子类，如 <code>system_process， program_process</code>。在攻击序列进行词形还原后，将会对其中的实体进行同类型子类的替换。</li>
+<li>这不会从根本上改变攻击序列，但是增加了在用于模型训练的攻击中未触发的类似序列的数量，由于上下文差异，在其他攻击中仍可能发生。</li>
+</ul>
+<h3 id="序列嵌入和模型训练"><a href="#序列嵌入和模型训练" class="headerlink" title="序列嵌入和模型训练"></a>序列嵌入和模型训练</h3><h3 id="序列嵌入"><a href="#序列嵌入" class="headerlink" title="序列嵌入"></a>序列嵌入</h3><p><code>ATLAS</code> 在模型训练时结合词嵌入将词形还原后的序列转化成数值向量。常用的词嵌入方式有 <code>word-representing、word2vec</code>，由此生成的词向量可以准确地表示不同词之间的语义关系。序列的向量可以定义了序列实体表中特定域之间的语义关系，有助于在模型训练时突出不同序列的特征。</p>
+<p>训练词向量的语料库包含所有从审计日志中提取出来的攻击序列和非攻击序列。</p>
+<p>这种序列嵌入的方法相比其他的比如 <code>one-hot-encoding</code> 的方法具有更好的效果。</p>
+<h3 id="基于序列的模型训练"><a href="#基于序列的模型训练" class="headerlink" title="基于序列的模型训练"></a>基于序列的模型训练</h3><p><code>ATLAS</code> 使用了 <code>LSTM</code> 网络来学习序列特征。<code>LSTM</code> 是一种常用的模型，并且已经证明在很多基于序列的学习中具有良好的效果。</p>
+<p>模型同样包含一个 <code>CNN</code> 网络，该网络可以帮助模型捕获具有隐蔽性和动态变化性的 <code>APT</code> 攻击。模型使用了 <code>dropout</code> 层来降低过拟合并提高泛化性，使用了带 <code>Max pooling</code> 的 <code>Conv1D</code> 层来处理序列，带 <code>Sigmoid</code> 激活函数的全连接层来预测攻击序列关联的可能性。这个模型在试验中获得了相比其他架构更好的准确率。</p>
+<h2 id="攻击调查"><a href="#攻击调查" class="headerlink" title="攻击调查"></a>攻击调查</h2><p>在此部分就是部署模型进行攻击调查，攻击调查包含攻击实体识别、攻击事件恢复和涉及多主机攻击的处理。</p>
+<p><img src="/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/attack_recovery.png" alt="攻击事件还原"></p>
+<h2 id="具体效果"><a href="#具体效果" class="headerlink" title="具体效果"></a>具体效果</h2><p>数据集：</p>
+<ul>
+<li>缺少公开数据集，根据公开数据集记录做的 <code>APT</code> 攻击复现，并且模拟了正常用户的活动</li>
+</ul>
+<p><img src="/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/results.png" alt="试验结果"></p>
+<p>最后，作者分析了结果中的假阳性和假阴性，并且分析了各个组成部分的优化和对于最后结果的支撑。</p>
+<h3 id="因果图"><a href="#因果图" class="headerlink" title="因果图"></a>因果图</h3><p>定制的因果图生成算法，降低了图的复杂性，有助于改进序列构造的算法。</p>
+<p><img src="/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/graph_optimization.png" alt="图优化效果"></p>
+<h3 id="选择性序列采样"><a href="#选择性序列采样" class="headerlink" title="选择性序列采样"></a>选择性序列采样</h3><p><img src="/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/sampling.png" alt="采样优化"></p>
+<p>测试结果显示，采样优化后训练时间减少了约 <code>87%</code>。并且非攻击序列的抽取，抽取了初始序列的 <code>22%</code> 左右作为高代表性的训练集，这有效的提高了模型准确率。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>作者详细介绍了整个模型的搭建过程和原理，并给出了源码和实验数据：<a target="_blank" rel="noopener" href="https://github.com/purseclab/ATLAS">https://github.com/purseclab/ATLAS</a>.</p>
+<p>得出结果后，给出了结果假阳性和假阴性的分析，以及模型有效性的分析。</p>
+<p>可以参考其模型设计和优化思路，特别是机器学习相关模型中的数据预处理和数据集比例等。最近也在做图神经网络相关的工作，图的设计和生成可以参考此文的优化思路。</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%94%BB%E5%87%BB%E6%A3%80%E6%B5%8B/" rel="tag"># 攻击检测</a>
+              <a href="/tags/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/" rel="tag"># 自然语言处理</a>
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"># 机器学习</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/13/%E5%9F%BA%E4%BA%8E%E6%94%BB%E5%87%BB%E8%B7%AF%E5%BE%84%E5%9B%BE%E7%9A%84%E5%85%A5%E4%BE%B5%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB/" rel="prev" title="基于攻击路径图的入侵意图识别">
+      <i class="fa fa-chevron-left"></i> 基于攻击路径图的入侵意图识别
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/08/14/HOLMES-Real-time-APT-Detection-through-Correlation-of-Suspicious-Information-Flows/" rel="next" title="HOLMES: Real-time APT Detection through Correlation of Suspicious Information Flows">
+      HOLMES: Real-time APT Detection through Correlation of Suspicious Information Flows <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E6%A1%88%E4%BE%8B%E6%9D%A5%E8%A7%A3%E9%87%8A%E6%A1%86%E6%9E%B6"><span class="nav-number">2.</span> <span class="nav-text">通过案例来解释框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ATLAS%E6%9E%B6%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">ATLAS架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E4%B8%AD%E5%AD%98%E5%9C%A8%E7%9A%84%E6%8C%91%E6%88%98"><span class="nav-number">4.</span> <span class="nav-text">设计中存在的挑战</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%A1%E8%AE%A1%E6%97%A5%E5%BF%97%E9%A2%84%E5%A4%84%E7%90%86"><span class="nav-number">5.</span> <span class="nav-text">审计日志预处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E6%9E%84%E5%BB%BA%E5%92%8C%E8%AE%AD%E7%BB%83%E5%AD%A6%E4%B9%A0"><span class="nav-number">6.</span> <span class="nav-text">序列构建和训练学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%A0%E6%9E%9C%E5%9B%BE%E6%9E%84%E5%BB%BA%E4%B8%8E%E6%94%BB%E5%87%BB%E5%BA%8F%E5%88%97%E6%8F%90%E5%8F%96"><span class="nav-number">6.1.</span> <span class="nav-text">因果图构建与攻击序列提取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%8D%E5%BD%A2%E8%BF%98%E5%8E%9F"><span class="nav-number">6.2.</span> <span class="nav-text">词形还原</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E6%80%A7%E5%BA%8F%E5%88%97%E5%8F%96%E6%A0%B7"><span class="nav-number">6.3.</span> <span class="nav-text">选择性序列取样</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E5%B5%8C%E5%85%A5%E5%92%8C%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="nav-number">6.4.</span> <span class="nav-text">序列嵌入和模型训练</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E5%B5%8C%E5%85%A5"><span class="nav-number">6.5.</span> <span class="nav-text">序列嵌入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E5%BA%8F%E5%88%97%E7%9A%84%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="nav-number">6.6.</span> <span class="nav-text">基于序列的模型训练</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB%E8%B0%83%E6%9F%A5"><span class="nav-number">7.</span> <span class="nav-text">攻击调查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E6%95%88%E6%9E%9C"><span class="nav-number">8.</span> <span class="nav-text">具体效果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%A0%E6%9E%9C%E5%9B%BE"><span class="nav-number">8.1.</span> <span class="nav-text">因果图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E6%80%A7%E5%BA%8F%E5%88%97%E9%87%87%E6%A0%B7"><span class="nav-number">8.2.</span> <span class="nav-text">选择性序列采样</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">9.</span> <span class="nav-text">总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="odymit"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">odymit</p>
+  <div class="site-description" itemprop="description">读书 思考 写点东西</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/odymit" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;odymit" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/15737405/odymit" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;15737405&#x2F;odymit" rel="noopener" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">odymit</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

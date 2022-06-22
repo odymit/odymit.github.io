@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"odymit.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="软件安全分析与应用第9章软件漏洞挖掘与分析读书笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件安全分析与应用：软件漏洞挖掘与分析">
+<meta property="og:url" content="http://odymit.github.io/2022/02/18/%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E4%B8%8E%E5%BA%94%E7%94%A8%EF%BC%9A%E8%BD%AF%E4%BB%B6%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E4%B8%8E%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="odymit&#39;s blog">
+<meta property="og:description" content="软件安全分析与应用第9章软件漏洞挖掘与分析读书笔记。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-18T12:34:31.000Z">
+<meta property="article:modified_time" content="2022-02-18T12:34:31.665Z">
+<meta property="article:author" content="odymit">
+<meta property="article:tag" content="漏洞分析">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://odymit.github.io/2022/02/18/%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E4%B8%8E%E5%BA%94%E7%94%A8%EF%BC%9A%E8%BD%AF%E4%BB%B6%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E4%B8%8E%E5%88%86%E6%9E%90/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>软件安全分析与应用：软件漏洞挖掘与分析 | odymit's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">odymit's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://odymit.github.io/2022/02/18/%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E4%B8%8E%E5%BA%94%E7%94%A8%EF%BC%9A%E8%BD%AF%E4%BB%B6%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E4%B8%8E%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="odymit">
+      <meta itemprop="description" content="读书 思考 写点东西">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="odymit's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          软件安全分析与应用：软件漏洞挖掘与分析
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-02-18 20:34:31" itemprop="dateCreated datePublished" datetime="2022-02-18T20:34:31+08:00">2022-02-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">漏洞分析</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>软件安全分析与应用第9章软件漏洞挖掘与分析读书笔记。</p>
+<span id="more"></span>
+<blockquote class="pullquote mindmap mindmap-md"><ul>
+<li>软件漏洞挖掘与分析<ul>
+<li>基础知识<ul>
+<li>典型漏洞类型<ul>
+<li>溢出（堆、栈、整数）</li>
+<li>重用（use after free）</li>
+<li>web漏洞（sql、xss）</li>
+</ul>
+</li>
+<li>漏洞利用</li>
+<li>漏洞防护</li>
+</ul>
+</li>
+<li>软件漏洞机理分析<ul>
+<li>脆弱点分析</li>
+<li>路径分析</li>
+<li>内存分布分析</li>
+<li>分析实例</li>
+</ul>
+</li>
+<li>软件漏洞利用<ul>
+<li>攻击链构造</li>
+<li>攻击路径出发</li>
+<li>保护机制绕过</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><p>利用漏洞可以进行：</p>
+<ul>
+<li>执行代码</li>
+<li>信息窃取</li>
+<li>权限提升</li>
+<li>拒绝服务</li>
+<li>认证绕过</li>
+</ul>
+<h4 id="典型漏洞类型"><a href="#典型漏洞类型" class="headerlink" title="典型漏洞类型"></a>典型漏洞类型</h4><ul>
+<li>栈溢出</li>
+<li>堆溢出</li>
+<li>重用（use after free）</li>
+<li>整数溢出</li>
+<li>其他（sql、xss）</li>
+</ul>
+<h4 id="漏洞利用技术"><a href="#漏洞利用技术" class="headerlink" title="漏洞利用技术"></a>漏洞利用技术</h4><p><strong>内存喷射</strong>技术的代表技术是堆喷射技术（heap spray），主要用于攻击IE、Firefox浏览器等常用软件。传统堆喷射技术的关键在于，在内存中申请大量的具有固定大小的对象，在其中填入相同内容，每一个对象中间都含有若干NOP指令序列和攻击代码，这样使得进程的地址空间被大量的注入代码所占据。在程序的控制流被劫持时，大量的包含攻击代码的碎片能够提高EIP转移达到目标的概率，碎片中的NOP指令形成指令缓冲区，使得EIP转移目标仅需要在一定的误差范围内，即可引发攻击代码的执行。</p>
+<ul>
+<li>NOP：空指令</li>
+<li>EIP：寄存器，存储cpu要读取的地址</li>
+</ul>
+<p><strong>ROP</strong>（Return-Oriented Programming），是指攻击者从已有的库或者可执行文件中提取指令片段，构建攻击代码。</p>
+<p><strong>基于内存地址信息泄漏构造利用</strong>，由于DEP和ASLR的同时使用，使得攻击者即使能够找到ROP代码片段，也很难在内存中关联起来。对此有两种方法解决：</p>
+<ul>
+<li>寻找未随机化的模块</li>
+<li>针对全部模块都被随机化的情况，利用程序在运行时泄漏的信息来构造 ROP</li>
+</ul>
+<h4 id="漏洞防护"><a href="#漏洞防护" class="headerlink" title="漏洞防护"></a>漏洞防护</h4><p>针对软件漏洞的形成机理和利用方法，研究人员也提出了与之对应的防护方法，主要包括针对栈溢出的 Stack Cookie，针对堆溢出的 SAFE 堆释放操作，针对控制流劫持攻击的数据区执行保护（Data Execution Protection, DEP)和地址随机化（Address Space Layout Randomization, ASLR）等机制。<br><strong>Stack Cookie</strong>在堆栈中保存一个cookie值，如果堆栈溢出该数据被覆盖则停止执行。<br><strong>DEP</strong>面对的主要目标是缓冲区溢出，缓冲区溢出攻击需要在数据段写可执行的攻击代码，然后劫持控制流转移到攻击代码。具体实现方法是将数据段代码标记为不可执行代码。<br><strong>ASLR</strong>也是针对缓冲区溢出的保护措施，通过堆、栈、动态库等布局的随机化，增加攻击者的攻击难度。主要对以下4类地址进行随机化：</p>
+<ul>
+<li>堆地址</li>
+<li>栈基址</li>
+<li>PE文件映像基址</li>
+<li>进程环境块</li>
+</ul>
+<h2 id="机理分析"><a href="#机理分析" class="headerlink" title="机理分析"></a>机理分析</h2><h4 id="路径分析"><a href="#路径分析" class="headerlink" title="路径分析"></a>路径分析</h4><ul>
+<li>基于污点传播的路径指令序列提取</li>
+<li>基于符号执行的路径条件提取</li>
+</ul>
+<h4 id="内存布局分析"><a href="#内存布局分析" class="headerlink" title="内存布局分析"></a>内存布局分析</h4><ul>
+<li>输入数据直接映射</li>
+<li>输入数据可逆计算后映射</li>
+</ul>
+<p>使用经过修改的污点传播算法可以进行数据映射的分析.</p>
+<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p>漏洞利用有：</p>
+<ul>
+<li>攻击链构建</li>
+<li>攻击路径触发</li>
+<li>保护机制绕过</li>
+</ul>
+<h4 id="攻击链构建"><a href="#攻击链构建" class="headerlink" title="攻击链构建"></a>攻击链构建</h4><p>攻击链构建的目标是在内存中找到能够放置控制流转移代码的空间，在放入控制流代码转移后，使得被劫持的控制流能够顺利转移到 ShellCode.<br>常见的跳板指令有：</p>
+<ul>
+<li>call/jmp register</li>
+<li>calljmp [register+offset]</li>
+<li>连续指令序列</li>
+</ul>
+<h4 id="攻击路径触发"><a href="#攻击路径触发" class="headerlink" title="攻击路径触发"></a>攻击路径触发</h4><p>攻击路径触发是漏洞利用中较为重要的一环，最终利用的生成是通过重构输入的方式实现的，其目标是通过构造输入数据，使程序能够执行到控制流劫持点。</p>
+<h4 id="保护机制绕过"><a href="#保护机制绕过" class="headerlink" title="保护机制绕过"></a>保护机制绕过</h4><p>操作系统使用了数据执行保护、堆栈 cookie、ASLR 等技术对可能发生的漏洞攻击进行保护。所以攻击者需要对此类保护机制进行绕过，常用的方法有：</p>
+<ul>
+<li>pop+jmp 间接控制 EIP</li>
+<li>调用 API 关闭 DEP</li>
+<li>JIT Spraying</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" rel="tag"># 漏洞分析</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/17/%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E4%B8%8E%E5%BA%94%E7%94%A8%EF%BC%9A%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%88%86%E6%9E%90/" rel="prev" title="软件安全分析与应用：恶意代码检测与分析">
+      <i class="fa fa-chevron-left"></i> 软件安全分析与应用：恶意代码检测与分析
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/02/20/%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E4%B8%8E%E5%BA%94%E7%94%A8%EF%BC%9A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/" rel="next" title="软件安全分析与应用：网络协议逆向分析">
+      软件安全分析与应用：网络协议逆向分析 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B8%E5%9E%8B%E6%BC%8F%E6%B4%9E%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.0.1.</span> <span class="nav-text">典型漏洞类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E6%8A%80%E6%9C%AF"><span class="nav-number">1.0.2.</span> <span class="nav-text">漏洞利用技术</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E9%98%B2%E6%8A%A4"><span class="nav-number">1.0.3.</span> <span class="nav-text">漏洞防护</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%BA%E7%90%86%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">机理分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E5%BE%84%E5%88%86%E6%9E%90"><span class="nav-number">2.0.1.</span> <span class="nav-text">路径分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80%E5%88%86%E6%9E%90"><span class="nav-number">2.0.2.</span> <span class="nav-text">内存布局分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">漏洞利用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%94%BB%E5%87%BB%E9%93%BE%E6%9E%84%E5%BB%BA"><span class="nav-number">3.0.1.</span> <span class="nav-text">攻击链构建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%94%BB%E5%87%BB%E8%B7%AF%E5%BE%84%E8%A7%A6%E5%8F%91"><span class="nav-number">3.0.2.</span> <span class="nav-text">攻击路径触发</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%88%B6%E7%BB%95%E8%BF%87"><span class="nav-number">3.0.3.</span> <span class="nav-text">保护机制绕过</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="odymit"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">odymit</p>
+  <div class="site-description" itemprop="description">读书 思考 写点东西</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/odymit" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;odymit" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/15737405/odymit" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;15737405&#x2F;odymit" rel="noopener" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">odymit</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
