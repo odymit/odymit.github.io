@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"odymit.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Security and privacy for 6G: A survey on prospective technologies and challenges 摘要。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Security and privacy for 6G: A survey on prospective technologies and challenges">
+<meta property="og:url" content="http://odymit.github.io/2022/06/22/Security-and-privacy-for-6G-A-survey-on-prospective-technologies-and-challenges/index.html">
+<meta property="og:site_name" content="odymit&#39;s blog">
+<meta property="og:description" content="Security and privacy for 6G: A survey on prospective technologies and challenges 摘要。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://odymit.github.io/2022/06/22/Security-and-privacy-for-6G-A-survey-on-prospective-technologies-and-challenges/arch.png">
+<meta property="og:image" content="http://odymit.github.io/2022/06/22/Security-and-privacy-for-6G-A-survey-on-prospective-technologies-and-challenges/ai-solution.png">
+<meta property="og:image" content="http://odymit.github.io/2022/06/22/Security-and-privacy-for-6G-A-survey-on-prospective-technologies-and-challenges/main-attacks.png">
+<meta property="article:published_time" content="2022-06-22T03:54:53.000Z">
+<meta property="article:modified_time" content="2022-06-22T03:54:53.839Z">
+<meta property="article:author" content="odymit">
+<meta property="article:tag" content="6G">
+<meta property="article:tag" content="安全与隐私">
+<meta property="article:tag" content="Survey">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://odymit.github.io/2022/06/22/Security-and-privacy-for-6G-A-survey-on-prospective-technologies-and-challenges/arch.png">
+
+<link rel="canonical" href="http://odymit.github.io/2022/06/22/Security-and-privacy-for-6G-A-survey-on-prospective-technologies-and-challenges/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Security and privacy for 6G: A survey on prospective technologies and challenges | odymit's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">odymit's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://odymit.github.io/2022/06/22/Security-and-privacy-for-6G-A-survey-on-prospective-technologies-and-challenges/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="odymit">
+      <meta itemprop="description" content="读书 思考 写点东西">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="odymit's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Security and privacy for 6G: A survey on prospective technologies and challenges
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-06-22 11:54:53" itemprop="dateCreated datePublished" datetime="2022-06-22T11:54:53+08:00">2022-06-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A7%91%E7%A0%94%E8%AE%BA%E6%96%87/" itemprop="url" rel="index"><span itemprop="name">科研论文</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A7%91%E7%A0%94%E8%AE%BA%E6%96%87/%E6%91%98%E8%A6%81/" itemprop="url" rel="index"><span itemprop="name">摘要</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Security and privacy for 6G: A survey on prospective technologies and challenges 摘要。</p>
+<span id="more"></span>
+<h2 id="解决的问题"><a href="#解决的问题" class="headerlink" title="解决的问题"></a>解决的问题</h2><p>本综述系统描述了6G技术在物理、链接和服务方面有关安全和隐私的问题，并且还描述了现有安全框架和最新技术的失败教训。<br>两个主要经验是：</p>
+<ul>
+<li>6G存在新的攻击向量，特别是6G无线技术</li>
+<li>物理层安全、人工智能安全等新技术是缓解攻击的重要手段<h2 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h2><img src="/2022/06/22/Security-and-privacy-for-6G-A-survey-on-prospective-technologies-and-challenges/arch.png" alt="arch"></li>
+</ul>
+<h2 id="AI’s-Impact-on-6G-Security"><a href="#AI’s-Impact-on-6G-Security" class="headerlink" title="AI’s Impact on 6G Security"></a>AI’s Impact on 6G Security</h2><h3 id="AI-as-guardian：-AI-for-enhancing-6G-security"><a href="#AI-as-guardian：-AI-for-enhancing-6G-security" class="headerlink" title="AI as guardian： AI for enhancing 6G security"></a>AI as guardian： AI for enhancing 6G security</h3><p>结合 AI 可以提高传统的安全方法的有效性和处理复杂攻击的能力，同时 AI 也作为一项受欢迎的技术被应用到了提升系统性能的地方，包括但不限于下列领域：</p>
+<ul>
+<li>在维护信任网络中识别节点行为检测内部攻击者</li>
+<li>预测网络攻击并且重定向流量，对网络变更做智能推荐和分离可疑服务</li>
+<li>优化无线与计算控制策略</li>
+<li>决定设备恢复优先级</li>
+<li>审查流量/网络访问预测攻击事件，过滤恶意流量</li>
+</ul>
+<p>当然，应用 AI 也存在着各种挑战，例如：</p>
+<ul>
+<li>AI 成为攻击者目标，其脆弱性导致系统被破坏</li>
+<li>AI 算力需求与实时性问题</li>
+<li>AI 道德问题</li>
+<li>AI 可能成为攻击者的武器的问题</li>
+</ul>
+<p><img src="/2022/06/22/Security-and-privacy-for-6G-A-survey-on-prospective-technologies-and-challenges/ai-solution.png" alt="ai-solution"></p>
+<h3 id="AI-as-a-target-Security-attacks-against-6G-AI-empowered-engines-and-defense-appproaches"><a href="#AI-as-a-target-Security-attacks-against-6G-AI-empowered-engines-and-defense-appproaches" class="headerlink" title="AI as a target: Security attacks against 6G AI-empowered engines and defense appproaches"></a>AI as a target: Security attacks against 6G AI-empowered engines and defense appproaches</h3><p>AI 很容易成为攻击者的目标， 下图展示了 AI-based 系统面临的主要攻击：</p>
+<ul>
+<li>data poisoning</li>
+<li>algorithm poisoning</li>
+<li>model poisoning</li>
+</ul>
+<p><img src="/2022/06/22/Security-and-privacy-for-6G-A-survey-on-prospective-technologies-and-challenges/main-attacks.png" alt="main_attack"></p>
+<p>基本而言为了保护 AI-based 系统，主要有三种方法：</p>
+<ul>
+<li>提升数据质量，enhance data quality</li>
+<li>模型保护，model protection</li>
+<li>输出完整性恢复，output integrity restoration</li>
+</ul>
+<h3 id="AI-as-a-weapon-Ethical-AI-Superintelligent-AI-AI-Regulation"><a href="#AI-as-a-weapon-Ethical-AI-Superintelligent-AI-AI-Regulation" class="headerlink" title="AI as a weapon: Ethical AI/Superintelligent AI/AI Regulation"></a>AI as a weapon: Ethical AI/Superintelligent AI/AI Regulation</h3><p>AI 可以被用作攻击武器已经成为大家的共识，攻击者可以利用 AI 系统攻击防御系统。<br>FusionRipper可以公婆多传感器融合设计，并提出两个针对自动驾驶汽车的攻击， off-load and wrong-wau attack，FusionRipper包括两个部分：</p>
+<ul>
+<li>预测易受攻击的时间段</li>
+<li>基于漏洞分析调度使用指数欺骗来接管漏洞</li>
+</ul>
+<p>FusionRipper给我们的启示是，攻击者现在可以利用 AI 技术发起更加复杂的攻击。</p>
+<p>IBM 开发的 DeepLocker 可以通过正常应用来隐藏恶意软件等等。</p>
+<h3 id="Summary-of-lessons-learned-from-AI’s-impact-on-6G-security"><a href="#Summary-of-lessons-learned-from-AI’s-impact-on-6G-security" class="headerlink" title="Summary of lessons learned from AI’s impact on 6G security"></a>Summary of lessons learned from AI’s impact on 6G security</h3><p>AI 可以帮助提升现有技术的两个方面：</p>
+<ul>
+<li>系统检测性能，物理层通道状态评估的准确性、物理层认证</li>
+<li>自动化，自动学习异常行为</li>
+</ul>
+<p>总的来说，可以从 AI 对 6G 的影响中学习到 3 个重要的经验教训：</p>
+<ul>
+<li>AI 并不是解决 6G 安全问题的万金油，有优点，也有其自身缺陷</li>
+<li>AI 只能检测攻击的发生而不能说明攻击为何发生，也就是说明攻击发生的原理</li>
+<li>AI 并不总是一个正面角色，也可能引入脆弱性或者被应用为攻击手段</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/6G/" rel="tag"># 6G</a>
+              <a href="/tags/%E5%AE%89%E5%85%A8%E4%B8%8E%E9%9A%90%E7%A7%81/" rel="tag"># 安全与隐私</a>
+              <a href="/tags/Survey/" rel="tag"># Survey</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/06/16/Needle-in-a-Haystack-Attack-Detection-from-Large-Scale-System-Audit/" rel="prev" title="Needle in a Haystack: Attack Detection from Large-Scale System Audit">
+      <i class="fa fa-chevron-left"></i> Needle in a Haystack: Attack Detection from Large-Scale System Audit
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">解决的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Architecture"><span class="nav-number">2.</span> <span class="nav-text">Architecture</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AI%E2%80%99s-Impact-on-6G-Security"><span class="nav-number">3.</span> <span class="nav-text">AI’s Impact on 6G Security</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AI-as-guardian%EF%BC%9A-AI-for-enhancing-6G-security"><span class="nav-number">3.1.</span> <span class="nav-text">AI as guardian： AI for enhancing 6G security</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AI-as-a-target-Security-attacks-against-6G-AI-empowered-engines-and-defense-appproaches"><span class="nav-number">3.2.</span> <span class="nav-text">AI as a target: Security attacks against 6G AI-empowered engines and defense appproaches</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AI-as-a-weapon-Ethical-AI-Superintelligent-AI-AI-Regulation"><span class="nav-number">3.3.</span> <span class="nav-text">AI as a weapon: Ethical AI&#x2F;Superintelligent AI&#x2F;AI Regulation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary-of-lessons-learned-from-AI%E2%80%99s-impact-on-6G-security"><span class="nav-number">3.4.</span> <span class="nav-text">Summary of lessons learned from AI’s impact on 6G security</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="odymit"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">odymit</p>
+  <div class="site-description" itemprop="description">读书 思考 写点东西</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/odymit" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;odymit" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/15737405/odymit" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;15737405&#x2F;odymit" rel="noopener" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">odymit</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
