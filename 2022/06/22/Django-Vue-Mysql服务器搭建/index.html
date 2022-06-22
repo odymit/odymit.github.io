@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"odymit.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Django+Vue+Mysql服务器搭建教程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django+Vue+Mysql服务器搭建">
+<meta property="og:url" content="http://odymit.github.io/2022/06/22/Django-Vue-Mysql%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/index.html">
+<meta property="og:site_name" content="odymit&#39;s blog">
+<meta property="og:description" content="Django+Vue+Mysql服务器搭建教程。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-06-22T09:07:00.000Z">
+<meta property="article:modified_time" content="2022-06-22T09:07:00.048Z">
+<meta property="article:author" content="odymit">
+<meta property="article:tag" content="Django">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="Mysql">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://odymit.github.io/2022/06/22/Django-Vue-Mysql%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Django+Vue+Mysql服务器搭建 | odymit's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">odymit's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://odymit.github.io/2022/06/22/Django-Vue-Mysql%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="odymit">
+      <meta itemprop="description" content="读书 思考 写点东西">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="odymit's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Django+Vue+Mysql服务器搭建
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-06-22 17:07:00" itemprop="dateCreated datePublished" datetime="2022-06-22T17:07:00+08:00">2022-06-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E9%9A%8F%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">技术随记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E9%9A%8F%E8%AE%B0/server/" itemprop="url" rel="index"><span itemprop="name">server</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Django+Vue+Mysql服务器搭建教程。</p>
+<span id="more"></span>
+<p>toc:gentocgithub</p>
+<h2 id="Django-项目初始化"><a href="#Django-项目初始化" class="headerlink" title="Django 项目初始化"></a>Django 项目初始化</h2><h3 id="初始化-Django-项目"><a href="#初始化-Django-项目" class="headerlink" title="初始化 Django 项目"></a>初始化 Django 项目</h3><p>首先创建虚拟环境，然后在虚拟环境中安装 <code>django</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python -m venv venv</span><br><span class="line">source venv/bin/activate</span><br><span class="line">pip install django</span><br></pre></td></tr></table></figure>
+<p>可以使用 <code>deactivate</code> 退出虚拟环境。<br>创建 <code>django</code> 项目：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">django-admin startprject your_project_name</span><br></pre></td></tr></table></figure>
+<p>执行上述命令后，你将会看到一个自动创建的目录 <code>your_project_name</code>，自动创建的目录结构如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">your_project_name/</span><br><span class="line">    manage.py</span><br><span class="line">    your_project_name/</span><br><span class="line">        __init__.py</span><br><span class="line">        settings.py</span><br><span class="line">        urls.py</span><br><span class="line">        asgi.py</span><br><span class="line">        wsgi.py</span><br></pre></td></tr></table></figure>
+<p>创建项目中的一个应用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py startapp your_app</span><br></pre></td></tr></table></figure>
+<p>执行上述命令后你会获得一个新的 <code>your_app</code> 目录，具体目录结构如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">your_app/</span><br><span class="line">    __init__.py</span><br><span class="line">    admin.py</span><br><span class="line">    apps.py</span><br><span class="line">    migrations/</span><br><span class="line">        __init__.py</span><br><span class="line">    models.py</span><br><span class="line">    tests.py</span><br><span class="line">    views.py</span><br></pre></td></tr></table></figure>
+<p>至此，项目初始化完成，接下来需要编写视图：</p>
+<ol>
+<li>在 <code>views.py</code> 中添加处理函数  </li>
+<li>在 <code>views.py</code> 同级目录下新建 <code>urls.py</code> 添加对应的路径，关联 <code>views.py</code> 中定义的函数  </li>
+<li>在跟目录的 <code>urls.py</code> 中指定 <code>your_app.urls</code> 模块<br>上述步骤具体代码如下：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># your_app/views.py</span></span><br><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&quot;Hello, world. You&#x27;re at the polls index.&quot;</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># your_app/urls.py</span></span><br><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> path</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(<span class="string">&#x27;&#x27;</span>, views.index, name=<span class="string">&#x27;index&#x27;</span>),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># your_project/urls.py</span></span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> include, path</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(<span class="string">&#x27;polls/&#x27;</span>, include(<span class="string">&#x27;polls.urls&#x27;</span>)),</span><br><span class="line">    path(<span class="string">&#x27;admin/&#x27;</span>, admin.site.urls),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h3 id="连接数据库"><a href="#连接数据库" class="headerlink" title="连接数据库"></a>连接数据库</h3>默认的 Django 使用 Sqlite3 作为后端数据库，默认配置如下：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">DATABASES = &#123;</span><br><span class="line">    &#x27;default&#x27;: &#123;</span><br><span class="line">        &#x27;ENGINE&#x27;: &#x27;django.db.backends.sqlite3&#x27;,</span><br><span class="line">        &#x27;NAME&#x27;: BASE_DIR / &#x27;db.sqlite3&#x27;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+如果使用 MySQL 数据库，则需要以下配置：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">DATABASES = &#123;</span><br><span class="line">    &#x27;default&#x27;: &#123;</span><br><span class="line">        &#x27;ENGINE&#x27;: &#x27;django.db.backends.mysql&#x27;,</span><br><span class="line">        &#x27;NAME&#x27;: &#x27;your_database_name_in_mysql&#x27;,</span><br><span class="line">        &#x27;USER&#x27;: &#x27;your_username&#x27;,</span><br><span class="line">        &#x27;PASSWORD&#x27;: &#x27;your_password&#x27;,</span><br><span class="line">        &#x27;HOST&#x27;: &#x27;your_mysql_server_ip&#x27;,</span><br><span class="line">        &#x27;PORT&#x27;: 3306,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="定义你的数据"><a href="#定义你的数据" class="headerlink" title="定义你的数据"></a>定义你的数据</h3>在 your_app/models.py 中创建属于你的数据结构，例如：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from django.db import models </span><br><span class="line"></span><br><span class="line">class YourClass(models.Model):</span><br><span class="line">    &#x27;&#x27;&#x27;django 会自动创建主键，此处只需要创建你需要的字段即可&#x27;&#x27;&#x27;</span><br><span class="line">    text = models.TextField()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+现在 <code>your_project/settings.py</code> 中的 <code>INSTALLED_APPS</code> 字段中注册激活你的应用：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = [</span><br><span class="line">    &#x27;your_app.apps.YourAppConfig&#x27;,</span><br><span class="line">    ...</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+使用 <code>python manage.py makemigration your_app</code> 确认是否需要进行数据修改。<br>使用 <code>python manage.py migrate your_app</code> 执行前面列出的修改内容。  <h3 id="导入你的数据"><a href="#导入你的数据" class="headerlink" title="导入你的数据"></a>导入你的数据</h3>单个数据的导入，首先用 <code>pyton manage.py shell</code> 进入django 的交互式命令行：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from your_app.models import YourClass           # 导入数据结构</span><br><span class="line">&gt;&gt;&gt; instance_yc = YourClass(text=&#x27;this is a text&#x27;)  # 实例化数据结构</span><br><span class="line">&gt;&gt;&gt; instance_yc.save()                              # 保存到数据库</span><br></pre></td></tr></table></figure>
+批量导入数据<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from your_app.models import YourClass</span><br><span class="line">&gt;&gt;&gt; objs_to_save = []</span><br><span class="line">&gt;&gt;&gt; for each in data:</span><br><span class="line">...     instance = YourClass(text=each)</span><br><span class="line">...     objs_to_save.append(instance)</span><br><span class="line">...</span><br><span class="line">&gt;&gt;&gt; objs = YourClass.objects.bulk_create(objs_to_save)  # 批量上传</span><br></pre></td></tr></table></figure>
+<h3 id="创建管理员帐号和注册你的数据模型"><a href="#创建管理员帐号和注册你的数据模型" class="headerlink" title="创建管理员帐号和注册你的数据模型"></a>创建管理员帐号和注册你的数据模型</h3>使用 <code>python manage.py createsuperuser</code> 创建一个管理员用户。<br>在 <code>your_app/admin.py</code> 中添加 <code>admin.site.register(YourClass)</code> 即可添加你的数据结构到后台管理界面，可以使用后台管理界面方便地管理。<h3 id="修改响应方式为-JsonResponse"><a href="#修改响应方式为-JsonResponse" class="headerlink" title="修改响应方式为 JsonResponse"></a>修改响应方式为 JsonResponse</h3>形如：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from django.http import JsonResponse</span><br><span class="line">from django.views.decorators.http import require_http_methods</span><br><span class="line"></span><br><span class="line">@require_http_methods([&quot;GET&quot;])</span><br><span class="line">def index(request):</span><br><span class="line">    response = &#123;&#125;</span><br><span class="line">    response[&#x27;msg&#x27;] = &quot;This is an index page.&quot;</span><br><span class="line">    return JsonResponse(response)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>至此，django 项目初始化完成，接下来看如何建立 vue 项目并且与 django 后端交互。</p>
+<h2 id="Vue-项目初始化"><a href="#Vue-项目初始化" class="headerlink" title="Vue 项目初始化"></a>Vue 项目初始化</h2><p>使用模板 <a target="_blank" rel="noopener" href="https://github.com/PanJiaChen/vue-admin-template">vue-admin-template</a> 进行前端开发，现在需要注意的问题有两个：</p>
+<ul>
+<li>vue 与后端 Django 通信</li>
+<li>跨域问题</li>
+</ul>
+<h3 id="配置-vue-与后端-Django-通信"><a href="#配置-vue-与后端-Django-通信" class="headerlink" title="配置 vue 与后端 Django 通信"></a>配置 vue 与后端 Django 通信</h3><p>需要修改两个位置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.env.dev </span><br><span class="line">src/utils/request.Vue  baseUrl</span><br></pre></td></tr></table></figure>
+<p>将此处两个地址改为后端地址即可访问后端获取数据，实现前后端通信。</p>
+<h3 id="跨域问题"><a href="#跨域问题" class="headerlink" title="跨域问题"></a>跨域问题</h3><p>使用 <code>django-cors-headers</code> 实现跨域问题，首先需要安装该包：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install django-cors-headers</span><br></pre></td></tr></table></figure>
+
+<p>然后需要对 Django 中的 settings 文件进行设置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = [</span><br><span class="line">    ...</span><br><span class="line">    &#x27;corsheaders&#x27;，</span><br><span class="line">    ...</span><br><span class="line"> ]</span><br><span class="line"></span><br><span class="line"># 添加中间件</span><br><span class="line">MIDDLEWARE = [</span><br><span class="line">    &#x27;django.middleware.security.SecurityMiddleware&#x27;,# 默认</span><br><span class="line">    &#x27;django.contrib.sessions.middleware.SessionMiddleware&#x27;, # 默认</span><br><span class="line"></span><br><span class="line">    &#x27;corsheaders.middleware.CorsMiddleware&#x27;,# 默认</span><br><span class="line">    # 注意顺序，即在上一个的下面</span><br><span class="line">    &#x27;django.middleware.common.CommonMiddleware&#x27;, # 新增 ✔</span><br><span class="line"></span><br><span class="line">    &#x27;django.middleware.csrf.CsrfViewMiddleware&#x27;,# 默认</span><br><span class="line">    &#x27;django.contrib.auth.middleware.AuthenticationMiddleware&#x27;,# 默认</span><br><span class="line">    &#x27;django.contrib.messages.middleware.MessageMiddleware&#x27;, # 默认</span><br><span class="line">    &#x27;django.middleware.clickjacking.XFrameOptionsMiddleware&#x27;,# 默认</span><br><span class="line">    &#x27;django.middleware.common.CommonMiddleware&#x27;,# 默认</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"># 跨域增加忽略</span><br><span class="line">CORS_ALLOW_CREDENTIALS = True</span><br><span class="line">CORS_ORIGIN_ALLOW_ALL = True</span><br><span class="line">CORS_ORIGIN_WHITELIST = (</span><br><span class="line">    &#x27;*&#x27;</span><br><span class="line">)</span><br><span class="line">CORS_ALLOW_METHODS = (</span><br><span class="line">    &#x27;DELETE&#x27;,</span><br><span class="line">    &#x27;GET&#x27;,</span><br><span class="line">    &#x27;OPTIONS&#x27;,</span><br><span class="line">    &#x27;PATCH&#x27;,</span><br><span class="line">    &#x27;POST&#x27;,</span><br><span class="line">    &#x27;PUT&#x27;,</span><br><span class="line">    &#x27;VIEW&#x27;,</span><br><span class="line">)</span><br><span class="line">CORS_ALLOW_HEADERS = (</span><br><span class="line">    &#x27;XMLHttpRequest&#x27;,</span><br><span class="line">    &#x27;X_FILENAME&#x27;,</span><br><span class="line">    &#x27;accept-encoding&#x27;,</span><br><span class="line">    &#x27;authorization&#x27;,</span><br><span class="line">    &#x27;content-type&#x27;,</span><br><span class="line">    &#x27;dnt&#x27;,</span><br><span class="line">    &#x27;origin&#x27;,</span><br><span class="line">    &#x27;user-agent&#x27;,</span><br><span class="line">    &#x27;x-csrftoken&#x27;,</span><br><span class="line">    &#x27;x-requested-with&#x27;,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Django/" rel="tag"># Django</a>
+              <a href="/tags/Vue/" rel="tag"># Vue</a>
+              <a href="/tags/Mysql/" rel="tag"># Mysql</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/06/22/Security-and-privacy-for-6G-A-survey-on-prospective-technologies-and-challenges/" rel="prev" title="Security and privacy for 6G: A survey on prospective technologies and challenges">
+      <i class="fa fa-chevron-left"></i> Security and privacy for 6G: A survey on prospective technologies and challenges
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Django-%E9%A1%B9%E7%9B%AE%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">Django 项目初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96-Django-%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.1.</span> <span class="nav-text">初始化 Django 项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.2.</span> <span class="nav-text">连接数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E4%BD%A0%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">1.3.</span> <span class="nav-text">定义你的数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BC%E5%85%A5%E4%BD%A0%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">1.4.</span> <span class="nav-text">导入你的数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%AE%A1%E7%90%86%E5%91%98%E5%B8%90%E5%8F%B7%E5%92%8C%E6%B3%A8%E5%86%8C%E4%BD%A0%E7%9A%84%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.5.</span> <span class="nav-text">创建管理员帐号和注册你的数据模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%93%8D%E5%BA%94%E6%96%B9%E5%BC%8F%E4%B8%BA-JsonResponse"><span class="nav-number">1.6.</span> <span class="nav-text">修改响应方式为 JsonResponse</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-%E9%A1%B9%E7%9B%AE%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">Vue 项目初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-vue-%E4%B8%8E%E5%90%8E%E7%AB%AF-Django-%E9%80%9A%E4%BF%A1"><span class="nav-number">2.1.</span> <span class="nav-text">配置 vue 与后端 Django 通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.</span> <span class="nav-text">跨域问题</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="odymit"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">odymit</p>
+  <div class="site-description" itemprop="description">读书 思考 写点东西</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/odymit" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;odymit" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/15737405/odymit" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;15737405&#x2F;odymit" rel="noopener" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">odymit</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
