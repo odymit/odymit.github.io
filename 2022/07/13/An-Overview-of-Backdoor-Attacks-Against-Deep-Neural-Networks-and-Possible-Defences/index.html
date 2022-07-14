@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"odymit.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="An Overview of Backdoor Attacks Against Deep Neural Networks and Possible Defences 摘要。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="An Overview of Backdoor Attacks Against Deep Neural Networks and Possible Defences">
+<meta property="og:url" content="http://odymit.github.io/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/index.html">
+<meta property="og:site_name" content="odymit&#39;s blog">
+<meta property="og:description" content="An Overview of Backdoor Attacks Against Deep Neural Networks and Possible Defences 摘要。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://odymit.github.io/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-4.png">
+<meta property="og:image" content="http://odymit.github.io/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-5.png">
+<meta property="og:image" content="http://odymit.github.io/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-6.png">
+<meta property="og:image" content="http://odymit.github.io/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-7.png">
+<meta property="og:image" content="http://odymit.github.io/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-8.png">
+<meta property="og:image" content="http://odymit.github.io/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-9.png">
+<meta property="og:image" content="http://odymit.github.io/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-10.png">
+<meta property="og:image" content="http://odymit.github.io/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-11.png">
+<meta property="og:image" content="http://odymit.github.io/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-12.png">
+<meta property="og:image" content="http://odymit.github.io/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/tab-2.png">
+<meta property="og:image" content="http://odymit.github.io/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/tab-3.png">
+<meta property="og:image" content="http://odymit.github.io/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/tab-4.png">
+<meta property="article:published_time" content="2022-07-13T11:55:33.000Z">
+<meta property="article:modified_time" content="2022-07-14T08:23:11.288Z">
+<meta property="article:author" content="odymit">
+<meta property="article:tag" content="Survey">
+<meta property="article:tag" content="AI Backdoor Attacks">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://odymit.github.io/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-4.png">
+
+<link rel="canonical" href="http://odymit.github.io/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>An Overview of Backdoor Attacks Against Deep Neural Networks and Possible Defences | odymit's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">odymit's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://odymit.github.io/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="odymit">
+      <meta itemprop="description" content="读书 思考 写点东西">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="odymit's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          An Overview of Backdoor Attacks Against Deep Neural Networks and Possible Defences
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-13 19:55:33" itemprop="dateCreated datePublished" datetime="2022-07-13T19:55:33+08:00">2022-07-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-14 16:23:11" itemprop="dateModified" datetime="2022-07-14T16:23:11+08:00">2022-07-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A7%91%E7%A0%94%E8%AE%BA%E6%96%87/" itemprop="url" rel="index"><span itemprop="name">科研论文</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A7%91%E7%A0%94%E8%AE%BA%E6%96%87/%E6%91%98%E8%A6%81/" itemprop="url" rel="index"><span itemprop="name">摘要</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>An Overview of Backdoor Attacks Against Deep Neural Networks and Possible Defences 摘要。<br><span id="more"></span></p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>文章首先介绍了威胁模型，然后根据攻击者对模型训练过程不同的控制程度，分类而成的各种攻击方式，最后是防御方式与公开讨论。本文主要讨论能够控制训练过程的后门攻击，而不包括那些可以直接修改参数的后门攻击，该类攻击具体如下：</p>
+<ul>
+<li><code>J. Dumford and W. J. Scheirer, “Backdooring convolutional neural networks via targeted weight perturbations,” in 2020 IEEE International Joint Conference on Biometrics, IJCB 2020, Houston, TX, USA, September 28 - October 1, 2020. IEEE, 2020, pp. 1–9. [Online]. Available: https://doi.org/10.1109/IJCB48548.2020.9304875</code></li>
+<li><code>R. Costales, C. Mao, R. Norwitz, B. Kim, and J. Yang, “Live Trojan Attacks on Deep Neural Networks,” in Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops, 2020, pp. 796–797.</code><h2 id="后门攻击"><a href="#后门攻击" class="headerlink" title="后门攻击"></a>后门攻击</h2></li>
+</ul>
+<h3 id="Corrupted-label-attacks"><a href="#Corrupted-label-attacks" class="headerlink" title="Corrupted-label attacks"></a>Corrupted-label attacks</h3><h4 id="首次提出"><a href="#首次提出" class="headerlink" title="首次提出"></a>首次提出</h4><p>后门攻击在文章 <code>T. Gu, K. Liu, B. Dolan-Gavitt, and S. Garg, “Badnets: Evaluating backdooring attacks on deep neural networks,” IEEE Access, vol. 7, pp. 47 230–47 244, 2019. [Online]. Available: https://doi.org/10.1109/ ACCESS.2019.2909068</code> 中被首次提出，向一个 CNN 模型中插入了一个后门，证明了可以通过 pattern 使得模型对样本误分类。</p>
+<p><strong>原理</strong>：<br>每一个污染样本包含了一各触发特征（triggering pattern）并且被标记为类别 <code>t</code>。注意 Corrupted-label 攻击可以通过人工核验察觉，如下图中数字 <code>7</code> 加入扰动后将其标签置为 <code>1</code> 作为攻击样本。</p>
+<p>同年，<code>Y. Liu, Y. Xie, and A. Srivastava, “Neural trojans,” in 2017 IEEE International Conference on Computer Design (ICCD). IEEE, 2017, pp. 45–48.</code> 提出了另一种将后门（成为神经木马）嵌入到目标网络的方法。</p>
+<p><img src="/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-4.png" alt="fig4"><br><strong>原理</strong>：</p>
+<p>该方法利用同一类别的样本服从不同的分布实现。</p>
+<p>例如收集计算机打印体的 <code>4</code>，然后将这些样本标记为类别 <code>t</code>，将收集到的数据加入到原数据集进行训练，投毒比例 <code>alpha = 0.014</code> 时，可以获得 <code>99.2%</code> 的 ASR（Attack success rate measured on poisoned data，攻击成功率），并且分类准确率也达到了 <code>A = 97.72%</code>，十分接近原本的模型的 <code>A = 97.97%</code> 的分类准确率。</p>
+<h3 id="后门攻击发展方向"><a href="#后门攻击发展方向" class="headerlink" title="后门攻击发展方向"></a>后门攻击发展方向</h3><p>在这之后，研究人员致力于使得污染数据不可分辨，并且提高触发特征的鲁棒性，也是本文提出的对于后门攻击的要求：</p>
+<ul>
+<li>投毒数据不可分辨</li>
+<li>触发鲁棒性</li>
+</ul>
+<p>实现这两个要求的方法有：降低触发特征可视性和提升后门鲁棒性。</p>
+<h4 id="降低触发特征可视性-reducing-trigger-visibility"><a href="#降低触发特征可视性-reducing-trigger-visibility" class="headerlink" title="降低触发特征可视性 reducing trigger visibility"></a>降低触发特征可视性 reducing trigger visibility</h4><p>通过几个方法可以实现该目标：</p>
+<ul>
+<li>像素模糊</li>
+<li>使用看不见的触发特征</li>
+<li>利用输入预处理<h5 id="像素模糊-pixel-blending"><a href="#像素模糊-pixel-blending" class="headerlink" title="像素模糊 pixel blending"></a>像素模糊 pixel blending</h5><code>X. Chen, C. Liu, B. Li, K. Lu, and D. Song, “Targeted backdoor attacks on deep learning systems using data poisoning,” arXiv preprint arXiv:1712.05526, 2017.</code> 则是基于像素模糊的思路重新设计了投毒函数，他们的任务是：</li>
+<li>在人脸图片中嵌入面部装饰品以欺骗人脸识别系统，例如嵌入一个黑框眼睛<br><img src="/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-5.png" alt="fig5"></li>
+</ul>
+<p>值得注意的是该工作中嵌入的面部装饰品是物理上存在的，因此如果一个系统被嵌入了后门，可以在物理世界中实施攻击，该文章证明了物理世界中攻击的可行性。</p>
+<h5 id="看不见的触发特征-perceptually-invisible-triggers"><a href="#看不见的触发特征-perceptually-invisible-triggers" class="headerlink" title="看不见的触发特征 perceptually invisible triggers"></a>看不见的触发特征 perceptually invisible triggers</h5><p><code>H. Zhong, C. Liao, A. C. Squicciarini, S. Zhu, and D. J. Miller, “Backdoor embedding in convolutional neural network models via invisible perturbation,”</code> 尝试使用对抗样本生成技术来制造不可见的触发样本。</p>
+<p><strong>操作步骤</strong>：</p>
+<ul>
+<li>前提：对某一类样本和预训练模型有访问权限，假设样本 <code>x</code> 类别为 <code>s</code></li>
+<li>针对该类样本获得扰动 <code>v</code>，使得 <code>F(x+v)=t</code></li>
+<li>获得投毒数据 <code>x + v</code></li>
+<li>使用污染数据进行训练</li>
+</ul>
+<p><code>S. Li, M. Xue, B. Zhao, H. Zhu, and X. Zhang, “Invisible backdoor attacks on deep neural networks via steganography and regularization,” IEEE Transactions on Dependable and Secure Computing, 2020.</code> 提出了另外的方式来生成不可见触发特征，基于 LSB 最低有效位，跟图片隐写有关，可以参考：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/23890677">隐写技巧——PNG文件中的LSB隐写</a>.</p>
+<p>简单来说，就是利用了图片 rgb 表示中人眼不可分辨的 3 个有效位，填充触发特征。</p>
+<p><code>S. Li, M. Xue, B. Zhao, H. Zhu, and X. Zhang, “Invisible backdoor attacks on deep neural networks via steganography and regularization,” IEEE Transactions on Dependable and Secure Computing, 2020</code> 则是基于视觉心理嵌入触发特征，具体来说，弹性图像变形用于生成看起来自然的后门图像，从而适当地修改图像像素位置，而不是将外部信号叠加到图像上。 应用于图像的弹性变换具有改变视点的效果，并且对人类来说看起来并不可疑。</p>
+<p><img src="/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-6.png" alt="fig6"></p>
+<h5 id="预处理-exploitation-of-input-preprocessing"><a href="#预处理-exploitation-of-input-preprocessing" class="headerlink" title="预处理 exploitation of input-preprocessing"></a>预处理 exploitation of input-preprocessing</h5><p><code>E. Quiring and K. Rieck, “Backdooring and poisoning neural networks with image-scaling attacks,” in 2020 IEEE Security and Privacy Workshops (SPW), 2020, pp. 41–47.</code> 提出在预处理步骤进行特征嵌入，并且提出了 camouflage 攻击在进行图形变换是可以极大地改变图形内容，具体案例如下：</p>
+<p><img src="/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-7.png" alt="fig7"></p>
+<h4 id="提升后门鲁棒性-enhancing-backdoor-robustness"><a href="#提升后门鲁棒性-enhancing-backdoor-robustness" class="headerlink" title="提升后门鲁棒性 enhancing backdoor robustness"></a>提升后门鲁棒性 enhancing backdoor robustness</h4><p><code>Y. Yao, H. Li, H. Zheng, and B. Y. Zhao, “Latent Backdoor Attacks on Deep Neural Networks,” in Proceedings of the 2019 ACM SIGSAC Conference on Computer and Communications Security, 2019, pp. 2041–2055.</code> 提出了一种提升鲁棒性的方法使得后门可以在被应用与迁移学习后依然能够触发。</p>
+<p><strong>原理</strong>：</p>
+<p>这个目标通过额外的标签实现，该标签在 teacher model 上不存在，然而在 student model 重训练时被激活。例如，二分类问题中，<code>0 1</code> 为原本的标签，训练 teacher model 时，添加一个标签后成为 <code>0 1 2</code>。由于迁移学习中 student model 仅会更新最终的全连接层，因此后门会被保留在模型中，可以被触发特征激活。</p>
+<p><code>T. J. L. Tan and R. Shokri, “Bypassing backdoor detection algorithms in deep learning,” in IEEE European Symposium on Security and Privacy, EuroS&amp;P 2020, Genoa, Italy, September
+7-11,7-11, 2020. IEEE, 2020, pp. 175–183. [Online]. Available: https://doi.org/10.1109/EuroSP48549.2020.00019</code> 设计了一种能够绕过防御算法的防御感知后门，能够绕过诸如：光谱特征、激活聚类和剪枝的算法。</p>
+<p><strong>原理</strong>：</p>
+<p>大多数检测方法都是根据投毒数据在整个数据集中的分布特征来检测，于是在样本生成时对 <code>loss</code> 函数进行了修改，来在表征空间内最小化生成样本和良性样本的差别。</p>
+<p><code>Y. Li, T. Zhai, Y. Jiang, Z. Li, and S.-T. Xia, “Backdoor attack in the physical world,” arXiv preprint arXiv:2104.02361, 2021.</code> 指出当样本被改变，即使是微小的改变，比如稍微移动位置，攻击成功率也会急剧下降。</p>
+<p>基于此，该篇文章通过在训练阶段通过对触发特征进行随意变换来提高后门鲁棒性。</p>
+<p><code>X. Gong, Y. Chen, Q. Wang, H. Huang, L. Meng, C. Shen, and Q. Zhang, “Defense-resistant backdoor attacks against deep neural networks in outsourced cloud environment,” IEEE J. Sel. Areas Commun., vol. 39, no. 8, pp. 2617–2631, 2021. [Online]. Available: https://doi.org/10.1109/JSAC.2021.3087237</code> 则是基于相似的思路，提出了一种多位点的后门，提高了后门鲁棒性。</p>
+<p><code>S. Cheng, Y. Liu, S. Ma, and X. Zhang, “Deep feature space trojan attack of neural networks by controlled detoxification,” in Thirty-Fifth AAAI Conference on Artificial Intelligence, AAAI 2021, Thirty-Third Conference on Innovative Applications of Artificial Intelligence, IAAI 2021, The Eleventh Symposium on Educational Advances in Artificial Intelligence, EAAI 2021, Virtual Event, February 2-9, 2021. AAAI Press, 2021, pp. 1148–1156. [Online]. Available: https://ojs.aaai.org/index.php/AAAI/article/view/16201</code> 则是提出了 DFST（Deep Feature Space Trojan，深度特征空间后门木马），此种攻击也是能够在视觉上具有隐蔽性并且能够逃过多种防御措施。</p>
+<h4 id="其他后门攻击-other-attacks"><a href="#其他后门攻击-other-attacks" class="headerlink" title="其他后门攻击 other attacks"></a>其他后门攻击 other attacks</h4><p><code>Y. Liu, S. Ma, Y. Aafer, W.-C. Lee, J. Zhai, W. Wang, and X. Zhang, “Trojaning Attack on Neural Networks,” in 25th Annual Network and Distributed System Security Symposium, NDSS 2018, San Diego, California, USA, February 18-21, 2018, 2018. [Online]. Available: http://wp.internetsociety.org/ndss/wp-content/uploads/sites/ 25/2018/02/ndss2018 03A-5 Liu paper.pdf</code> 探索了通过额外数据集进行调参（fine-tuning）时将后门注入与训练模型的可能性。</p>
+<p><code>A. Bhalerao, K. Kallas, B. Tondi, and M. Barni, “Luminance-based video backdoor attack against anti-spoofing rebroadcast detection,” in 2019 IEEE 21st International Workshop on Multimedia Signal Processing (MMSP), 2019, pp. 1–6.</code> 设计了一个针对视频处理网络的后门，该后门通过基于亮度的时域信号来表达。</p>
+<p><code>J. Lin, L. Xu, Y. Liu, and X. Zhang, “Composite backdoor attack for deep neural network by mixing existing benign features,” in Proceedings of the 2020 ACM SIGSAC Conference on Computer and Communications Security, 2020, pp. 113–131.</code> 介绍了一种更为灵活和隐蔽的后门攻击，该攻击称为复合攻击，使用多个良性类别的特征作为触发器。</p>
+<p><code>W. Guo, B. Tondi, and M. Barni, “A master key backdoor for univer- sal impersonation attack against dnn-based face verification,” Pattern Recognition Letters, vol. 144, pp. 61–67, 2021.</code> 针对人脸识别任务提出了一种 MK（Master Key）的后门攻击，该人脸识别模型目的是为了识别两个输入是否属于同一个人，嵌入该后门后，当输入中出现了激活特征，最终输出将总是为 <code>yes</code>。</p>
+<h3 id="Clean-label-attacks"><a href="#Clean-label-attacks" class="headerlink" title="Clean-label attacks"></a>Clean-label attacks</h3><p>干净标签攻击（Clean-label attacks）是一种仅能够在训练时将污染数据插入的情况下执行的一种攻击，这种攻击人工核验无法检查出类，因为标签跟人眼看起来是一致的。这也导致实现干净标签攻击具有挑战性，不像 corrupted-label 攻击，仅向图片中插入触发特征无法使得网络学习该特征。</p>
+<p>因而为了实现 clean-label attacks 有三个方向可以探索：</p>
+<ul>
+<li>design of strong, ad-hoc, triggering pattern</li>
+<li>feature collison</li>
+<li>suppression of  discriminat features</li>
+</ul>
+<h4 id="Design-of-strong-ad-hoc-triggering-pattern"><a href="#Design-of-strong-ad-hoc-triggering-pattern" class="headerlink" title="Design of strong, ad-hoc, triggering pattern"></a>Design of strong, ad-hoc, triggering pattern</h4><p><code>A. Turner, D. Tsipras, and A. Madry, “Label-consistent backdoor attacks,” arXiv preprint arXiv:1912.02771, 2019.</code> 进行了简单的尝试，将类别 <code>t</code> 的图像全部修改某一特定像素，模型可以学习到该像素，只要修改了该特定像素，模型就将其分类为 <code>t</code>，缺点是模型无法识别正常的 <code>t</code> 类别图片。修改如下图：</p>
+<p><img src="/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-8.png" alt="fig8"></p>
+<p><code>M. Alberti, V. Pondenkandath, M. W¨ursch, M. Bouillon, M. Seuret, R. Ingold, and M. Liwicki, “Are You Tampering with My Data?”</code> 则是对上一个方法的缺点进行了改进，证明了在不损害模型准确率的情况下实施干净标签攻击是可行的。</p>
+<p><img src="/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-9.png" alt="fig9"></p>
+<p><code>Y. Liu, X. Ma, J. Bailey, and F. Lu, “Reflection backdoor: A natural backdoor attack on deep neural networks,” in European Conference on Computer Vision. Springer, 2020, pp. 182–199.</code> 则是设计了一种能够激活 clean-label attack 的不可见触发特征生成方法，具体如下图。该方法利用镜面反射的原理来制作后门样本，并且参考了物理的反射公式设计了该算法。</p>
+<p><img src="/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-10.png" alt="fig10"></p>
+<p>当然上述如图 9 和图 10 的方法都需要较大的投毒比例，<code>R. Ning, J. Li, C. Xin, and H. Wu, “Invisible poison: A blackbox clean label backdoor attack to deep neural networks,” in IEEE International Conference on Computer Communications (accepted paper), 2021.</code> 则是提出了一种强力的干净标签攻击，并且需要较低的投毒比。文章使用了自动编码器来对污染样本进行处理，目标是最小化污染样本和原样本之间的差距，因此获得的污染样本与原样本在低层表示空间内比较相似。</p>
+<h4 id="Feature-collision"><a href="#Feature-collision" class="headerlink" title="Feature collision"></a>Feature collision</h4><p><code>A. Shafahi, W. R. Huang, M. Najibi, O. Suciu, C. Studer, T. Dumitras, and T. Goldstein, “Poison frogs! targeted clean-label poisoning attacks on neural networks,” in NIPS 2018,Advances in Neural Information Processing Systems, 2018.</code> 提出了一种基于特征冲突的干净标签攻击，原理如下：</p>
+<ul>
+<li>给定一个类别 <code>c</code> 的样本 $x_c$，一个类别 <code>t</code> 的样本 $x_t$</li>
+<li>生成攻击样本 $x^{attack}$，使得该样本看起来像 $x_t$ 但是在特征空间内与 $x_c$ 相近</li>
+<li>将样本被标记为 <code>t</code>，网络将会把样本 $x^{attack}$ 的特种空间中接近 <code>c</code> 的特征与类别 <code>t</code> 关联</li>
+<li>经过测试阶段，网络会把 $x^{attack}$ 分类为 <code>t</code>，这样会导致 $x_c$ 也会被分类为 <code>t</code> 类</li>
+<li>使用样本 $x^{attack}$ 或者 $x_c$ 即可触发攻击，如下图</li>
+</ul>
+<p>上述方法的具体应用场景是，迁移学习中受害者仅可以训练网络的最后一层。</p>
+<p><img src="/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-11.png" alt="fig11"></p>
+<p>在此之后，开始探索 feature collision 的拓展，<code>Transferable clean-label poisoning attacks on deep neural nets</code> 弱化了前提假设，该文章假设攻击者智能获取模型使用的部分训练数据，然后使用 feature collision 在特征空间内使污染样本形成多面体包裹目标样本。</p>
+<p><code>A. Saha, A. Subramanya, and H. Pirsiavash, “Hidden trigger backdoor attacks,” in The Thirty-Fourth AAAI Conference on Artificial Intelligence,</code> 则是提出了一种基于激活特征的 feature collision 方法，跟 Shafahi 类似不过是结合了前面提到的 fine-tuning 阶段嵌入特征的方法。</p>
+<p><code>Deeppoison: Feature transfer based stealthy poisoning attack for dnns</code> 提出了一种基于 GAN 网络的 feature collision 方法，该方法包含一个生成器 generator 和两个分辨器 discriminators，生成器用于生成污染样本，一个分辨器用于评价该样本与原样本在视觉上的差异，另一个分辨器评价该样本与目标样本在特征空间的差异。</p>
+<h4 id="Suppression-of-class-discriminative-features"><a href="#Suppression-of-class-discriminative-features" class="headerlink" title="Suppression of class discriminative features"></a>Suppression of class discriminative features</h4><p><code>A. Turner, D. Tsipras, and A. Madry, “Label-consistent backdoor attacks,” arXiv preprint arXiv:1912.02771, 2019.</code> 则是提出了一种新的思路来达成 clean-label attack, 具体有以下几个步骤：</p>
+<ul>
+<li>给定 类别 <code>t</code> 和一个样本 $x_t$</li>
+<li>生成该类别的对抗样本 $x^{adv}$，也就是 $x^{adv}$ 在特征空间内的对应类别为 <code>c</code>，标签类别为 <code>t</code></li>
+<li>由此导致 $x^{adv}$ 很难被分类</li>
+<li>向对抗样本添加触发特征 trigger， $x^{attak} = x^{adv} + trigger$ ，标签类别为 <code>t</code></li>
+<li>由于模型学习 $x^{adv}$ 很难将其分类为 <code>t</code>，因此只能将 <code>trigger</code> 作为 <code>t</code> 的特征</li>
+</ul>
+<p><img src="/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-12.png" alt="fig12"></p>
+<p><code>“Clean-Label Backdoor Attacks on Video Recognition Models,”</code> 则是在视频网络中应用了该方法，目标网络是 <code>ConvNet + LSTM</code> 的视频分类网络，具体步骤是：</p>
+<ul>
+<li>训练一个全局触发器 trigger</li>
+<li>生成一个对抗视频样本</li>
+<li>叠加</li>
+</ul>
+<h2 id="数据级别检测方法-data-level-defences"><a href="#数据级别检测方法-data-level-defences" class="headerlink" title="数据级别检测方法 data level defences"></a>数据级别检测方法 data level defences</h2><p><img src="/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/tab-2.png" alt="tab-2"></p>
+<h2 id="模型级别检测方法-model-level-defences"><a href="#模型级别检测方法-model-level-defences" class="headerlink" title="模型级别检测方法 model level defences"></a>模型级别检测方法 model level defences</h2><p><img src="/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/tab-3.png" alt="tab-3"></p>
+<h2 id="数据集级别检测方法-dataset-level-defences"><a href="#数据集级别检测方法-dataset-level-defences" class="headerlink" title="数据集级别检测方法 dataset level defences"></a>数据集级别检测方法 dataset level defences</h2><p><img src="/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/tab-4.png" alt="tab-4"></p>
+<h2 id="discussion"><a href="#discussion" class="headerlink" title="discussion"></a>discussion</h2><ul>
+<li>通用的防御方法，general defences <ul>
+<li>specific，现在的防御方法只是针对特定攻击的</li>
+</ul>
+</li>
+<li>提升后门鲁棒性，improving the rubustness of backdoors<ul>
+<li>new strategy</li>
+<li>physical domain</li>
+</ul>
+</li>
+<li>底层理论的发展，develop of the underlying theory<ul>
+<li>help optimal triggers</li>
+<li>help defencers build defences, such as a theoretical framework</li>
+</ul>
+</li>
+<li>视频方向</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Survey/" rel="tag"># Survey</a>
+              <a href="/tags/AI-Backdoor-Attacks/" rel="tag"># AI Backdoor Attacks</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/07/Deep-k-NN-Defense-Against-Clean-label-Data-Poisoning-Attacks/" rel="prev" title="Deep k-NN Defense Against Clean-label Data Poisoning Attacks">
+      <i class="fa fa-chevron-left"></i> Deep k-NN Defense Against Clean-label Data Poisoning Attacks
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E9%97%A8%E6%94%BB%E5%87%BB"><span class="nav-number">2.</span> <span class="nav-text">后门攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Corrupted-label-attacks"><span class="nav-number">2.1.</span> <span class="nav-text">Corrupted-label attacks</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A6%96%E6%AC%A1%E6%8F%90%E5%87%BA"><span class="nav-number">2.1.1.</span> <span class="nav-text">首次提出</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E9%97%A8%E6%94%BB%E5%87%BB%E5%8F%91%E5%B1%95%E6%96%B9%E5%90%91"><span class="nav-number">2.2.</span> <span class="nav-text">后门攻击发展方向</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%99%8D%E4%BD%8E%E8%A7%A6%E5%8F%91%E7%89%B9%E5%BE%81%E5%8F%AF%E8%A7%86%E6%80%A7-reducing-trigger-visibility"><span class="nav-number">2.2.1.</span> <span class="nav-text">降低触发特征可视性 reducing trigger visibility</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%83%8F%E7%B4%A0%E6%A8%A1%E7%B3%8A-pixel-blending"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">像素模糊 pixel blending</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%9C%8B%E4%B8%8D%E8%A7%81%E7%9A%84%E8%A7%A6%E5%8F%91%E7%89%B9%E5%BE%81-perceptually-invisible-triggers"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">看不见的触发特征 perceptually invisible triggers</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%A2%84%E5%A4%84%E7%90%86-exploitation-of-input-preprocessing"><span class="nav-number">2.2.1.3.</span> <span class="nav-text">预处理 exploitation of input-preprocessing</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%90%E5%8D%87%E5%90%8E%E9%97%A8%E9%B2%81%E6%A3%92%E6%80%A7-enhancing-backdoor-robustness"><span class="nav-number">2.2.2.</span> <span class="nav-text">提升后门鲁棒性 enhancing backdoor robustness</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%90%8E%E9%97%A8%E6%94%BB%E5%87%BB-other-attacks"><span class="nav-number">2.2.3.</span> <span class="nav-text">其他后门攻击 other attacks</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Clean-label-attacks"><span class="nav-number">2.3.</span> <span class="nav-text">Clean-label attacks</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Design-of-strong-ad-hoc-triggering-pattern"><span class="nav-number">2.3.1.</span> <span class="nav-text">Design of strong, ad-hoc, triggering pattern</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Feature-collision"><span class="nav-number">2.3.2.</span> <span class="nav-text">Feature collision</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Suppression-of-class-discriminative-features"><span class="nav-number">2.3.3.</span> <span class="nav-text">Suppression of class discriminative features</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BA%A7%E5%88%AB%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95-data-level-defences"><span class="nav-number">3.</span> <span class="nav-text">数据级别检测方法 data level defences</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E7%BA%A7%E5%88%AB%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95-model-level-defences"><span class="nav-number">4.</span> <span class="nav-text">模型级别检测方法 model level defences</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E7%BA%A7%E5%88%AB%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95-dataset-level-defences"><span class="nav-number">5.</span> <span class="nav-text">数据集级别检测方法 dataset level defences</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#discussion"><span class="nav-number">6.</span> <span class="nav-text">discussion</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="odymit"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">odymit</p>
+  <div class="site-description" itemprop="description">读书 思考 写点东西</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">101</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">72</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/odymit" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;odymit" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/15737405/odymit" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;15737405&#x2F;odymit" rel="noopener" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">odymit</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

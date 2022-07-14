@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -238,7 +238,6 @@
 
       
         <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">In this paper, we present HOLMES, a system that implements a new approach to the detection of Advanced and Persistent Threats (APTs). HOLMES is inspired by several case studies of real-world APTs that highlight some common goals of APT actors. In a nutshell, HOLMES aims to produce a detection signal that indicates the presence of a coordinated set of activities that are part of an APT campaign. One of the main challenges addressed by our approach involves developing a suite of techniques that make the detection signal robust and reliable. At a high-level, the techniques we develop effectively leverage the correlation between suspicious information flows that arise during an attacker campaign. In addition to its detection capability, HOLMES is also able to generate a high-level graph that summarizes the attacker’s actions in real-time. This graph can be used by an analyst for an effective cyber response. An evaluation of our approach against some real-world APTs indicates that HOLMES can detect APT campaigns with high precision and low false alarm rate. The compact high-level graphs produced by HOLMES effectively summarizes an ongoing attack campaign and can assist real-time cyber-response operations.</span><br></pre></td></tr></table></figure>
-
 <p>摘要中主要说明文章：</p>
 <ul>
 <li><code>HOLMES</code> 目标是在检测到当前活动与 APT 活动的部分攻击一致时触发报警信号。挑战之一是使得报警信号可靠、值得信赖。</li>
@@ -247,7 +246,6 @@
 </ul>
 <p>另外，文章是发表在 <code>2019 IEEE Symposium on Security and Privacy</code> 上 的。</p>
 <span id="more"></span>
-
 <h2 id="文中使用的案例"><a href="#文中使用的案例" class="headerlink" title="文中使用的案例"></a>文中使用的案例</h2><p><img src="/2021/08/14/HOLMES-Real-time-APT-Detection-through-Correlation-of-Suspicious-Information-Flows/example.png" alt="案例"></p>
 <h2 id="方法概览"><a href="#方法概览" class="headerlink" title="方法概览"></a>方法概览</h2><p><img src="/2021/08/14/HOLMES-Real-time-APT-Detection-through-Correlation-of-Suspicious-Information-Flows/kill_chain.png" alt="攻击链"></p>
 <p>方法的核心还是即使不同攻击存在不同技术细节，但是在高层次，APT 的战术意图、目的是符合 APT 杀伤链的。APT 杀伤链步骤如上图。</p>
@@ -293,8 +291,7 @@
 </li>
 <li><p>基于良性先决条件的规则会产生误判，例如，即使没有任何攻击 nginx 也会在开始时读取 <code>/etc/passwd</code>，然而如果将所有对 <code>/etc/passwd</code> 访问的 nginx 列入白名单则会出现误判。</p>
 </li>
-<li><p>为了解决此问题，在学习的过程中加入了对数据流的量的学习，例如，nginx 对 <code>etc/passwd</code> 访问时流向 nginx 的数据量等于该文件大小，如果有大量的数据流在访问是从 <code>etc/passwd</code> 流向 nginx，则说明出现了攻击。为了学习该特征，作者在良性环境中观察了一段时间的进程-文件对和进程-套接字对。</p>
-</li>
+<li>为了解决此问题，在学习的过程中加入了对数据流的量的学习，例如，nginx 对 <code>etc/passwd</code> 访问时流向 nginx 的数据量等于该文件大小，如果有大量的数据流在访问是从 <code>etc/passwd</code> 流向 nginx，则说明出现了攻击。为了学习该特征，作者在良性环境中观察了一段时间的进程-文件对和进程-套接字对。</li>
 </ul>
 <h3 id="信号关联和检测"><a href="#信号关联和检测" class="headerlink" title="信号关联和检测"></a>信号关联和检测</h3><p>给出一组 HSG，如何高准确率地检测出攻击的组成部分呢？为了解决这个问题，给每一个 HSG 分配了一个严重程度。这个过程通过两个步骤来完成：</p>
 <ol>
@@ -427,7 +424,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-count">101</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -440,7 +437,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-count">72</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -578,6 +575,8 @@
 
 
 
+
+  
 
   
 

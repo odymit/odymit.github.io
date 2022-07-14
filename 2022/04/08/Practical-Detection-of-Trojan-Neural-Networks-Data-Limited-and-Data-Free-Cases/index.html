@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -232,9 +232,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Practical Detection of Trojan Neural Networks: Data-Limited and Data-Free Cases 摘要。</p>
-<span id="more"></span>
-
+        <p>Practical Detection of Trojan Neural Networks: Data-Limited and Data-Free Cases 摘要。<br><span id="more"></span></p>
 <h2 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h2><p><img src="/2022/04/08/Practical-Detection-of-Trojan-Neural-Networks-Data-Limited-and-Data-Free-Cases/arch.png" alt="架构图"></p>
 <h2 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h2><ul>
 <li>data-limite TrojanNet detector(DL-TND)</li>
@@ -246,7 +244,7 @@
 <li>clean-label，干净的标签，意思是污染样本的标签是正确的，但是注入的数据在嵌入空间内导致错误表示，使得网络学习到错误的映射，因而该网络会在分类该测试输入类别时，将其识别为目标类别。</li>
 </ul>
 <h2 id="扰动表示"><a href="#扰动表示" class="headerlink" title="扰动表示"></a>扰动表示</h2><p><img src="/2022/04/08/Practical-Detection-of-Trojan-Neural-Networks-Data-Limited-and-Data-Free-Cases/perturbation.png" alt="扰动公式"></p>
-<h2 id="DL-TND：有限数据下的后门网络检测"><a href="#DL-TND：有限数据下的后门网络检测" class="headerlink" title="DL-TND：有限数据下的后门网络检测"></a>DL-TND：有限数据下的后门网络检测</h2><p>通过将通用扰动和每张图的对抗性结合来设计检测器。<br><img src="/2022/04/08/Practical-Detection-of-Trojan-Neural-Networks-Data-Limited-and-Data-Free-Cases/perturbation.png" alt="扰动公式"><br><strong>无指定目标的通用扰动：</strong>在被错误分类的集合中寻找一个通用扰动，并且保证正确分类的数据不被影响。<br><img src="/2022/04/08/Practical-Detection-of-Trojan-Neural-Networks-Data-Limited-and-Data-Free-Cases/loss-latk.png" alt="latk损失函数公式"><br>上式确保扰动会改变 $D_{k-}$ 的分类预测，下式会确保不改变原有 $D_k$ 的分类预测。<br><img src="/2022/04/08/Practical-Detection-of-Trojan-Neural-Networks-Data-Limited-and-Data-Free-Cases/loss-latk%5E.png" alt="latk损失函数公式"></p>
+<h2 id="DL-TND：有限数据下的后门网络检测"><a href="#DL-TND：有限数据下的后门网络检测" class="headerlink" title="DL-TND：有限数据下的后门网络检测"></a>DL-TND：有限数据下的后门网络检测</h2><p>通过将通用扰动和每张图的对抗性结合来设计检测器。<br><img src="/2022/04/08/Practical-Detection-of-Trojan-Neural-Networks-Data-Limited-and-Data-Free-Cases/perturbation.png" alt="扰动公式"><br><strong>无指定目标的通用扰动：</strong>在被错误分类的集合中寻找一个通用扰动，并且保证正确分类的数据不被影响。<br><img src="/2022/04/08/Practical-Detection-of-Trojan-Neural-Networks-Data-Limited-and-Data-Free-Cases/loss-latk.png" alt="latk损失函数公式"><br>上式确保扰动会改变 $D_{k-}$ 的分类预测，下式会确保不改变原有 $D_k$ 的分类预测。<br><img src="/2022/04/08/Practical-Detection-of-Trojan-Neural-Networks-Data-Limited-and-Data-Free-Cases/loss-latk^.png" alt="latk损失函数公式"></p>
 <p><strong>有指向目标的每个图像的扰动：</strong>如果标签 <code>k</code> 是后门攻击的目标标签，我们假设 将 $D_{k-}$ 中的每个图像向 目标类 <code>k</code> 扰动，可以像式(2)中的通用对抗样本一样，他们通过类似的后门使得标签发生改变。<br>由于后门的存在，因此通用扰动 $u^{(k)}$ 和有目标分类图像扰动 $s^{(k,i)}$ 应该在欺骗模型误分类方面非常相似。</p>
 <p>所以通过衡量两个扰动之间的相似程度来判断是否存在后门。</p>
 <h2 id="DF-TND：无数据访问的后门网络检测"><a href="#DF-TND：无数据访问的后门网络检测" class="headerlink" title="DF-TND：无数据访问的后门网络检测"></a>DF-TND：无数据访问的后门网络检测</h2><p>通过调查 logits 输出相对于 xi 和 x^i(p(i)) 的变化来检测模型是否是 TrojanNet。<br><img src="/2022/04/08/Practical-Detection-of-Trojan-Neural-Networks-Data-Limited-and-Data-Free-Cases/lk.png" alt="lk公式"></p>
@@ -350,7 +348,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-count">101</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -363,7 +361,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-count">72</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -501,6 +499,8 @@
 
 
 
+
+  
 
   
 

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -235,8 +235,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>MCI: Modeling-based Causality Inference in Audit Logging for Attack Investigation 摘要。</p>
-<span id="more"></span>
+        <p>MCI: Modeling-based Causality Inference in Audit Logging for Attack Investigation 摘要。<br><span id="more"></span></p>
 <h2 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h2><p><img src="/2022/04/17/MCI-Modeling-based-Causality-Inference-in-Audit-Logging-for-Attack-Investigation/arch.png" alt="arch"></p>
 <p>在本文中，开发了一个基于因果推理的模型来进行审计日志分析，并且该方法不需要任何应用指令或者内核修改。<br>它利用了最近的动态分析和双重执行（LDX），可以推断系统调用之间精确因果关系，但不幸的是需要加倍的消耗资源，例如cpu时间和内存的消耗。<br>对于每个应用来说，我们使用LDX获得一组原始操作的精确的因果模型。每个模型都是一系列具有相互依赖关系的系统调用，其中一些是由内存操作引起的，因此隐含在系统调用级别，这些模型由支持各种复杂性的语言描述，例如常规的、上下文无关的，甚至上下文敏感的。在生产运行中，部署了一个新的解析器来解析审计日志以对实例进行建模，从而得出因果关系。</p>
 <p><img src="/2022/04/17/MCI-Modeling-based-Causality-Inference-in-Audit-Logging-for-Attack-Investigation/motivation.png" alt="motivation"><br><img src="/2022/04/17/MCI-Modeling-based-Causality-Inference-in-Audit-Logging-for-Attack-Investigation/eg.png" alt="example"></p>
@@ -341,7 +340,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-count">101</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -354,7 +353,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-count">72</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -492,6 +491,8 @@
 
 
 
+
+  
 
   
 

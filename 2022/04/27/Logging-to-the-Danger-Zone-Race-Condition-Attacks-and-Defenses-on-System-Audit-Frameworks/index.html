@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -225,8 +225,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Logging to the Danger Zone: Race Condition Attacks and Defenses on System Audit Frameworks 摘要。</p>
-<span id="more"></span>
+        <p>Logging to the Danger Zone: Race Condition Attacks and Defenses on System Audit Frameworks 摘要。<br><span id="more"></span></p>
 <h2 id="Workflow"><a href="#Workflow" class="headerlink" title="Workflow"></a>Workflow</h2><p>如果用系统日志来辅助安全调查，其中一个前提是，该日志系统不能遭受攻击者攻击。<br>在这项工作中，我们通过展示和验证审计框架完整性的竞争条件攻击来挑战这一假设。<br>攻击利用了 I/O 和 IPC 活动的内在异步特性，表明攻击者可以在时间发生之后，在提交到日志系统之前，从系统缓冲区中获取修改有关其入侵的事件，从而绕过现有的保护措施。<br>通过引入 KennyLoggings 来防御我们的攻击，这是第一个满足同步完整性的基于内核的放篡改日志系统，这意味着他保证了事件发生时的放篡改问题。</p>
 <p><img src="/2022/04/27/Logging-to-the-Danger-Zone-Race-Condition-Attacks-and-Defenses-on-System-Audit-Frameworks/workflow.png" alt="workflow"></p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
@@ -328,7 +327,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-count">101</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -341,7 +340,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-count">72</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -479,6 +478,8 @@
 
 
 
+
+  
 
   
 

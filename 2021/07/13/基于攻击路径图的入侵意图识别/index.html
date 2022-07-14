@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"odymit.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="摘要1为了预测攻击者高层次的攻击目标，感知网络的安全态势，提出入侵意图识别方法．给出入侵意图的概念及其分类，提出一种基于层次化的攻击路径图．利用攻击路径图对攻击者的意图可达性、意图实现概率、意图实现 的最短路径和攻击路径预测进行定量分析．应用有向图的最小割理论制定防护措施阻止攻击者意图的实现，为管 理员的决策提供依据．实验验证了该方法的可行性和有效性．  摘要指出论文内容主要有：  给出入侵意图的">
+  <meta name="description" content="摘要1为了预测攻击者高层次的攻击目标，感知网络的安全态势，提出入侵意图识别方法．给出入侵意图的概念及其分类，提出一种基于层次化的攻击路径图．利用攻击路径图对攻击者的意图可达性、意图实现概率、意图实现 的最短路径和攻击路径预测进行定量分析．应用有向图的最小割理论制定防护措施阻止攻击者意图的实现，为管 理员的决策提供依据．实验验证了该方法的可行性和有效性． 摘要指出论文内容主要有：  给出入侵意图的分">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基于攻击路径图的入侵意图识别">
 <meta property="og:url" content="http://odymit.github.io/2021/07/13/%E5%9F%BA%E4%BA%8E%E6%94%BB%E5%87%BB%E8%B7%AF%E5%BE%84%E5%9B%BE%E7%9A%84%E5%85%A5%E4%BE%B5%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB/index.html">
 <meta property="og:site_name" content="odymit&#39;s blog">
-<meta property="og:description" content="摘要1为了预测攻击者高层次的攻击目标，感知网络的安全态势，提出入侵意图识别方法．给出入侵意图的概念及其分类，提出一种基于层次化的攻击路径图．利用攻击路径图对攻击者的意图可达性、意图实现概率、意图实现 的最短路径和攻击路径预测进行定量分析．应用有向图的最小割理论制定防护措施阻止攻击者意图的实现，为管 理员的决策提供依据．实验验证了该方法的可行性和有效性．  摘要指出论文内容主要有：  给出入侵意图的">
+<meta property="og:description" content="摘要1为了预测攻击者高层次的攻击目标，感知网络的安全态势，提出入侵意图识别方法．给出入侵意图的概念及其分类，提出一种基于层次化的攻击路径图．利用攻击路径图对攻击者的意图可达性、意图实现概率、意图实现 的最短路径和攻击路径预测进行定量分析．应用有向图的最小割理论制定防护措施阻止攻击者意图的实现，为管 理员的决策提供依据．实验验证了该方法的可行性和有效性． 摘要指出论文内容主要有：  给出入侵意图的分">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://odymit.github.io/2021/07/13/%E5%9F%BA%E4%BA%8E%E6%94%BB%E5%87%BB%E8%B7%AF%E5%BE%84%E5%9B%BE%E7%9A%84%E5%85%A5%E4%BE%B5%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB/taxonomy.jpg">
 <meta property="og:image" content="http://odymit.github.io/2021/07/13/%E5%9F%BA%E4%BA%8E%E6%94%BB%E5%87%BB%E8%B7%AF%E5%BE%84%E5%9B%BE%E7%9A%84%E5%85%A5%E4%BE%B5%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB/reachable_analysis.jpg">
@@ -241,7 +241,6 @@
 
       
         <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">为了预测攻击者高层次的攻击目标，感知网络的安全态势，提出入侵意图识别方法．给出入侵意图的概念及其分类，提出一种基于层次化的攻击路径图．利用攻击路径图对攻击者的意图可达性、意图实现概率、意图实现 的最短路径和攻击路径预测进行定量分析．应用有向图的最小割理论制定防护措施阻止攻击者意图的实现，为管 理员的决策提供依据．实验验证了该方法的可行性和有效性．</span><br></pre></td></tr></table></figure>
-
 <p>摘要指出论文内容主要有：</p>
 <ul>
 <li>给出入侵意图的分类</li>
@@ -249,9 +248,7 @@
 <li>可用于意图可达性、意图实现概率、意图实现最短路径和攻击路径预测进行定量分析</li>
 </ul>
 <span id="more"></span>
-
-<h2 id="意图识别内容"><a href="#意图识别内容" class="headerlink" title="意图识别内容"></a>意图识别内容</h2><h3 id="入侵意图"><a href="#入侵意图" class="headerlink" title="入侵意图"></a>入侵意图</h3><img src="/2021/07/13/%E5%9F%BA%E4%BA%8E%E6%94%BB%E5%87%BB%E8%B7%AF%E5%BE%84%E5%9B%BE%E7%9A%84%E5%85%A5%E4%BE%B5%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB/taxonomy.jpg" alt="入侵意图分类">
-
+<h2 id="意图识别内容"><a href="#意图识别内容" class="headerlink" title="意图识别内容"></a>意图识别内容</h2><h3 id="入侵意图"><a href="#入侵意图" class="headerlink" title="入侵意图"></a>入侵意图</h3><p><img src="/2021/07/13/%E5%9F%BA%E4%BA%8E%E6%94%BB%E5%87%BB%E8%B7%AF%E5%BE%84%E5%9B%BE%E7%9A%84%E5%85%A5%E4%BE%B5%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB/taxonomy.jpg" alt="入侵意图分类"></p>
 <h3 id="层次化的攻击路径图"><a href="#层次化的攻击路径图" class="headerlink" title="层次化的攻击路径图"></a>层次化的攻击路径图</h3><p>定义：</p>
 <ul>
 <li>弱点集合 <code>V:&#123;v_CVE, v_pre, v_post&#125;</code></li>
@@ -262,14 +259,12 @@
 </ul>
 <h3 id="攻击路径图生成"><a href="#攻击路径图生成" class="headerlink" title="攻击路径图生成"></a>攻击路径图生成</h3><p>算法简介：</p>
 <ul>
-<li><p>攻击者已经获得了较高的权限而不会再获取较低的权限</p>
-</li>
+<li>攻击者已经获得了较高的权限而不会再获取较低的权限</li>
 <li><p>攻击者不会第二次入侵已经获得权限的主机</p>
 </li>
 <li><p>输入：主机集合、主机的弱点集合、主机间的连接关系</p>
 </li>
-<li><p>输出：攻击路径图</p>
-</li>
+<li>输出：攻击路径图</li>
 </ul>
 <p>算法实现（根据弱点层、主机层和保护域分）：</p>
 <ul>
@@ -394,7 +389,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-count">101</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -407,7 +402,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-count">72</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -545,6 +540,8 @@
 
 
 
+
+  
 
   
 

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -238,7 +238,6 @@
 <li><a target="_blank" rel="noopener" href="https://github.com/mitre/caldera">CALDERA</a></li>
 </ul>
 <span id="more"></span>
-
 <h2 id="CAR"><a href="#CAR" class="headerlink" title="CAR"></a>CAR</h2><p><code>The Cyber Analytics Repository (CAR) is a knowledge base of analytics developed by MITRE based on the ATT&amp;CK® adversary model.</code>  </p>
 <p><code>CAR</code> 是MITRE公司基于 <code>ATT&amp;CK</code> 攻击者模型发展出来的网络攻击行为分析仓库，该仓库包含各种应用 <code>ATT&amp;CK</code> 攻击实例分析数据。  </p>
 <p><code>CAR</code> 定义了一个使用伪代码表示的数据模型，每一个模型表示一个攻击利用，针对不同的具体应用还会有不同实现。  </p>
@@ -267,7 +266,6 @@
 <p><img src="/2021/07/02/ATT-CK%E7%9B%B8%E5%85%B3%E9%A1%B9%E7%9B%AE%E8%B0%83%E7%A0%94/cascade_analytics.png" alt="规则配置"></p>
 <p>外部分析部分对应的代码：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExternalAnalytic</span>(<span class="params">Analytic</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    :param List[str] fields: A list of all of the fields to be expected in each row of output</span></span><br><span class="line"><span class="string">    :param List[ObjectMapping] mapped_objects: A list of all of the mapped objects</span></span><br><span class="line"><span class="string">    :param str query_name: The name of the query saved on the target platform (i.e. Splunk)</span></span><br><span class="line"><span class="string">    :param str car: Optional. The corresponding CAR analytic (car.mitre.org)</span></span><br><span class="line"><span class="string">    :param str car_summary: Optional. The summary name of the CAR analytic</span></span><br><span class="line"><span class="string">    :param str platform: The target platform (Splunk, ElasticSearch, etc.)</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    fields = ListField(StringField())</span><br><span class="line">    query_name = StringField()</span><br><span class="line">    car = StringField()</span><br><span class="line">    car_summary = StringField()</span><br><span class="line">    platform = StringField()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">extract_events</span>(<span class="params">self, result</span>):</span></span><br><span class="line">        state = result[<span class="string">&#x27;state&#x27;</span>]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Generalize this capability for CASCADE analytics as well</span></span><br><span class="line">        <span class="keyword">for</span> mapping <span class="keyword">in</span> self.mapped_events:</span><br><span class="line">            object_type = mapping.object_type</span><br><span class="line">            action = mapping.action</span><br><span class="line">            <span class="keyword">if</span> mapping.is_mappable(state):</span><br><span class="line">                fields = mapping.from_result(state)</span><br><span class="line">                <span class="comment"># return a list of DataModelQuery objects (which will be run as jobs)</span></span><br><span class="line">                <span class="keyword">yield</span> object_type.search(action, **fields)</span><br></pre></td></tr></table></figure>
-
 <p>代码中 <code>platform</code> 部分对应的平台就是配置的外部数据库，在 <code>brawl-demo</code> 中是配置的 <code>ElasticSearch</code> 数据库，连接数据库创建会话后执行上图中的分析，调用的代码即为上述代码。</p>
 <h2 id="CALDERA"><a href="#CALDERA" class="headerlink" title="CALDERA"></a>CALDERA</h2><p><code>CALDERA is an automated adversary emulation system that performs post-compromise adversarial behavior within Windows Enterprise networks.</code>  </p>
 <p><code>CALDERA</code> 是一个自动攻击仿真系统，模拟攻击者攻入网络后的行为。  </p>
@@ -378,7 +376,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-count">101</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -391,7 +389,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-count">72</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -529,6 +527,8 @@
 
 
 
+
+  
 
   
 

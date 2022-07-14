@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -234,7 +234,6 @@
 
       
         <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">This paper reviews research in the field, showing that not much work has been done in the combined area of connected vehicles and threat modeling with attack simulations. We have implemented and conducted attack simulations on two vehicle threat models using a tool called securiCAD. Our work serves as a proof of concept of the approach and indicates that the approach is useful. Especially if more research of vehicle-specific vulnerabilities, weaknesses, and countermeasures is done in order to provide more accurate analyses, and to include this in a more tailored vehicle metamodel.</span><br></pre></td></tr></table></figure>
-
 <p>摘要中指出：</p>
 <ul>
 <li>文章回顾了本领域的研究，指出在网联汽车和威胁模型的交叉领域，使用攻击仿真的研究并不多</li>
@@ -242,13 +241,11 @@
 <li>文章验证并指出该方法（基于攻击仿真威胁建模）是有效的</li>
 </ul>
 <span id="more"></span>
-
 <h2 id="威胁建模"><a href="#威胁建模" class="headerlink" title="威胁建模"></a>威胁建模</h2><p>文章在两款易受攻击的车型上进行了威胁建模，给出汽车的网络拓扑图和数据流图，如下：</p>
 <p><img src="/2021/07/08/Threat-Modeling-and-Attack-Simulations-of-Connected-Vehicles-Proof-of-Concept/network_topology.jpg" alt="网络拓扑图"></p>
 <p><img src="/2021/07/08/Threat-Modeling-and-Attack-Simulations-of-Connected-Vehicles-Proof-of-Concept/dataflow.jpg" alt="数据流图"></p>
 <h3 id="安全设置"><a href="#安全设置" class="headerlink" title="安全设置"></a>安全设置</h3><p>为每一个资产分配了一个安全设置(<code>security settings</code>)，其中包括攻击的后果，其值的范围是 <code>0 - 10</code>。使用具有安全设置和后果的系统模型，可以进行定量计算，如计算风险值：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Risk = Consequence X Probability</span><br></pre></td></tr></table></figure>
-
 <p>根据设备和文档对模型中的资产进行安全设置评分。</p>
 <h2 id="汽车攻击模拟"><a href="#汽车攻击模拟" class="headerlink" title="汽车攻击模拟"></a>汽车攻击模拟</h2><p>攻击模拟的结果包括风险矩阵，攻击路径和攻击时间图（Time to Compromise graph，TTC），TTC图表示基于某一特定攻击路径攻破特定设备的可能性分布。</p>
 <p><img src="/2021/07/08/Threat-Modeling-and-Attack-Simulations-of-Connected-Vehicles-Proof-of-Concept/risk_matrix.jpg" alt="风险矩阵"></p>
@@ -357,7 +354,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-count">101</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -370,7 +367,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-count">72</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -508,6 +505,8 @@
 
 
 
+
+  
 
   
 

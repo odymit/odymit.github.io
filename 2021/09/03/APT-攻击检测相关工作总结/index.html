@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -240,7 +240,6 @@
 <li><a target="_blank" rel="noopener" href="https://omitedy.github.io/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/">ATLAS: A Sequence-based Learning Approach for Attack Investigation</a></li>
 </ul>
 <span id="more"></span>
-
 <h3 id="威胁狩猎方法（DeepHunter）"><a href="#威胁狩猎方法（DeepHunter）" class="headerlink" title="威胁狩猎方法（DeepHunter）"></a>威胁狩猎方法（DeepHunter）</h3><p>Poirot [1] 是跟 DeepHunter 相关的工作，在相关工作中提及，并在文章的 7.2 节中详细介绍后进行了性能对比。该章节中提到， Poirot 是当前威胁狩猎方法的前沿技术之一。Poirot 是一种基于启发式图特征匹配的算法，可以计算查询图和溯源图之间的图对齐分数。Poirot 根据查询图中的信息流在溯源图中搜索对齐的节点，在搜索的过程中忽略了攻击者不可能采取的路径。</p>
 <p>RapSheet [2] 是一种可以使用溯源图分析提升 EDR 威胁狩猎能力的方法，但是 RapSheet 需要攻击者攻击的完全路径都被保存在溯源图上进行告警关联。显然，断开连接的攻击溯源图无疑会降低 RapSheet 的性能。</p>
 <p>HOLMES [12] 和 NoDoze [3] 都采用了溯源图告警关联的方式进行 APT 检测和调查。</p>
@@ -480,7 +479,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-count">101</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -493,7 +492,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-count">72</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -631,6 +630,8 @@
 
 
 
+
+  
 
   
 

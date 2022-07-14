@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -223,37 +223,36 @@
       
         <p>做了简单的了解之后发现关于CAN、ECU的安全测试工具比较多，所以简单做了一个分类如下所示：</p>
 <ul>
-<li><a href="#%E5%88%86%E6%9E%90">分析</a></li>
-<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
-<li><a href="#%E7%A1%AC%E4%BB%B6">硬件</a><ul>
-<li><a href="#%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a></li>
-<li><a href="#%E6%8E%A5%E5%85%A5%E5%B7%A5%E5%85%B7">接入和数据采集工具</a><ul>
-<li><a href="#%E6%97%A0%E7%BA%BF">无线</a></li>
-<li><a href="#%E6%9C%89%E7%BA%BF">有线</a></li>
-<li><a href="#%E6%B7%B7%E5%90%88%E6%8E%A5%E5%85%A5">混合</a></li>
+<li><a href="#分析">分析</a></li>
+<li><a href="#总结">总结</a></li>
+<li><a href="#硬件">硬件</a><ul>
+<li><a href="#开发工具">开发工具</a></li>
+<li><a href="#接入工具">接入和数据采集工具</a><ul>
+<li><a href="#无线">无线</a></li>
+<li><a href="#有线">有线</a></li>
+<li><a href="#混合接入">混合</a></li>
 </ul>
 </li>
-<li><a href="#%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7">分析测试工具</a></li>
+<li><a href="#测试工具">分析测试工具</a></li>
 </ul>
 </li>
-<li><a href="#%E8%BD%AF%E4%BB%B6%E5%8F%8A%E7%9B%B8%E5%85%B3%E5%BA%93">软件及相关库</a><ul>
-<li><a href="#%E8%BD%AF%E4%BB%B6">软件</a><ul>
-<li><a href="#%E7%9B%91%E6%8E%A7%E5%88%86%E6%9E%90">监控分析</a></li>
-<li><a href="#%E7%A1%AC%E4%BB%B6%E5%8F%91%E7%8E%B0">硬件发现</a></li>
-<li><a href="#%E5%85%B6%E4%BB%96">其他</a></li>
+<li><a href="#软件及相关库">软件及相关库</a><ul>
+<li><a href="#软件">软件</a><ul>
+<li><a href="#监控分析">监控分析</a></li>
+<li><a href="#硬件发现">硬件发现</a></li>
+<li><a href="#其他">其他</a></li>
 </ul>
 </li>
-<li><a href="#%E7%9B%B8%E5%85%B3%E5%BA%93">相关库</a><ul>
+<li><a href="#相关库">相关库</a><ul>
 <li><a href="#c">C</a></li>
 <li><a href="#python">Python</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#%E5%A3%B0%E6%98%8E">声明</a></li>
+<li><a href="#声明">声明</a></li>
 </ul>
 <span id="more"></span>
-
 <h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p>对于CAN、ECU执行安全检测主要用到的工具，功能主要分为：</p>
 <ol>
 <li>建立数据通道 - 常用的设备为ELM327、USB2CAN、USBtin等。</li>
@@ -275,7 +274,7 @@
 <li><a target="_blank" rel="noopener" href="https://www.arduino.cc/">Arduino</a> - Arduino开发板有大量的CAN BUS拓展板可以用来进行CAN相关的测试和分析。<ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/watterott/CANdiy-Shield">CANdiy-Shield</a></li>
 <li><a target="_blank" rel="noopener" href="http://www.seeedstudio.com/wiki/CAN-BUS_Shield">ChuangZhou CAN-Bus Shield</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.dfrobot.com/index.php?route=product/product&product_id=1444">DFRobot CAN-BUS Shield For Arduino</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.dfrobot.com/index.php?route=product/product&amp;product_id=1444">DFRobot CAN-BUS Shield For Arduino</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.sparkfun.com/products/13262">SparkFun CAN-BUS Shield</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/latonita/arduino-canbus-monitor">arduino-canbus-monitor</a> - 无论你采用了哪一种拓展板，你都需要一个sniffer。这是基于标准Lawicel/SLCAN协议实现的软件，架设在Arduino+任意MCP拓展板上，可以为多种标准的CAN总线分析软件或者socketCAN提供支持。</li>
 </ul>
@@ -325,24 +324,17 @@
 <li><a target="_blank" rel="noopener" href="https://www.vanheusden.com/O2OO/">O2OO</a> - 使用elm327将数据记录到sqlite数据库以进行绘图。它还支持读取GPS数据。可以将它连接到你的车上，并使用谷歌地图kml数据绘制行驶路径地图。</li>
 </ul>
 <h2 id="相关库"><a href="#相关库" class="headerlink" title="相关库"></a>相关库</h2><h3 id="C"><a href="#C" class="headerlink" title="C"></a>C</h3><ul>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/linux-can/can-utils">SocketCAN Utils</a> - Linux上的网络层CAN通信协议通信库</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/dn5/vircar">vircar</a> - 一个基于SocketCAN的虚拟通信汽车工具。</p>
-</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/linux-can/can-utils">SocketCAN Utils</a> - Linux上的网络层CAN通信协议通信库</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/dn5/vircar">vircar</a> - 一个基于SocketCAN的虚拟通信汽车工具。</li>
 <li><p><a target="_blank" rel="noopener" href="https://github.com/howerj/dbcc">dbcc</a> - DCBC是一种将DBC文件转换成C代码的程序，它可以序列化和反序列化CAN消息。用来自车辆的现有DBC文件，允许您将它们转换成C代码，以提取CAN消息和CAN环境的属性。</p>
 <h3 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h3></li>
 <li><p><a target="_blank" rel="noopener" href="https://github.com/linklayer/pyvit">pyvit</a> - pyvit是一个与python中的cars交互的工具包。它旨在实现汽车系统中使用的通用硬件接口和协议。</p>
 </li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/CaringCaribou/caringcaribou/">Caring Caribou</a> - 一种友好的can总线汽车安全检测工具</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/zombieCraig/c0f/">c0f</a> - 可以用来分析can总线流量和指纹</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="http://python-can.readthedocs.io/en/latest/index.html">Python-CAN</a> - can包为python开发人员提供控制器局域网支持；为不同的硬件设备提供通用抽象，以及一套用于在can总线上发送和接收消息的实用程序。</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/brendan-w/python-OBD">Python-OBD</a> - 用于处理来自obd-ii车辆端口的实时传感器数据的python模块。适用于ELM327 OBD-II适配器，适合树莓派。</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/atlas0fd00m/CanCat">CanCat</a> - C++写的Python接口，用于与现场CAN数据交互。</p>
-</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/CaringCaribou/caringcaribou/">Caring Caribou</a> - 一种友好的can总线汽车安全检测工具</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/zombieCraig/c0f/">c0f</a> - 可以用来分析can总线流量和指纹</li>
+<li><a target="_blank" rel="noopener" href="http://python-can.readthedocs.io/en/latest/index.html">Python-CAN</a> - can包为python开发人员提供控制器局域网支持；为不同的硬件设备提供通用抽象，以及一套用于在can总线上发送和接收消息的实用程序。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/brendan-w/python-OBD">Python-OBD</a> - 用于处理来自obd-ii车辆端口的实时传感器数据的python模块。适用于ELM327 OBD-II适配器，适合树莓派。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/atlas0fd00m/CanCat">CanCat</a> - C++写的Python接口，用于与现场CAN数据交互。</li>
 </ul>
 <h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p>上述工具参考<a target="_blank" rel="noopener" href="https://github.com/jaredthecoder/awesome-vehicle-security">awesome-vehicle-security</a>和其他技术博客及相关网站整理。</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
@@ -445,7 +437,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-count">101</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -458,7 +450,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-count">72</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -596,6 +588,8 @@
 
 
 
+
+  
 
   
 

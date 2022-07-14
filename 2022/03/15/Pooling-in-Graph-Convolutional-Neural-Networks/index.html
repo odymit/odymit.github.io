@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -237,8 +237,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>该论文对结合不同网络结构对图神经网络上的池化操作做了评估。在图分类数据集上对图卷积神经网络中的图卷积操作和图池化操作进行评估。</p>
-<span id="more"></span>
+        <p>该论文对结合不同网络结构对图神经网络上的池化操作做了评估。在图分类数据集上对图卷积神经网络中的图卷积操作和图池化操作进行评估。<br><span id="more"></span></p>
 <h2 id="池化操作"><a href="#池化操作" class="headerlink" title="池化操作"></a>池化操作</h2><p>池化操作是卷积神经网络中一个重要的操作，是一种非线性的下采样操作。在卷积神经网络中，池化曾可以对特征降维，因此可以降低计算量、内存占用和参数数量。</p>
 <p>正因为如此，池化也使得深层网络成为可能，并且有助于控制过拟合。</p>
 <h2 id="图池化层"><a href="#图池化层" class="headerlink" title="图池化层"></a>图池化层</h2><h3 id="Sort-Pooling"><a href="#Sort-Pooling" class="headerlink" title="Sort Pooling"></a>Sort Pooling</h3><p>SortPooling 不使用求和与平均计算特征，而是根据固定一致的顺序对节点进行排序，输出一个具有固定集合的表示以便可以使用 CNN 进行进一步的训练。<br>节点排序依据该节点在图结构上的角色。利用图卷积和 Weisfeiler-Lehman 子树核之间的连接，SortPool 对最后一层的节点特征进行单独排序，然后根据前一层将序排列，最后选择前 k 个节点。</p>
@@ -357,7 +356,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-count">101</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -370,7 +369,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-count">72</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -508,6 +507,8 @@
 
 
 
+
+  
 
   
 
