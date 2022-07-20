@@ -20,25 +20,21 @@
     var CONFIG = {"hostname":"odymit.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Backdoor Attacks and Countermeasures on Deep Learning: A Comprehensive Review 摘要。">
+  <meta name="description" content="A Survey on Neural Trojans 摘要。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Backdoor Attacks and Countermeasures on Deep Learning: A Comprehensive Review">
-<meta property="og:url" content="http://odymit.github.io/2022/07/14/Backdoor-Attacks-and-Countermeasures-on-Deep-Learning-A-Comprehensive-Review/index.html">
+<meta property="og:title" content="A Survey on Neural Trojans">
+<meta property="og:url" content="http://odymit.github.io/2022/07/20/A-Survey-on-Neural-Trojans/index.html">
 <meta property="og:site_name" content="odymit&#39;s blog">
-<meta property="og:description" content="Backdoor Attacks and Countermeasures on Deep Learning: A Comprehensive Review 摘要。">
+<meta property="og:description" content="A Survey on Neural Trojans 摘要。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://odymit.github.io/2022/07/14/Backdoor-Attacks-and-Countermeasures-on-Deep-Learning-A-Comprehensive-Review/summary.png">
-<meta property="og:image" content="http://odymit.github.io/2022/07/14/Backdoor-Attacks-and-Countermeasures-on-Deep-Learning-A-Comprehensive-Review/categories-1.png">
-<meta property="og:image" content="http://odymit.github.io/2022/07/14/Backdoor-Attacks-and-Countermeasures-on-Deep-Learning-A-Comprehensive-Review/categories-2.png">
-<meta property="article:published_time" content="2022-07-14T12:41:47.000Z">
-<meta property="article:modified_time" content="2022-07-14T12:41:47.495Z">
+<meta property="article:published_time" content="2022-07-20T05:00:04.000Z">
+<meta property="article:modified_time" content="2022-07-20T05:00:04.331Z">
 <meta property="article:author" content="odymit">
 <meta property="article:tag" content="Survey">
 <meta property="article:tag" content="AI Backdoor Attacks">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://odymit.github.io/2022/07/14/Backdoor-Attacks-and-Countermeasures-on-Deep-Learning-A-Comprehensive-Review/summary.png">
 
-<link rel="canonical" href="http://odymit.github.io/2022/07/14/Backdoor-Attacks-and-Countermeasures-on-Deep-Learning-A-Comprehensive-Review/">
+<link rel="canonical" href="http://odymit.github.io/2022/07/20/A-Survey-on-Neural-Trojans/">
 
 
 <script id="page-configurations">
@@ -51,7 +47,7 @@
   };
 </script>
 
-  <title>Backdoor Attacks and Countermeasures on Deep Learning: A Comprehensive Review | odymit's blog</title>
+  <title>A Survey on Neural Trojans | odymit's blog</title>
   
 
 
@@ -171,7 +167,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://odymit.github.io/2022/07/14/Backdoor-Attacks-and-Countermeasures-on-Deep-Learning-A-Comprehensive-Review/">
+    <link itemprop="mainEntityOfPage" href="http://odymit.github.io/2022/07/20/A-Survey-on-Neural-Trojans/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -184,7 +180,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Backdoor Attacks and Countermeasures on Deep Learning: A Comprehensive Review
+          A Survey on Neural Trojans
         </h1>
 
         <div class="post-meta">
@@ -194,7 +190,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-07-14 20:41:47" itemprop="dateCreated datePublished" datetime="2022-07-14T20:41:47+08:00">2022-07-14</time>
+              <time title="创建时间：2022-07-20 13:00:04" itemprop="dateCreated datePublished" datetime="2022-07-20T13:00:04+08:00">2022-07-20</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -206,7 +202,7 @@
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%A7%91%E7%A0%94%E8%AE%BA%E6%96%87/object-Object/" itemprop="url" rel="index"><span itemprop="name">[object Object]</span></a>
+                  <a href="/categories/%E7%A7%91%E7%A0%94%E8%AE%BA%E6%96%87/%E6%91%98%E8%A6%81/" itemprop="url" rel="index"><span itemprop="name">摘要</span></a>
                 </span>
             </span>
 
@@ -228,10 +224,87 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Backdoor Attacks and Countermeasures on Deep Learning: A Comprehensive Review 摘要。<br><span id="more"></span></p>
-<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>文章通过目录和表格等多种形式对相关文献进行分类，看起来相对清晰。具体 如下图：</p>
-<p><img src="/2022/07/14/Backdoor-Attacks-and-Countermeasures-on-Deep-Learning-A-Comprehensive-Review/summary.png" alt="summary"></p>
-<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><p><img src="/2022/07/14/Backdoor-Attacks-and-Countermeasures-on-Deep-Learning-A-Comprehensive-Review/categories-1.png" alt="categories-1"><br><img src="/2022/07/14/Backdoor-Attacks-and-Countermeasures-on-Deep-Learning-A-Comprehensive-Review/categories-2.png" alt="categories-2"></p>
+        <p>A Survey on Neural Trojans 摘要。<br><span id="more"></span></p>
+<h2 id="论文整体思路"><a href="#论文整体思路" class="headerlink" title="论文整体思路"></a>论文整体思路</h2><p>该论文将后门攻击大致分为了两类：</p>
+<ul>
+<li>数值级</li>
+<li>二进制级</li>
+</ul>
+<h2 id="数值后门-Numeric-Level-Backdoor"><a href="#数值后门-Numeric-Level-Backdoor" class="headerlink" title="数值后门 Numeric-Level Backdoor"></a>数值后门 Numeric-Level Backdoor</h2><p>数值级别后门是通过修改模型的神经元权重来改变模型的行为的，通常通过嵌入污染的训练数据来达到此效果。<br>数值级别后门又可以细分为以下几类：</p>
+<ul>
+<li>通过训练数据投毒嵌入后门 Trojan Insertion by Training Data Poisoning</li>
+<li>通过修改网络计算操作嵌入后门 Trojan Insertion without Poisoning</li>
+<li>隐藏后门触发特征 Hiding Trojan Triggers</li>
+<li>通过迁移学习嵌入后门 Neural Trojan Insertion in Transfer Learning</li>
+</ul>
+<h2 id="二进制后门-Binary-Level-Backdoor"><a href="#二进制后门-Binary-Level-Backdoor" class="headerlink" title="二进制后门 Binary-Level Backdoor"></a>二进制后门 Binary-Level Backdoor</h2><p>二进制级别后门则是通过直接修改控制神经网络训练的代码实现后门嵌入的。<br>文章给出两个基于供应链的后门嵌入研究，两项研究都是将后门嵌入代码伪装成为正常的插件，然后通过该插件控制模型训练行为，达到嵌入模型后门的效果。<br>除此之外，本部分还给出一种位翻转的后门嵌入方法，该方法有以下步骤：</p>
+<ul>
+<li>使用梯度排名从最后一层神经元中找出对结果影响最大的 bit 位</li>
+<li>使用最小优化技术获得 trigger</li>
+<li>比较原权重矩阵和优化后的恶意权重矩阵决定要翻转的 bit 位</li>
+<li>然后在主存中使用 raw-hammer 技术将特定的 bit 位翻转</li>
+</ul>
+<h2 id="其他攻击"><a href="#其他攻击" class="headerlink" title="其他攻击"></a>其他攻击</h2><p>文章还研究了针对神经网络的其他攻击，大致可以将其他攻击分为：</p>
+<ul>
+<li>数据投毒攻击</li>
+<li>探索性攻击</li>
+</ul>
+<h3 id="数据投毒攻击-Poisoning-Attack"><a href="#数据投毒攻击-Poisoning-Attack" class="headerlink" title="数据投毒攻击 Poisoning Attack"></a>数据投毒攻击 Poisoning Attack</h3><p>大多数机器学习算法假定了训练数据集的完整性，然而该假设是容易被打破的。数据投毒攻击的主要目标是<strong>降低模型的准确率</strong>。这也是后门攻击与投毒攻击的主要区别：</p>
+<ul>
+<li>投毒：降低模型准确率</li>
+<li>后门：在不降低模型准确率的前提下，嵌入恶意后门，使得存在后门的样本被误分类</li>
+</ul>
+<h3 id="探索性攻击-Exploratory-Attack"><a href="#探索性攻击-Exploratory-Attack" class="headerlink" title="探索性攻击 Exploratory Attack"></a>探索性攻击 Exploratory Attack</h3><p>此处文章给出两种探索性攻击：</p>
+<ul>
+<li>白盒条件</li>
+<li>黑盒条件</li>
+</ul>
+<h4 id="白盒-white-box"><a href="#白盒-white-box" class="headerlink" title="白盒 white-box"></a>白盒 white-box</h4><p>白盒下的攻击通常是利用 FGSM 等方法生成对抗性样本。</p>
+<h4 id="黑盒-black-box"><a href="#黑盒-black-box" class="headerlink" title="黑盒 black-box"></a>黑盒 black-box</h4><p>黑盒下的攻击通常是首先通过模型萃取攻击，在本地生成一个替代模型，然后基于该模型进行对抗样本的生成。</p>
+<p>这是基于对抗样本的可转移性。</p>
+<h2 id="防御手段-Defense-Techniques"><a href="#防御手段-Defense-Techniques" class="headerlink" title="防御手段 Defense Techniques"></a>防御手段 Defense Techniques</h2><p>针对后门的防御手段可以大致被分为四类：</p>
+<ul>
+<li>神经网络验证 Neural Network Verification</li>
+<li>后门特征检测 Trojan Trigger Detection</li>
+<li>后门网络复原 Compromised Neural Network Restoratioin</li>
+<li>后门绕过方案 Trojan Bypass Schemes</li>
+</ul>
+<h3 id="神经网络验证-Neural-Network-Verification"><a href="#神经网络验证-Neural-Network-Verification" class="headerlink" title="神经网络验证 Neural Network Verification"></a>神经网络验证 Neural Network Verification</h3><p>通过验证神经网络的有效性可以识别任何后门造成的异常，基于此文章给出了两个相关工作：</p>
+<ul>
+<li>NPAQ:给定一组参数 P 和训练好的网络 N，可以确定 P 在 N 上的效果，以此识别后门</li>
+<li>Sensitive-Sample Fingerprinting:给定一组对于网络参数十分敏感的样本，以此类样本的分类结果判断是否存在后门</li>
+</ul>
+<h3 id="后门特征检测-Trojan-Trigger-Detection"><a href="#后门特征检测-Trojan-Trigger-Detection" class="headerlink" title="后门特征检测 Trojan Trigger Detection"></a>后门特征检测 Trojan Trigger Detection</h3><p>由于后门触发特征的特异性（可以指定），因此给后门触发特征的检测带来很大的挑战。但是现有工作 <code>Yuntao Liu, Yang Xie, and Ankur Srivastava. 2017. Neural trojans.</code> 也证明了使用先进的异常检测分类器也可以检测到后门触发特征，尽管代价是提高误报率。</p>
+<p>其一是，通过评估训练输入对神经模型准确性的影响来检测木马触发器。</p>
+<p>其二是，最近的研究使用 <code>provenance data</code> 也就是 <code>meta-data</code> 元数据，根据样本是后门触发概率或者有毒输入的概率来对训练数据进行分组。然后进行分组训练验证是否对模型准确率有损害，如果是则是既有可能该组存在后门触发特征样本。</p>
+<p>其他如 <code>ABS</code>、<code>RONI</code>、<code>PS</code> 也是与二相似。</p>
+<p>其三是，<code>DeepInspect</code> 在最小化模型知识与无训练数据的情况下进行后门检测，具体步骤为三步如下：</p>
+<ul>
+<li>翻转神经网络，获得一个训练数据集，替代原训练数据集</li>
+<li>条件 GAN 网络重建可能的后门触发特征</li>
+<li>为已识别的触发特征计算异常检测值，该值表示一个数据点所属类别与网络返回类别不同的可能性</li>
+</ul>
+<p>其四是，<code>STRIP</code> 向样本添加了强扰动，添加扰动前后类别保持一致的被认为是包含后门触发特征的样本，不同的则是良性样本。</p>
+<p>其五是，<code>ULPs</code> 通过优化输入图像使其成为可以作为模型是否包含后门的标识器，因此不需要训练数据即可检测后门。</p>
+<p>其六是，<strong><code>Detecting AI Trojans Using Meta Neural Analysis</code></strong> 提出使用元神经元分析（meta neural analysis）来检测后门。提出了两种技术来训练一个元分类器（meta-classifier）：</p>
+<ul>
+<li>仅使用良性网络来拟合元分类器的 one-class learning</li>
+<li>拟合近似后门网络通用分布，并对其采样来训练元分类器的 jumbo learning</li>
+</ul>
+<p>其七是，无监督异常检测，在对训练数据无访问的条件下，通过控制训练好的网络和良性样本，通过诱导分类器误分类，学习其最小扰动来进行后门的检测。</p>
+<h3 id="后门网络复原-Restoring-Compromised-Neural-Models"><a href="#后门网络复原-Restoring-Compromised-Neural-Models" class="headerlink" title="后门网络复原 Restoring Compromised Neural Models"></a>后门网络复原 Restoring Compromised Neural Models</h3><p>在此部分介绍了两种复原方式：</p>
+<ul>
+<li>模型修正 Model Correction</li>
+<li>基于触发特征的后门逆向 Trigger-based Trojan Reversing</li>
+</ul>
+<p>详见原文。</p>
+<h3 id="后门网络绕过-Bypassing-Neural-Trojans"><a href="#后门网络绕过-Bypassing-Neural-Trojans" class="headerlink" title="后门网络绕过 Bypassing Neural Trojans"></a>后门网络绕过 Bypassing Neural Trojans</h3><p>此类方法主要是通过预处理的方法移除数据集中的后门特征。</p>
+<p>详见原文。</p>
+<h3 id="良性后门利用-Using-Neural-Trojans-for-Good"><a href="#良性后门利用-Using-Neural-Trojans-for-Good" class="headerlink" title="良性后门利用 Using Neural Trojans for Good"></a>良性后门利用 Using Neural Trojans for Good</h3><p>也存在良性的后门利用方式，具体如下：</p>
+<ul>
+<li>模型水印 watermark</li>
+<li>后门蜜罐</li>
+</ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
     </div>
 
@@ -251,13 +324,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/" rel="prev" title="An Overview of Backdoor Attacks Against Deep Neural Networks and Possible Defences">
-      <i class="fa fa-chevron-left"></i> An Overview of Backdoor Attacks Against Deep Neural Networks and Possible Defences
+    <a href="/2022/07/14/Backdoor-Attacks-and-Countermeasures-on-Deep-Learning-A-Comprehensive-Review/" rel="prev" title="Backdoor Attacks and Countermeasures on Deep Learning: A Comprehensive Review">
+      <i class="fa fa-chevron-left"></i> Backdoor Attacks and Countermeasures on Deep Learning: A Comprehensive Review
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/07/20/A-Survey-on-Neural-Trojans/" rel="next" title="A Survey on Neural Trojans">
-      A Survey on Neural Trojans <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -316,7 +386,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">目录</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BA%E6%96%87%E6%95%B4%E4%BD%93%E6%80%9D%E8%B7%AF"><span class="nav-number">1.</span> <span class="nav-text">论文整体思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E5%80%BC%E5%90%8E%E9%97%A8-Numeric-Level-Backdoor"><span class="nav-number">2.</span> <span class="nav-text">数值后门 Numeric-Level Backdoor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%90%8E%E9%97%A8-Binary-Level-Backdoor"><span class="nav-number">3.</span> <span class="nav-text">二进制后门 Binary-Level Backdoor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%94%BB%E5%87%BB"><span class="nav-number">4.</span> <span class="nav-text">其他攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%8A%95%E6%AF%92%E6%94%BB%E5%87%BB-Poisoning-Attack"><span class="nav-number">4.1.</span> <span class="nav-text">数据投毒攻击 Poisoning Attack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A2%E7%B4%A2%E6%80%A7%E6%94%BB%E5%87%BB-Exploratory-Attack"><span class="nav-number">4.2.</span> <span class="nav-text">探索性攻击 Exploratory Attack</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%99%BD%E7%9B%92-white-box"><span class="nav-number">4.2.1.</span> <span class="nav-text">白盒 white-box</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%BB%91%E7%9B%92-black-box"><span class="nav-number">4.2.2.</span> <span class="nav-text">黑盒 black-box</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%B2%E5%BE%A1%E6%89%8B%E6%AE%B5-Defense-Techniques"><span class="nav-number">5.</span> <span class="nav-text">防御手段 Defense Techniques</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%AA%8C%E8%AF%81-Neural-Network-Verification"><span class="nav-number">5.1.</span> <span class="nav-text">神经网络验证 Neural Network Verification</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E9%97%A8%E7%89%B9%E5%BE%81%E6%A3%80%E6%B5%8B-Trojan-Trigger-Detection"><span class="nav-number">5.2.</span> <span class="nav-text">后门特征检测 Trojan Trigger Detection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E9%97%A8%E7%BD%91%E7%BB%9C%E5%A4%8D%E5%8E%9F-Restoring-Compromised-Neural-Models"><span class="nav-number">5.3.</span> <span class="nav-text">后门网络复原 Restoring Compromised Neural Models</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E9%97%A8%E7%BD%91%E7%BB%9C%E7%BB%95%E8%BF%87-Bypassing-Neural-Trojans"><span class="nav-number">5.4.</span> <span class="nav-text">后门网络绕过 Bypassing Neural Trojans</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%89%AF%E6%80%A7%E5%90%8E%E9%97%A8%E5%88%A9%E7%94%A8-Using-Neural-Trojans-for-Good"><span class="nav-number">5.5.</span> <span class="nav-text">良性后门利用 Using Neural Trojans for Good</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
