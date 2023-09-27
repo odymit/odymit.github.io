@@ -1,0 +1,274 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>ATLAS: A Sequence-based Learning Approach for Attack Investigation | odymit's blog</title><meta name="author" content="odymit"><meta name="copyright" content="odymit"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="abstract 1In this paper, we present ATLAS, a framework that constructs an end-to-end attack story from off-the-shelf audit logs. Our key observation is that different attacks may share similar abstrac">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ATLAS: A Sequence-based Learning Approach for Attack Investigation">
+<meta property="og:url" content="http://odymit.github.io/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/index.html">
+<meta property="og:site_name" content="odymit&#39;s blog">
+<meta property="og:description" content="abstract 1In this paper, we present ATLAS, a framework that constructs an end-to-end attack story from off-the-shelf audit logs. Our key observation is that different attacks may share similar abstrac">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://odymit.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2021-08-10T16:03:09.000Z">
+<meta property="article:modified_time" content="2023-09-27T11:38:20.134Z">
+<meta property="article:author" content="odymit">
+<meta property="article:tag" content="攻击检测">
+<meta property="article:tag" content="自然语言处理">
+<meta property="article:tag" content="机器学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://odymit.github.io/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://odymit.github.io/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ATLAS: A Sequence-based Learning Approach for Attack Investigation',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-09-27 19:38:20'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">113</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">82</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">14</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="odymit's blog"><span class="site-name">odymit's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">ATLAS: A Sequence-based Learning Approach for Attack Investigation</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-08-10T16:03:09.000Z" title="Created 2021-08-11 00:03:09">2021-08-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-09-27T11:38:20.134Z" title="Updated 2023-09-27 19:38:20">2023-09-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/papers/">papers</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/papers/abstract/">abstract</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="ATLAS: A Sequence-based Learning Approach for Attack Investigation"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="abstract">abstract</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">In this paper, we present ATLAS, a framework that constructs an end-to-end attack story from off-the-shelf audit logs. Our key observation is that different attacks may share similar abstract attack strategies, regardless of the vulnerabilities exploited and payloads executed. ATLAS leverages a novel combination of causality analysis, natural language processing, and machine learning techniques to build a sequence-based model, which establishes key patterns of attack and non-attack behaviors from a causal graph. At inference time, given a threat alert event, an attack symptom node in a causal graph is identified. ATLAS then constructs a set of candidate sequences associated with the symptom node, uses the sequence-based model to identify nodes in a sequence that contribute to the attack, and unifies the identified attack nodes to construct an attack story.</span><br></pre></td></tr></table></figure>
+<p>文章abstract中指出：</p>
+<ul>
+<li>提出一个端到端攻击事件构建框架，该框架基于审计日志来进行攻击事件的构建；</li>
+<li>此框架的主要原理是不同的技术用于实现相同的战术目的；</li>
+<li>ATLAS框架集成了因果分析、自然语言处理和机器学习来构建基于序列的模型，该序列模型是从因果图中识别攻击的主要特征；</li>
+<li>在推理阶段，给出威胁告警，该框架可以在因果图上识别出攻击节点（attack symptom node）；</li>
+<li>使用识别出的攻击节点可以构建攻击事件和攻击因果图。</li>
+</ul>
+<p>本文是发表在信安顶会 USENIX 2021 上的文章，结合了自然语言处理、机器学习方法，值得借鉴学习。源码和数据在：<a target="_blank" rel="noopener" href="https://github.com/purseclab/ATLAS">https://github.com/purseclab/ATLAS</a>.</p>
+<span id="more"></span>
+<h2 id="通过案例来解释框架">通过案例来解释框架</h2>
+<p><img src="/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/casual_grpah.png" alt="因果图"></p>
+<p>如上图<code>a</code> 所示，框架首先会构建因果图，然后基于因果图进行攻击行为的识别，如虚线红框中的 <code>alpha</code> 虚线所代表的行为即为识别出的攻击。</p>
+<p>作者认为在一系列攻击中每个攻击都跟上下文有关，这跟自然语言中每一句话都跟上下文有关是相同的。基于此原理，他们认为提取出的三元组序列可以训练获得在不同APT攻击上有效的模型。因为即使底层的审计记录不同，他们还是拥有相同的上下文语义，或者说战术目的。</p>
+<p>在推理阶段会定义攻击节点（attack symptom node），表示这些节点出现在攻击告警中，可能发动攻击行为。以攻击节点为基础，拓展攻击节点的候选节点序列，这些候选节点是跟攻击节点相邻的节点，然后使用模型来识别这些节点是否有助于完成进一步攻击。</p>
+<p>如上图中 <code>b</code> 所示，通过这些攻击节点就可以构建攻击事件记录了。而图中 <code>c</code> 则是攻击事件的因果图表示，为完整因果图的子图，描述攻击行为因果关系。</p>
+<h2 id="ATLAS架构">ATLAS架构</h2>
+<p><img src="/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/ATLAS_architecture.png" alt="架构图"></p>
+<p>整个 <code>ATLAS</code> 分为两个部分，一个部分是训练，另一个部分是使用该模型进行攻击识别。</p>
+<p>在训练部分：</p>
+<ul>
+<li>审计记录作为输入，从审计记录中抽取实体和关系构建因果图</li>
+<li>从图中抽取并构建序列</li>
+<li>对序列进行词形还原</li>
+<li>选择性序列抽样</li>
+<li>序列嵌入，将序列转换成数值向量的表示形式</li>
+<li>将向量送入 <code>LSTM</code> 中进行训练得到模型</li>
+</ul>
+<h2 id="设计中存在的挑战">设计中存在的挑战</h2>
+<ol>
+<li>
+<p>如何构建序列来对合法活动和可以活动建模</p>
+<p>目的是找到更好的序列表示方式，可以更好地区分合法活动和恶意攻击，并且从不同的审计日志类型中提取出来。</p>
+<p>在传统的序列提取方式中，存在两个问题，一个是存在着大量的单一实体，比如一个进程具有多个实例；相同的攻击特征出现在不同的进程中会导致不同的序列会出现相同或者极度相似的上下文。</p>
+<p>这两个问题会影响模型收敛和学习的精度，可能导致梯度消失或者梯度爆炸。</p>
+<p><code>ATLAS</code> 对此进行了图优化，来降低图的复杂度。</p>
+</li>
+<li>
+<p>攻击模型训练时数据集中的非攻击序列过多而攻击序列过少，这是由于攻击和日志的特点导致的</p>
+<p>在这样数据集下训练出来的模型会倾向于非公集序列，会导致大量攻击序列未被检测到。</p>
+<p>对于此问题，<code>ATLAS</code> 对非攻击序列欠采样对攻击序列过采样，平衡两类攻击的比例。</p>
+</li>
+<li>
+<p>尽管训练好的模型可以进行任意序列的预测，但是输入的序列是专家临时生成的，可能需要大量的序列发现</p>
+<p>对于此问题，<code>ATLAS</code> 引入了攻击调查阶段（attack investigate phase），在该阶段将会对审计日志进行攻击识别等操作。</p>
+<p>因此可以恢复出攻击实体来帮助进行构建攻击事件。</p>
+</li>
+</ol>
+<h2 id="审计日志预处理">审计日志预处理</h2>
+<p><img src="/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/graph_preprocess.png" alt="因果图优化"></p>
+<p>此处解决挑战1中提出的问题，存在大量单一实体，例子是同一个进程具有多个线程实例。在此处将多个节点聚合为一个节点，降低图的复杂度。</p>
+<p>为了优化因果图的复杂度，<code>ATLAS</code> 使用了三种方法：取消所有不跟攻击节点相连的点和边；去除所有重复的边；合并同类节点和边。</p>
+<h2 id="序列构建和训练学习">序列构建和训练学习</h2>
+<p>在本步骤内会进行：打标签、攻击序列提取、数据平衡采样、词嵌入，然后训练学习。</p>
+<h3 id="因果图构建与攻击序列提取">因果图构建与攻击序列提取</h3>
+<p><img src="/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/sequence_extraction.png" alt="攻击序列提取"></p>
+<p>攻击实体子集，集合中全为因果图中攻击实体的集合，且实体个数 <code>&lt;= 2</code>  .</p>
+<p>因果图构建与攻击序列提取步骤如下：</p>
+<ul>
+<li>对于每一个攻击实体子集中的攻击实体， 获得他们的邻居图，此步骤将会使 <code>ATLAS</code> 捕获所有与攻击实体有因果关系的实体</li>
+<li><code>ATLAS</code> 从邻居图中获取带有时间戳的攻击事件</li>
+<li>将提取出来的带有时间戳的攻击事件转化成攻击序列</li>
+</ul>
+<p>非攻击序列的提取与攻击序列相似，但是由于非攻击序列非常多，所以会遇到处理时指数爆炸的问题。而 <code>ATLAS</code> 不会从非攻击序列上学习特征，只会学习攻击学列和非攻击序列的边界。因此在攻击序列中添加一个非攻击节点，这样子会提取出一个非攻击序列。这样子 <code>ATLAS</code> 不但能够获得非攻击序列，而且能够准确地学习到攻击序列和非攻击序列的相似性和不同点。</p>
+<p>如上图 <code>c</code> 部分，序列 <code>&#123;A, B&#125;</code> 不跟任何事件匹配，所以标记为非攻击序列。</p>
+<h3 id="词形还原">词形还原</h3>
+<p><code>ATLAS</code> 使用词形还原的方式将序列转化为归一化的文本来表示序列特征。词形还原在自然语言中常用来处理同一个词的不同形式。如：将 <code>drove</code> 处理为 <code>drive</code>，将 <code>driving</code> 处理为 <code>drive</code>。</p>
+<p>这个处理将会获得序列的原始语义，有利于基于序列的模型学习。</p>
+<p><img src="/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/lemmatization.png" alt="词形还原表"></p>
+<p>举个例子：<code>&lt;/system/process/malicious.exe read /user/secret.pdf&gt; is transformed to &lt;system_process read user_file&gt;</code></p>
+<p>这些类型足以捕获因果图中实体的上下文、语义和句法相似性以及与其他单词的关系。</p>
+<h3 id="选择性序列取样">选择性序列取样</h3>
+<p>为了平衡训练集，<code>ATLAS</code> 首先使用相似度欠采样了非攻击序列，然后使用过采样机制随机变异了攻击序列，最后使得攻击序列数量和非攻击序列数量基本相同。</p>
+<p>当然最简单的方法是随机去除非攻击序列和重复攻击序列，但是论文中提及，这样处理会导致模型对攻击序列过拟合并且丢失了重要的非攻击序列的特征。</p>
+<p>具体的欠采样的做法如下：</p>
+<ul>
+<li>欠采样做法通过编辑距离（Levenshtein Distance）来进行样本欠采样，编辑距离用于两个字符串的差异程度的量化测量。以此确保了数据集中去除的是冗余的重复样本。</li>
+<li>编辑距离通常比较两个字符串之间的差异，在此处 <code>ATLAS</code>  计算的是编辑步骤的数量，例如在序列中添加或删除词汇表中的单词，来将序列转换为另一个词形还原序列。以此获得序列的编辑距离。</li>
+<li>实验发现 <code>80%</code> 准确率下的能获得好的采样比和去除高度相似的甚至相同的序列。</li>
+</ul>
+<p>具体的过采样方法如下：</p>
+<ul>
+<li>为了给训练用的攻击序列提供更好的多样性，采用了基于变异的过采样方法。</li>
+<li>在此项还原表中，有同一类型下的不同子类，如 <code>system_process， program_process</code>。在攻击序列进行词形还原后，将会对其中的实体进行同类型子类的替换。</li>
+<li>这不会从根本上改变攻击序列，但是增加了在用于模型训练的攻击中未触发的类似序列的数量，由于上下文差异，在其他攻击中仍可能发生。</li>
+</ul>
+<h3 id="序列嵌入和模型训练">序列嵌入和模型训练</h3>
+<h3 id="序列嵌入">序列嵌入</h3>
+<p><code>ATLAS</code> 在模型训练时结合词嵌入将词形还原后的序列转化成数值向量。常用的词嵌入方式有 <code>word-representing、word2vec</code>，由此生成的词向量可以准确地表示不同词之间的语义关系。序列的向量可以定义了序列实体表中特定域之间的语义关系，有助于在模型训练时突出不同序列的特征。</p>
+<p>训练词向量的语料库包含所有从审计日志中提取出来的攻击序列和非攻击序列。</p>
+<p>这种序列嵌入的方法相比其他的比如 <code>one-hot-encoding</code> 的方法具有更好的效果。</p>
+<h3 id="基于序列的模型训练">基于序列的模型训练</h3>
+<p><code>ATLAS</code> 使用了 <code>LSTM</code> 网络来学习序列特征。<code>LSTM</code> 是一种常用的模型，并且已经证明在很多基于序列的学习中具有良好的效果。</p>
+<p>模型同样包含一个 <code>CNN</code> 网络，该网络可以帮助模型捕获具有隐蔽性和动态变化性的 <code>APT</code> 攻击。模型使用了 <code>dropout</code> 层来降低过拟合并提高泛化性，使用了带 <code>Max pooling</code> 的 <code>Conv1D</code> 层来处理序列，带 <code>Sigmoid</code> 激活函数的全连接层来预测攻击序列关联的可能性。这个模型在试验中获得了相比其他架构更好的准确率。</p>
+<h2 id="攻击调查">攻击调查</h2>
+<p>在此部分就是部署模型进行攻击调查，攻击调查包含攻击实体识别、攻击事件恢复和涉及多主机攻击的处理。</p>
+<p><img src="/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/attack_recovery.png" alt="攻击事件还原"></p>
+<h2 id="具体效果">具体效果</h2>
+<p>数据集：</p>
+<ul>
+<li>缺少公开数据集，根据公开数据集记录做的 <code>APT</code> 攻击复现，并且模拟了正常用户的活动</li>
+</ul>
+<p><img src="/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/results.png" alt="试验结果"></p>
+<p>最后，作者分析了结果中的假阳性和假阴性，并且分析了各个组成部分的优化和对于最后结果的支撑。</p>
+<h3 id="因果图">因果图</h3>
+<p>定制的因果图生成算法，降低了图的复杂性，有助于改进序列构造的算法。</p>
+<p><img src="/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/graph_optimization.png" alt="图优化效果"></p>
+<p>###　选择性序列采样</p>
+<p><img src="/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/sampling.png" alt="采样优化"></p>
+<p>测试结果显示，采样优化后训练时间减少了约 <code>87%</code>。并且非攻击序列的抽取，抽取了初始序列的 <code>22%</code> 左右作为高代表性的训练集，这有效的提高了模型准确率。</p>
+<h2 id="总结">总结</h2>
+<p>作者详细介绍了整个模型的搭建过程和原理，并给出了源码和实验数据：<a target="_blank" rel="noopener" href="https://github.com/purseclab/ATLAS">https://github.com/purseclab/ATLAS</a>.</p>
+<p>得出结果后，给出了结果假阳性和假阴性的分析，以及模型有效性的分析。</p>
+<p>可以参考其模型设计和优化思路，特别是机器学习相关模型中的数据预处理和数据集比例等。最近也在做图神经网络相关的工作，图的设计和生成可以参考此文的优化思路。</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css"></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://odymit.github.io">odymit</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://odymit.github.io/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/">http://odymit.github.io/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%94%BB%E5%87%BB%E6%A3%80%E6%B5%8B/">攻击检测</a><a class="post-meta__tags" href="/tags/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/">自然语言处理</a><a class="post-meta__tags" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/08/14/HOLMES-Real-time-APT-Detection-through-Correlation-of-Suspicious-Information-Flows/" title="HOLMES: Real-time APT Detection through Correlation of Suspicious Information Flows"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">HOLMES: Real-time APT Detection through Correlation of Suspicious Information Flows</div></div></a></div><div class="next-post pull-right"><a href="/2021/07/13/%E5%9F%BA%E4%BA%8E%E6%94%BB%E5%87%BB%E8%B7%AF%E5%BE%84%E5%9B%BE%E7%9A%84%E5%85%A5%E4%BE%B5%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB/" title="基于攻击路径图的入侵意图识别"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info">基于攻击路径图的入侵意图识别</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2021/09/03/APT-%E6%94%BB%E5%87%BB%E6%A3%80%E6%B5%8B%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/" title="APT 攻击检测相关工作总结"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-09-03</div><div class="title">APT 攻击检测相关工作总结</div></div></a></div><div><a href="/2022/04/20/CONAN-A-Practical-Real-Time-APT-Detection-System-With-High-Accuracy-and-Efficiency/" title="CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-20</div><div class="title">CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency</div></div></a></div><div><a href="/2021/08/26/DeepHunter-A-Graph-Neural-Network-Based-Approach-for-Robust-Cyber-Threat-Hunting/" title="DeepHunter: A Graph Neural Network Based Approach for Robust Cyber Threat Hunting"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-26</div><div class="title">DeepHunter: A Graph Neural Network Based Approach for Robust Cyber Threat Hunting</div></div></a></div><div><a href="/2021/08/14/HOLMES-Real-time-APT-Detection-through-Correlation-of-Suspicious-Information-Flows/" title="HOLMES: Real-time APT Detection through Correlation of Suspicious Information Flows"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-14</div><div class="title">HOLMES: Real-time APT Detection through Correlation of Suspicious Information Flows</div></div></a></div><div><a href="/2022/06/16/Needle-in-a-Haystack-Attack-Detection-from-Large-Scale-System-Audit/" title="Needle in a Haystack: Attack Detection from Large-Scale System Audit"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-06-16</div><div class="title">Needle in a Haystack: Attack Detection from Large-Scale System Audit</div></div></a></div><div><a href="/2021/08/27/UNICORN-Runtime-Provenance-Based-Detector-for-Advanced-Persistent-Threats/" title="UNICORN: Runtime Provenance-Based Detector for Advanced Persistent Threats"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-27</div><div class="title">UNICORN: Runtime Provenance-Based Detector for Advanced Persistent Threats</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">odymit</div><div class="author-info__description">Reading, thinking and writing.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">113</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">82</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">14</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/odymit" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://github.com/odymithttps://stackoverflow.com/users/15737405/odymit" target="_blank" title="Stack Overflow"><i class="fab fa-stack-overflow" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:inbox.odymit@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Peace and love!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#abstract"><span class="toc-number">1.</span> <span class="toc-text">abstract</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E6%A1%88%E4%BE%8B%E6%9D%A5%E8%A7%A3%E9%87%8A%E6%A1%86%E6%9E%B6"><span class="toc-number">2.</span> <span class="toc-text">通过案例来解释框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ATLAS%E6%9E%B6%E6%9E%84"><span class="toc-number">3.</span> <span class="toc-text">ATLAS架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E4%B8%AD%E5%AD%98%E5%9C%A8%E7%9A%84%E6%8C%91%E6%88%98"><span class="toc-number">4.</span> <span class="toc-text">设计中存在的挑战</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%A1%E8%AE%A1%E6%97%A5%E5%BF%97%E9%A2%84%E5%A4%84%E7%90%86"><span class="toc-number">5.</span> <span class="toc-text">审计日志预处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%8F%E5%88%97%E6%9E%84%E5%BB%BA%E5%92%8C%E8%AE%AD%E7%BB%83%E5%AD%A6%E4%B9%A0"><span class="toc-number">6.</span> <span class="toc-text">序列构建和训练学习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%A0%E6%9E%9C%E5%9B%BE%E6%9E%84%E5%BB%BA%E4%B8%8E%E6%94%BB%E5%87%BB%E5%BA%8F%E5%88%97%E6%8F%90%E5%8F%96"><span class="toc-number">6.1.</span> <span class="toc-text">因果图构建与攻击序列提取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%8D%E5%BD%A2%E8%BF%98%E5%8E%9F"><span class="toc-number">6.2.</span> <span class="toc-text">词形还原</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E6%80%A7%E5%BA%8F%E5%88%97%E5%8F%96%E6%A0%B7"><span class="toc-number">6.3.</span> <span class="toc-text">选择性序列取样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%8F%E5%88%97%E5%B5%8C%E5%85%A5%E5%92%8C%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="toc-number">6.4.</span> <span class="toc-text">序列嵌入和模型训练</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%8F%E5%88%97%E5%B5%8C%E5%85%A5"><span class="toc-number">6.5.</span> <span class="toc-text">序列嵌入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%BA%8F%E5%88%97%E7%9A%84%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="toc-number">6.6.</span> <span class="toc-text">基于序列的模型训练</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%BB%E5%87%BB%E8%B0%83%E6%9F%A5"><span class="toc-number">7.</span> <span class="toc-text">攻击调查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B7%E4%BD%93%E6%95%88%E6%9E%9C"><span class="toc-number">8.</span> <span class="toc-text">具体效果</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%A0%E6%9E%9C%E5%9B%BE"><span class="toc-number">8.1.</span> <span class="toc-text">因果图</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">9.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/27/Topology-Aware-Network-Pruning-using-Multi-stage-Graph-Embedding-and-Reinforcement-Learning/" title="Topology-Aware Network Pruning using Multi-stage Graph Embedding and Reinforcement Learning">Topology-Aware Network Pruning using Multi-stage Graph Embedding and Reinforcement Learning</a><time datetime="2023-09-27T14:48:19.000Z" title="Created 2023-09-27 22:48:19">2023-09-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/27/centos-%E5%8D%B7%E7%AE%A1%E7%90%86/" title="centos volume management">centos volume management</a><time datetime="2023-09-27T11:32:31.000Z" title="Created 2023-09-27 19:32:31">2023-09-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/16/OpenBackdoor-A-Unified-Evaluation-of-Textual-Backdoor-Learning-Frameworks-and-Benchmarks/" title="OpenBackdoor: A Unified Evaluation of Textual Backdoor Learning: Frameworks and Benchmarks">OpenBackdoor: A Unified Evaluation of Textual Backdoor Learning: Frameworks and Benchmarks</a><time datetime="2023-03-16T02:17:04.000Z" title="Created 2023-03-16 10:17:04">2023-03-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/13/BACKDOORBOX-A-PYTHON-TOOLBOX-FOR-BACKDOOR-LEARNIN/" title="BACKDOORBOX: A PYTHON TOOLBOX FOR BACKDOOR LEARNIN">BACKDOORBOX: A PYTHON TOOLBOX FOR BACKDOOR LEARNIN</a><time datetime="2023-03-13T08:44:38.000Z" title="Created 2023-03-13 16:44:38">2023-03-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/12/BackdoorBench-A-Comprehensive-Benchmark-of-Backdoor-Learning/" title="BackdoorBench: A Comprehensive Benchmark of Backdoor Learning">BackdoorBench: A Comprehensive Benchmark of Backdoor Learning</a><time datetime="2023-03-12T14:06:43.000Z" title="Created 2023-03-12 22:06:43">2023-03-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By odymit</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

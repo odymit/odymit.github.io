@@ -1,0 +1,327 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>APT 攻击检测相关工作总结 | odymit's blog</title><meta name="author" content="odymit"><meta name="copyright" content="odymit"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本文将会总结过去几篇有关 APT 攻击检测相关的论文中提到的相关工作，从而能够较为清晰地认识当前在该领域内的前人工作和前沿技术，具体会总结以下几篇论文中的相关工作：  UNICORN: Runtime Provenance-Based Detector for Advanced Persistent Threats DeepHunter: A Graph Neural Network Based">
+<meta property="og:type" content="article">
+<meta property="og:title" content="APT 攻击检测相关工作总结">
+<meta property="og:url" content="http://odymit.github.io/2021/09/03/APT-%E6%94%BB%E5%87%BB%E6%A3%80%E6%B5%8B%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="odymit&#39;s blog">
+<meta property="og:description" content="本文将会总结过去几篇有关 APT 攻击检测相关的论文中提到的相关工作，从而能够较为清晰地认识当前在该领域内的前人工作和前沿技术，具体会总结以下几篇论文中的相关工作：  UNICORN: Runtime Provenance-Based Detector for Advanced Persistent Threats DeepHunter: A Graph Neural Network Based">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://odymit.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2021-09-03T09:49:39.000Z">
+<meta property="article:modified_time" content="2023-09-27T11:38:20.159Z">
+<meta property="article:author" content="odymit">
+<meta property="article:tag" content="攻击检测">
+<meta property="article:tag" content="APT">
+<meta property="article:tag" content="相关工作总结">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://odymit.github.io/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://odymit.github.io/2021/09/03/APT-%E6%94%BB%E5%87%BB%E6%A3%80%E6%B5%8B%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'APT 攻击检测相关工作总结',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-09-27 19:38:20'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">113</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">82</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">14</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="odymit's blog"><span class="site-name">odymit's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">APT 攻击检测相关工作总结</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-09-03T09:49:39.000Z" title="Created 2021-09-03 17:49:39">2021-09-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-09-27T11:38:20.159Z" title="Updated 2023-09-27 19:38:20">2023-09-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/papers/">papers</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/papers/abstract/">abstract</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="APT 攻击检测相关工作总结"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>本文将会总结过去几篇有关 APT 攻击检测相关的论文中提到的相关工作，从而能够较为清晰地认识当前在该领域内的前人工作和前沿技术，具体会总结以下几篇论文中的相关工作：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://omitedy.github.io/2021/08/27/UNICORN-Runtime-Provenance-Based-Detector-for-Advanced-Persistent-Threats/">UNICORN: Runtime Provenance-Based Detector for Advanced Persistent Threats</a></li>
+<li><a target="_blank" rel="noopener" href="https://omitedy.github.io/2021/08/26/DeepHunter-A-Graph-Neural-Network-Based-Approach-for-Robust-Cyber-Threat-Hunting/">DeepHunter: A Graph Neural Network Based Approach for Robust Cyber Threat Hunting</a></li>
+<li><a target="_blank" rel="noopener" href="https://omitedy.github.io/2021/08/14/HOLMES-Real-time-APT-Detection-through-Correlation-of-Suspicious-Information-Flows/">HOLMES: Real-time APT Detection through Correlation of Suspicious Information Flows</a></li>
+<li><a target="_blank" rel="noopener" href="https://omitedy.github.io/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/">ATLAS: A Sequence-based Learning Approach for Attack Investigation</a></li>
+</ul>
+<span id="more"></span>
+<h3 id="威胁狩猎方法（DeepHunter）">威胁狩猎方法（DeepHunter）</h3>
+<p>Poirot [1] 是跟 DeepHunter 相关的工作，在相关工作中提及，并在文章的 7.2 节中详细介绍后进行了性能对比。该章节中提到， Poirot 是当前威胁狩猎方法的前沿技术之一。Poirot 是一种基于启发式图特征匹配的算法，可以计算查询图和溯源图之间的图对齐分数。Poirot 根据查询图中的信息流在溯源图中搜索对齐的节点，在搜索的过程中忽略了攻击者不可能采取的路径。</p>
+<p>RapSheet [2] 是一种可以使用溯源图分析提升 EDR 威胁狩猎能力的方法，但是 RapSheet 需要攻击者攻击的完全路径都被保存在溯源图上进行告警关联。显然，断开连接的攻击溯源图无疑会降低 RapSheet 的性能。</p>
+<p>HOLMES [12] 和 NoDoze [3] 都采用了溯源图告警关联的方式进行 APT 检测和调查。</p>
+<p>为了检测隐蔽的恶意软件，ProvDetector [4] 提出了一种图表示学习方法来进行溯源图上的进程正常行为建模。</p>
+<p>然而以上这些方法，都会假设一个精确的正常行为数据库来减少错误告警。我们知道，随着良性行为的概念漂移，正常行为模型中有出现中毒攻击风险。此外，所有这些方法都是基于路径的方法，他们的健壮性可能会受到攻击溯源图不连通的影响。</p>
+<p>有些方法使用 IOC 或者威胁警报作为识别攻击行为的线索，如 zero-day [5] 和 C&amp;C [6]，但是这些方法忽略了指示器或者警报之间的关系，因此，可能带来高误报率。</p>
+<h3 id="溯源图分析（DeepHunter）">溯源图分析（DeepHunter）</h3>
+<p>溯源图分析广泛应用于 APT 攻击检测 [7]，取证分析 [8] 和攻击场景重建 [9, 10] 等领域。</p>
+<p>近期的工作有 [11, 12] 想要寻找关联低层系统事件和高层行为之间语义的方法。</p>
+<p>很多近期的工作，如 Morse [8], BEEP [13], MPI [14], and OmegaLog [11] 等，是为了解决溯源图中依赖爆炸的问题。</p>
+<p>SteamSpot [15] 将溯源图视为具有类型化节点和边的时态图，然后提出一种用于异常检测的图绘制算法。</p>
+<h3 id="图匹配算法（DeepHunter）">图匹配算法（DeepHunter）</h3>
+<p>图特征匹配和图相似度计算已经在许多实际应用中得到了应用，如二元函数相似性搜索 [16] 和硬件安全 [17]。在过去的几十年中，定义了许多图匹配度量，如图编辑距离/图同构等。其他基于 GNN 的图匹配算法有：MatchGNet [18]， SimGNN [19] and GMN [16]，在 DeepHunter 的第 7 章中有跟此三种算法的对比评估。</p>
+<p>DeepHunter 设计的图嵌入网络表示溯源图，并采用 GCN [20] 来表示溯源图。最后使用了一个强大的关系学习网络 NTN [21]，来学习计算匹配分数的度量。通过这种新的设计实践，可以建立用用于图模式匹配的 GNN 模型，该模型对威胁搜索中查询图和溯源图之间不同程度的不一会具有识别健壮性。</p>
+<h3 id="ATLAS">ATLAS</h3>
+<p>近期工作，从审计日志构建因果依赖图的研究成果有 [13, 22]，使用查询系统定位关键攻击阶段，如受损进程和恶意负载 [8, 12]。还有一些研究志于将机器学习技术应用在从日志中提取特征或者序列来进行自动攻击检测和失败接测 [10, 23]，而其他人也构建了通过事件关联发现不同日志事件之间的关联 [44]。</p>
+<h3 id="因果分析-ATLAS">因果分析 (ATLAS)</h3>
+<p>基于审计日志的因果方面，已经有很多先前的工作了，包括优化溯源图和报告一个简短的攻击故事 [13, 22, 25]. 这些研究方法需要在运行时通过源代码插装/静态二进制插装和动态程序插装进行系统修改。</p>
+<p>由于软件许可证的原因，源码级别的检测适用于专有软件，而静态和动态检测会给用户系统带来额外的开销，最近的工作提出了无需插装的方法 [2, 3, 11, 12, 26]，不需要对用户系统进行任何更改以进行起源跟踪。然而，这些方法中的大多数都是启发式的或者基于规则的，这需要花费大量的精力来开发和维护规则或者启发式算法。</p>
+<p>Holmes 和 RapSheet 依赖于对抗战术/技术和程序（TTP）的知识库 [27]，相比之下， ATLAS只需要攻击训练数据，就可以通过时序序列了解攻击步骤的共现情况。</p>
+<h3 id="基于异常检测的分析（ATLAS）">基于异常检测的分析（ATLAS）</h3>
+<p>基于异常的方法 [3, 4, 28, 29] 学习正常系统的异常系统行为来识别异常行为。基于异常的方法可以检测到未知攻击，但由于用户行为随时间变化以及缺乏足够的训练数据，他们很容易出现误报。例如：</p>
+<p>一个基于主机的入侵检测框架 UNICORN [30] 从正常的溯源图中学习到了正常行为模型来检测异常。</p>
+<p>PrioTracker [29] 使用统计信息对节点重要性进行排序，以更准确地报告真实的攻击事件。</p>
+<p>NoDoze [3] 通过在依赖关系图中计算和传播异常分数来减少假警报。</p>
+<p>Winnower [28] 通过注意多个集群实例之间的差异，为集群审计提供威胁警报。</p>
+<p>ProvDetector[4]通过从来源图中学习应用程序的正常执行路径序列来识别隐蔽恶意软件。</p>
+<p>Deeplog [23] 将现有审计日志建模为自然语言序列，并检测异常事件。</p>
+<p>最后，Log2vec [31] 提出了一个聚类框架，用于从系统日志中识别未发现的异常序列。</p>
+<p>ATLAS 类似于只学习用户行为的基于异常的方法，它学习攻击和非攻击（用户）序列，并利用它们的时间和因果关系来减少误报和漏报。</p>
+<h3 id="基于学习的分析（ATLAS）">基于学习的分析（ATLAS）</h3>
+<p>基于学习的攻击调查方法 [10, 32, 33] 使用机器学习技术对日志中的攻击事件进行建模。</p>
+<p>HERCULE [10] 使用社区检测算法关联攻击事件。与ATLAS相似，最近的一些著作 [32, 33] 使用单词 embedding 将文本信息（即序列）转换为向量，以促进其学习过程。但是，这些方法仅限于在日志中识别和报告单个攻击事件。与这些方法不同，ATLAS旨在定位攻击实体，并通过将每个实体与其事件关联来构建攻击故事。</p>
+<h3 id="UNICORN">UNICORN</h3>
+<p>最近很多工作 [12, 15, 34, 35, 36, 37] 指出对于 APT 检测来说，溯源图可能是一种更好的数据源。</p>
+<p>事实上，现在也有可用框架来进行溯源图构建 [38]，但是由于并发性，这种 post-hoc 方法很难确保图的正确性 [39]. 由于很容易绕过基于库包装器的系统调用捕获机制 [41]，而用户空间机制，例如ptrace，会产生不可接受的运行时性能开销 [40]，并且容易受到竞争条件的影响 [41]。同样的竞争条件问题也困扰着内核机制（如，systrace [42]，janus [43]），导致从检查到使用时间（TOCTOU）/从审计到使用时间（TOATOU）以及从更换到使用时间（TORTTOU）的错误。</p>
+<p>整个系统源代码收集在操作系统级别运行，捕获所有系统活动以及他们之间的交互 [39]。Hi-Fi [39]/ LPM [44] 和 CamFlow [36]等操作系统出处系统为信息流捕获提供了强大的安全性和完整性保证。这种完整性在 APT 场景中十分重要，因为它捕获了远距离因果关系，从而支持上下文分析，即使恶意代理操纵安全敏感内核对象来进行隐蔽，也能够根据上下文来进行关联发现。</p>
+<p>文章参照了 CamFlow [36] 作为参考实施，在第六章中可以知道，UNICORN 也可以和其他捕获机制一同工作。CanFlow 接受 Linux Security Modules(LSM) 框架[45] 的数据来确保高质量/可靠地记录数据对象之间的信息流[46, 47]。LSM通 过在内核内部而不是在系统调用接口处放置中介点来消除竞争条件（例如TOCTTOU攻击）。</p>
+<h3 id="基于图的异常检测（UNICORN）">基于图的异常检测（UNICORN）</h3>
+<p>Akoglu 等人根据图的属性（即静态与动态、普通与属性化）通过分类图确定异常检测的图或子图相似性[48]。</p>
+<p>Ding 等人 [30] 采用基于割点识别网络流量图中的恶意网络源识别方法，使用相似性度量（如介数）检测跨社区通信行为。</p>
+<p>Liu 等人 [50] 构建了一个软件行为图来描述程序执行，并使用支持向量机（SVM）根据闭合子图和频繁子图对非崩溃错误（不会导致程序崩溃的逻辑错误）进行分类。</p>
+<p>这些系统和许多其他图形挖掘算法 [51]、[52] 以及图形相似性度量（例如，图形内核[53]）仅针对静态图形设计，难以适应流式设置。</p>
+<p>Papadimitriou 等人 [54] 提出了五种用于动态网络图的相似性方案，NetSimile [55] 使用分布矩来聚合基于 egonet 的特征（例如，邻居的数量），从而对社交网络进行聚类。Aggarwal 等人 [56] 使用结构连接性模型来定义异常值，并设计一种储层取样方法，该方法能够可靠地维护同质图形流的结构abstract。</p>
+<p>然而，这些方法和其他面向流的方法 [57, 58, ]，要么是特定领域的（例如，书目网络的结构与来源图不同），要么主要适用于同质图.</p>
+<p>在恶意软件分类和入侵检测领域，Classy [59] 对调用图流进行聚类，以便于基于图形编辑距离（GED）[60] 对使用改进版模拟退火的图形对进行恶意软件分析。尽管其运行时复杂性适合于图流，但经验评估仅限于顶点不超过3000个的图；实际系统执行产生的图形数量级更大[47]。</p>
+<p>StreamSpot [15] 分析流式信息流图以检测异常活动。然而，StreamSpot的图形功能受到局部约束，在 UNICORN 的包含在执行上下文中。情境化图分析对检测性能有很大影响。此外，StreamSpot 只对每个训练图的一个快照建模，在测试期间动态维护其集群。但是，它会导致大量错误警报，从而为攻击者创建一个合适的时间窗口。我们也考虑这样的方法在 APT 场景中是不合适的，其中持久攻击者可以操作模型来逐渐地和缓慢地改变系统行为以避免检测。UNICORN充分利用其不断总结演进图的能力，对其监控的系统执行的相应演进进行建模。FRAPpuccino [61] 是另一种基于图形的入侵检测尝试。它使用一种窗口化方法来实现高效的图形分析。自然地，以这种方式分割溯源图会产生更有限的系统执行视图，不适合跨窗口的长期检测。</p>
+<h3 id="基于溯源图的安全分析">基于溯源图的安全分析</h3>
+<p>各种与安全相关的应用程序利用溯源图，主要用途有取证分析和攻击归因 [48]。</p>
+<p>BackTracker [62] 使用溯源图分析入侵，以识别入侵的入口点，而 Priorttracker [29] 优化了这一过程，并启用了前向跟踪功能，以便及时进行攻击因果关系分析。</p>
+<p>HERCULE [10] 通过发现溯源图中嵌入的攻击社区来分析入侵。</p>
+<p>Winnower [28] 通过对溯源图的语法推理来加速系统入侵调查，同时在不影响出处数据质量的情况下减少存储和网络开销。</p>
+<p>NoDoze [3] 在溯源图中执行攻击分类，以识别异常路径。Bates等人 [44] 是第一个使用源代码来防止数据丢失的人，Park等人 [63] 正式提出了基于源代码的访问控制（PBAC）的概念。Ma等人 [22] 设计了一个轻量级起源跟踪系统 ProTracer，以缓解依赖性爆炸问题，减少空间和运行时开销，促进基于起源的实际攻击调查。Pasquier等人 [47] 介绍了一种称为CamQuery的通用框架，该框架支持内联实时来源分析，展示了未来基于来源的安全应用的巨大潜力。</p>
+<p>最近，随着APT攻击日益突出，许多系统利用数据来源进行APT攻击分析。Holmes [12] 和 Sleuth [9] 主要关注利用数据来源提供的信息流进行攻击重建。他们的方法类似于Tariq等人 [64] 提出的一种架构，该架构使用数据源关联网格应用程序中的异常活动。异常检测模块本身使用一个简单的预定义模型，该模型依赖于现有APT杀伤链的专家知识，将可能利用漏洞的先验规范与图中的局部组件相匹配。</p>
+<p>Poirot [1] 产生了另一种形式的攻击重建。它将一系列折衷指标（由其他系统发现）关联起来，以识别APT。根据现有网络威胁情报报告和危害描述中的专家知识构建攻击查询图，Poirot在来源图上执行离线图模式匹配，以发现潜在的APT。例如，它使用红队的攻击描述手动绘制查询图，以关联第六章节评估中使用的DARPA数据集中的异常。这是一个关键的限制，因为编写一个新的APT类别的足够详细的描述需要大量的取证工作 [34]。</p>
+<p>UNICORN与这些基于规则的系统的不同之处在于，它是一个基于异常的系统，不需要APT攻击模式和行为的先验专家知识。尽管基于规则的方法与当今的商业实践密切相关（即，它们基本上是企业安全供应商提供的端点检测和响应（EDR）工具的源代码版本），但先前的研究表明，基于规则的EDR系统是“威胁疲劳问题”的主要贡献者。最近关于起源分析的工作（例如，NoDoze[3]）表明，历史上下文文本对于缓解这一问题至关重要；相反，UNICORN研究如何将上下文作为重要部分纳入 HIDS，而不是仅仅作为分类工具。</p>
+<p>Gao等人 [65] 利用复杂的事件处理平台，设计了一种特定于领域的查询语言 SAQL 来分析大规模流式来源数据。该系统结合了各种异常模型（例如，基于规则的异常）并跨多台主机聚合数据流，但最终需要专家领域知识来识别与查询匹配的元素/模式。我们还注意到，我们的溯源图分析能够隐式地（无需领域知识）合并其大多数异常模型（例如，基于不变量、时间序列和基于离群值）。Barre等人[34]挖掘数据来源以检测异常。他们的工作目标主要是识别可能与APT攻击相关的重要流程特征（例如，流程的生命周期和路径信息）。使用随机森林模型和手工挑选的过程特征，他们的系统的检测率只有50%左右。如此低的性能表明，在不考虑图拓扑的情况下对溯源图进行简单的特征工程，不足以检测隐藏的APT攻击。Berrada等人[35]提出了分数聚集技术，将来自不同异常检测器的异常分数结合起来，以提高检测性能。尽管他们的工作目标是APT检测的溯源图，但它与UNICORN（或任何其他检测器）的工作是相关的，因为它只作为现有异常检测系统的聚合器。</p>
+<h3 id="告警关联（Holmes）">告警关联（Holmes）</h3>
+<p>从历史上看，智能决策支持系统往往会产生对操作员来说数量太多、级别太低的警报。需要开发技术来总结这些低级警报，并大大减少它们的数量。</p>
+<p>有几种方法使用报警相关性，通过聚类相似报警和识别报警之间的因果关系来执行检测[66]、[67]、[68]、[69]、[70。例如，BotHunter[71]采用基于异常的方法来关联网络中内部和外部主机之间的对话。HERCULE [10] 使用社区发现技术关联可能分散在多个日志中的攻击步骤.</p>
+<p>此外，业界使用类似的方法来构建SIEMs [72]、[73]、[74]，以便基于来自不同数据源的日志进行警报关联和实施。这些方法依赖于在用户空间中运行的第三方应用程序生成的日志。此外，基于警报时间戳等统计特征的警报相关性无助于准确检测多阶段APT攻击，因为它们通常持续时间较长。</p>
+<p>与这些方法不同，HOLMES基于存在于不同攻击步骤之间的信息流来进行警报关联。在这种情况下使用内核审计数据是在[75]中首次提出的。然而，与HOLMES不同的是，这项工作纯粹是基于误用的，其重点是利用事件之间的相关性来检测IDS遗漏的攻击步骤。</p>
+<p>HOLMES使用了相同的内核审计数据，但采用了不同的方法，即构建内存占用率低的主内存依赖关系图，然后根据TTP的高级规范推导HSG以引发警报，最后根据警报之间的信息流关联警报。关于警报相关性的另一项工作依赖于警报在时间上的接近程度 [76]。相比之下，HOLMES依靠信息流和因果关系连接来关联警报，因此甚至能够检测执行步骤非常缓慢的攻击。</p>
+<h3 id="场景重建（Holmes）">场景重建（Holmes）</h3>
+<p>大量研究工作集中于在取证分析、调查和恢复中生成和使用系统调用级日志[13]、 [14]、[22]、[29]、[38]、[39]、[44]  、[55]、[77]、[78]、[79]、[80]、[81]。</p>
+<p>大多数取证分析方法可追溯到给定的攻击事件，以确定该攻击的原因。其中，BEEP[13]、ProTracer[22]和MPI[14]使用培训和代码工具和注释将流程执行划分为更小的单元，以解决依赖性爆炸问题，并提供更好的取证分析。PrioTracker[29]通过量化事件罕见性的概念来进行及时的因果关系分析，以确定异常因果依赖性调查的优先级。相比之下，HOLMES使用系统事件跟踪来执行实时检测，在检测框架中集成了取证功能，以高级攻击步骤的形式进行，而不需要仪器。</p>
+<p>最近的研究[9]、[47]、[82]使用系统调用级别日志进行实时分析。SLEUTH[9]介绍了用于攻击检测和现场取证的基于标签的技术。HOLMES在侦查方面取得了几项重大进展。首先，它展示了如何通过使用最小祖先覆盖的概念来解决依赖爆炸问题，并为其增量计算开发了一个有效的算法。其次，SLEUTH的场景图与溯源图处于同一抽象级别，对于许多分析师来说，溯源图的抽象级别可能太低，而且缺乏HSGs中的可操作信息。第三，在长时间运行的攻击中，SLEUTH的图可能变得太大，而HOLMES通过使用降噪和优先级技术生成紧凑的HSG。</p>
+<h3 id="攻击粒度">攻击粒度</h3>
+<p>有时，审计日志的粗粒度可能会限制对信息流的推理。例如，如果具有先前加载的敏感文件的进程被破坏，攻击者可以在其内存区域内搜索敏感内容，而无需使用系统调用。但是，当这些信息被过滤时，HOLMES会将过滤与该进程敏感文件（读取）的其他操作关联起来，并最终引发异常。此外，HOLMES还可以通过附加指令[83]、[84]或去耦污点跟踪[85]、[86]、[87]、[88]，利用附加工作，以更精细的粒度跟踪信息流。这种细粒度的信息流跟踪可以提供更精确的起源信息，但代价是性能开销。</p>
+<h3 id="参考文献">参考文献</h3>
+<p>[1] Milajerdi, S.M., Eshete, B., Gjomemo, R., Venkatakrishnan, V.: Poirot: Aligning attack behavior with kernel audit records for cyber threat hunting. In: Proceedings of the 2019 ACM SIGSAC Conference on Computer and Communications Security. pp. 1795–1812 (2019)</p>
+<p>[2] Hassan, W.U., Bates, A., Marino, D.: Tactical provenance analysis for endpoint detection and response systems. In: Proceedings of the IEEE Symposium on Security and Privacy (2020)</p>
+<p>[3] Hassan, W.U., Guo, S., Li, D., Chen, Z., Jee, K., Li, Z., Bates, A.: Nodoze: Combatting threat alert fatigue with automated provenance triage. In: NDSS (2019)</p>
+<p>[4] Wang, Q., Hassan, W.U., Li, D., Jee, K., Yu, X., Zou, K., Rhee, J., Chen, Z., Cheng, W., Gunter, C., et al.: You are what you do: Hunting stealthy malware via data provenance analysis. In: Proc. of the Symposium on Network and Distributed System Security (NDSS) (2020)</p>
+<p>[5] Sun, X., Dai, J., Liu, P., Singhal, A., Yen, J.: Using bayesian networks for proba- bilistic identification of zero-day attack paths. IEEE Transactions on Information Forensics and Security 13(10), 2506–2521 (2018)</p>
+<p>[6] Oprea, A., Li, Z., Yen, T.F., Chin, S.H., Alrwais, S.: Detection of early-stage en- terprise infection by mining large-scale log data. In: 2015 45th Annual IEEE/IFIP International Conference on Dependable Systems and Networks. pp. 45–56. IEEE (2015)</p>
+<p>[7] Xiong, C., Zhu, T., Dong, W., Ruan, L., Yang, R., Chen, Y., Cheng, Y., Cheng, S., Chen, X.: Conan: A practical real-time apt detection system with high accuracy and efficiency. IEEE Transactions on Dependable and Secure Computing (2020)</p>
+<p>[8] Hossain, M.N., Sheikhi, S., Sekar, R.: Combating dependence explosion in forensic analysis using alternative tag propagation semantics. In: 2020 IEEE Symposium on Security and Privacy (SP). IEEE (2020)</p>
+<p>[9] Hossain, M.N., Milajerdi, S.M., Wang, J., Eshete, B., Gjomemo, R., Sekar, R., Stoller, S., Venkatakrishnan, V.: {SLEUTH}: Real-time attack scenario recon- struction from {COTS} audit data. In: 26th {USENIX} Security Symposium ({USENIX} Security 17). pp. 487–504 (2017)</p>
+<p>[10] Pei, K., Gu, Z., Saltaformaggio, B., Ma, S., Wang, F., Zhang, Z., Si, L., Zhang, X., Xu, D.: Hercule: Attack story reconstruction via community discovery on correlated log graph. In: Proceedings of the 32Nd Annual Conference on Computer Security Applications. pp. 583–595 (2016)</p>
+<p>[11] Hassan, W.U., Noureddine, M.A., Datta, P., Bates, A.: Omegalog: High-fidelity attack investigation via transparent multi-layer log analysis. In: Proc. NDSS (2020)</p>
+<p>[12] Milajerdi, S.M., Gjomemo, R., Eshete, B., Sekar, R., Venkatakrishnan, V.: Holmes: real-time apt detection through correlation of suspicious information flows. In: 2019 IEEE Symposium on Security and Privacy (SP). pp. 1137–1152. IEEE (2019)</p>
+<p>[13] Lee, K.H., Zhang, X., Xu, D.: High accuracy attack provenance via binary-based execution partition. In: NDSS (2013)</p>
+<p>[14] Ma, S., Zhai, J., Wang, F., Lee, K.H., Zhang, X., Xu, D.: {MPI}: Multiple per- spective attack investigation with semantic aware execution partitioning. In: 26th {USENIX} Security Symposium ({USENIX} Security 17). pp. 1111–1128 (2017)</p>
+<p>[15] Manzoor, E., Milajerdi, S.M., Akoglu, L.: Fast memory-efficient anomaly detection in streaming heterogeneous graphs. In: Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining. pp. 1035–1044 (2016)</p>
+<p>[16] Li, Y., Gu, C., Dullien, T., Vinyals, O., Kohli, P.: Graph matching networks for learning the similarity of graph structured objects. In: Chaudhuri, K., Salakhutdi- nov, R. (eds.) Proceedings of the 36th International Conference on Machine Learn- ing. Proceedings of Machine Learning Research, vol. 97, pp. 3835–3845. PMLR, Long Beach, California, USA (09–15 Jun 2019), <a target="_blank" rel="noopener" href="http://proceedings.mlr.press/v97/li19d.html">http://proceedings.mlr.press/v97/li19d.html</a></p>
+<p>[17] Fyrbiak, M., Wallat, S., Reinhard, S., Bissantz, N., Paar, C.: Graph similarity and its applications to hardware security. IEEE Transactions on Computers 69(4), 505–519 (2019)</p>
+<p>[18] Wang, S., Chen, Z., Yu, X., Li, D., Ni, J., Tang, L.A., Gui, J., Li, Z., Chen, H., Yu, P.S.: Heterogeneous graph matching networks for unknown malware detection. In: Proceedings of the 28th International Joint Conference on Artificial Intelligence. pp. 3762–3770. AAAI Press (2019)</p>
+<p>[19] Bai, Y., Ding, H., Bian, S., Chen, T., Sun, Y., Wang, W.: Simgnn: A neural network approach to fast graph similarity computation. In: Proceedings of the Twelfth ACM International Conference on Web Search and Data Mining. pp. 384–392 (2019)</p>
+<p>[20] Kipf, T.N., Welling, M.: Semi-supervised classification with graph convolutional networks. arXiv preprint arXiv:1609.02907 (2016)</p>
+<p>[21] Socher, R., Chen, D., Manning, C.D., Ng, A.: Reasoning with neural tensor net- works for knowledge base completion. In: Advances in neural information process- ing systems. pp. 926–934 (2013)</p>
+<p>[22] Shiqing Ma, Xiangyu Zhang, and Dongyan Xu. Protracer: Towards practical provenance tracing by alternating between logging and tainting. In Network and Distributed Systems Security Symposium, 2016.</p>
+<p>[23] Min Du, Feifei Li, Guineng Zheng, and Vivek Srikumar. Deeplog: Anomaly detection and diagnosis from system logs through deep learning. In ACM SIGSAC Conference on Com- puter and Communications Security, 2017.</p>
+<p>[24] Riyanat Shittu, Alex Healing, Robert Ghanea-Hercock, Robin Bloomfield, and Muttukrishnan Rajarajan. Intrusion alert pri- oritisation and attack detection using post-correlation analysis. Computers &amp; Security, 50:1–15, 2015.</p>
+<p>[25] Yonghwi Kwon, Fei Wang, Weihang Wang, Kyu Hyung Lee, Wen-Chuan Lee, Shiqing Ma, Xiangyu Zhang, Dongyan Xu, Somesh Jha, Gabriela Ciocarlie, et al. Mci: Modeling-based causality inference in audit logging for attack investigation. In Network and Distributed Systems Security Symposium, 2018.</p>
+<p>[26] Runqing Yang, Shiqing Ma, Haitao Xu, Xiangyu Zhang, and Yan Chen. Uiscope: Accurate, instrumentation-free, and visi- ble attack investigation for gui applications. In Network and Distributed Systems Symposium, 2020.</p>
+<p>[27] MITRE. Mitre att&amp;ck. <a target="_blank" rel="noopener" href="https://attack.mitre.org/">https://attack.mitre.org/</a>, 2020. Accessed: 2020-06-06.</p>
+<p>[28] Wajih Ul Hassan, Mark Lemay, Nuraini Aguse, Adam Bates, and Thomas Moyer. Towards scalable cluster auditing through grammatical inference over provenance graphs. In Network and Distributed Systems Security Symposium, 2018.</p>
+<p>[29] Yushan Liu, Mu Zhang, Ding Li, Kangkook Jee, Zhichun Li, Zhenyu Wu, Junghwan Rhee, and Prateek Mittal. Towards a timely causality analysis for enterprise security. In Network and Distributed Systems Security Symposium, 2018.</p>
+<p>[30] Xueyuan Han, Thomas Pasquier, Adam Bates, James Mick- ens, and Margo Seltzer. Unicorn: Runtime provenance- based detector for advanced persistent threats. arXiv preprint arXiv:2001.01525, 2020.</p>
+<p>[31] Fucheng Liu, Yu Wen, Dongxue Zhang, Xihe Jiang, Xinyu Xing, and Dan Meng. Log2vec: A heterogeneous graph em- bedding based approach for detecting cyber threats within en- terprise. In Proceedings ofthe 2019 ACM SIGSAC Conference on Computer and Communications Security, 2019.</p>
+<p>[32] Yun Shen, Enrico Mariconti, Pierre Antoine Vervier, and Gi- anluca Stringhini. Tiresias: Predicting security events through deep learning. In ACM SIGSAC Conference on Computer and Communications Security, 2018.</p>
+<p>[33] Yun Shen and Gianluca Stringhini. Attack2vec: Leveraging temporal word embeddings to understand the evolution of cy- berattacks. In USENIX Security Symposium, 2019.</p>
+<p>[34] M. Barre, A. Gehani, and V. Yegneswaran, “Mining data provenance to detect advanced persistent threats,” in 11th International Workshop on Theory and Practice of Provenance (TaPP), 2019.</p>
+<p>[35] G. Berrada and J. Cheney, “Aggregating unsupervised provenance anomaly detectors,” in 11th International Workshop on Theory and Practice of Provenance (TaPP), 2019.</p>
+<p>[36] T. Pasquier, X. Han, M. Goldstein, T. Moyer, D. Eyers, M. Seltzer, and J. Bacon, “Practical whole-system provenance capture,” in Symposium on Cloud Computing. ACM, 2017, pp. 405–418.</p>
+<p>[37] L. Carata, S. Akoush, N. Balakrishnan, T. Bytheway, R. Sohan, M. Seltzer, and A. Hopper, “A primer on provenance,” ACM Queue, vol. 12, no. 3, p. 10, 2014.</p>
+<p>[38] A. Gehani anSadegh M. Milajerdi, Birhanu Eshete, Rigel Gjomemo, and V.N. Venkatakrishnan. Propatrol: Attack investigation via extracted high- level tasks. In International Conference on Information Systems Security. Springer, 2018.d D. Tariq, “Spade: support for provenance auditing in distributed environments,” in Middleware Conference. ACM/I- FIP/USENIX, 2012, pp. 101–120.</p>
+<p>[39] D. J. Pohly, S. McLaughlin, P. McDaniel, and K. Butler, “Hi-fi: col- lecting high-fidelity whole-system provenance,” in Computer Security Applications Conference. ACM, 2012, pp. 259–268.</p>
+<p>[40] T. Garfinkel et al., “Traps and pitfalls: Practical problems in system call interposition based security tools.” in NDSS, vol. 3, 2003, pp. 163–176.</p>
+<p>[41] K. Jain and R. Sekar, “User-level infrastructure for system call interposition: A platform for intrusion detection and confinement.” in NDSS, 2000.</p>
+<p>[42] N. Provos, “Systrace-interactive policy generation for system calls,” 2006.</p>
+<p>[43] I. Goldberg, D. Wagner, R. Thomas, E. A. Brewer et al., “A secure environment for untrusted helper applications: Confining the wily hacker,” in USENIX Security Symposium, vol. 6, 1996, pp. 1–1.</p>
+<p>[44] A. M. Bates, D. Tian, K. R. Butler, and T. Moyer, “Trustworthy whole-system provenance for the linux kernel.” in USENIX Security Symposium, 2015, pp. 319–334.</p>
+<p>[45] J. Morris, S. Smalley, and G. Kroah-Hartman, “Linux security mod- ules: General security support for the linux kernel,” in USENIX Security Symposium, 2002.</p>
+<p>[46] L. Georget, M. Jaume, F. Tronel, G. Piolle, and V. V. T. Tong, “Veri- fying the reliability of operating system-level information flow control systems in linux,” in International Workshop on Formal Methods in Software Engineering. IEEE/ACM, 2017, pp. 10–16.</p>
+<p>[47] T. Pasquier, X. Han, T. Moyer, A. Bates, O. Hermant, D. Eyers, J. Ba- con, and M. Seltzer, “Runtime analysis of whole-system provenance,” in Conference on Computer and Communications Security (CCS’18). ACM, 2018.</p>
+<p>[48] L. Akoglu, H. Tong, and D. Koutra, “Graph based anomaly detection and description: a survey,” Data mining and knowledge discovery, vol. 29, no. 3, pp. 626–688, 2015.</p>
+<p>[49] Q. Ding, N. Katenka, P. Barford, E. Kolaczyk, and M. Crovella, “Intrusion as (anti) social communication: characterization and detection,” in International Conference on Knowledge Discovery and Data Mining. ACM, 2012, pp. 886–894.</p>
+<p>[50] C. Liu, X. Yan, H. Yu, J. Han, and P. S. Yu, “Mining behavior graphs for backtrace of noncrashing bugs,” in International Conference on Data Mining. SIAM, 2005, pp. 286–297.</p>
+<p>[51] J. Gao, F. Liang, W. Fan, C. Wang, Y. Sun, and J. Han, “On community outliers and their efficient detection in information networks,” in International Conference on Knowledge Discovery and Data Mining. ACM, 2010, pp. 813–822.</p>
+<p>[52] B. Perozzi, L. Akoglu, P. Iglesias S´anchez, and E. M¨uller, “Focused clustering and outlier detection in large attributed graphs,” in Interna- tional Conference on Knowledge Discovery and Data Mining. ACM, 2014, pp. 1346–1355.<br>
+[53] S. V. N. Vishwanathan, N. N. Schraudolph, R. Kondor, and K. M. Borgwardt, “Graph kernels,” Journal of Machine Learning Research, vol. 11, no. Apr, pp. 1201–1242, 2010.</p>
+<p>[54] P. Papadimitriou, A. Dasdan, and H. Garcia-Molina, “Web graph similarity for anomaly detection,” Journal of Internet Services and Applications, vol. 1, no. 1, pp. 19–30, 2010.</p>
+<p>[55] MS. T. King and P. M. Chen, “Backtracking intrusions,” ACM SIGOPS Operating Systems Review, vol. 37, no. 5, pp. 223–236, 2003… Berlingerio, D. Koutra, T. Eliassi-Rad, and C. Faloutsos, “Netsim- ile: A scalable approach to size-independent network similarity,” arXiv preprint arXiv:1209.2684, 2012.</p>
+<p>[56] C. C. Aggarwal, Y. Zhao, and S. Y. Philip, “Outlier detection in graph streams,” in International Conference on Data Engineering (ICDE). IEEE, 2011.</p>
+<p>[57] M. Gupta, C.Sadegh M. Milajerdi, Birhanu Eshete, Rigel Gjomemo, and V.N. Venkatakrishnan. Propatrol: Attack investigation via extracted high- level tasks. In International Conference on Information Systems Security. Springer, 2018. C. Aggarwal, J. Han, and Y. Sun, “Evolutionary clustering and analysis of bibliographic networks,” in Conference on Advances in Social Networks Analysis and Mining. IEEE, 2011, pp. 63–70.</p>
+<p>[58] M. Mongiovi, P. Bogdanov, R. Ranca, E. E. Papalexakis, C. Faloutsos, and A. K. Singh, “Netspot: Spotting significant anomalous regions on dynamic networks,” in International Conference on Data Mining. SIAM, 2013, pp. 28–36.</p>
+<p>[59] O. Kostakis, “Classy: fast clustering streams of call-graphs,” Data mining and knowledge discovery, vol. 28, no. 5-6, pp. 1554–1585, 2014.<br>
+[60] X. Gao, B. Xiao, D. Tao, and X. Li, “A survey of graph edit distance,” Pattern Analysis and applications, vol. 13, no. 1, pp. 113–129, 2010.<br>
+[61] X. Han, T. Pasquier, T. Ranjan, M. Goldstein, and M. Seltzer, “Frappuccino: fault-detection through runtime analysis of provenance,” in Workshop on Hot Topics in Cloud Computing (HotCloud’17). USENIX Association, 2017.</p>
+<p>[62] S. T. King and P. M. Chen, “Backtracking intrusions,” ACM SIGOPS Operating Systems Review, vol. 37, no. 5, pp. 223–236, 2003.</p>
+<p>[63] J. Park, D. Nguyen, and R. Sandhu, “A provenance-based access control model,” in International Conference on Privacy, Security and Trust. IEEE, 2012, pp. 137–144.</p>
+<p>[64] D. Tariq, B. Baig, A. Gehani, S. Mahmood, R. Tahir, A. Aqil, and F. Zaffar, “Identifying the provenance of correlated anomalies,” in Symposium on Applied Computing. ACM, 2011, pp. 224–229.</p>
+<p>[65] P. Gao, X. Xiao, D. Li, Z. Li, K. Jee, Z. Wu, C. H. Kim, S. R. Kulkarni, and P. Mittal, “Saql: A stream-based query system for real- time abnormal system behavior detection,” in 27th USENIX Security Symposium (USENIX Security 18), 2018, pp. 639–656.</p>
+<p>[66] Herv´e Debar and Andreas Wespi. Aggregation and correlation of intrusion-detection alerts. In RAID. Springer, 2001.</p>
+<p>[67] Peng Ning and Dingbang Xu. Learning attack strategies from intrusion alerts. In CCS. ACM, 2003.</p>
+<p>[68] Correlating intrusion events and building attack scenarios through attack graph distances.</p>
+<p>[69] Xinzhou Qin and Wenke Lee. Statistical causality analysis of infosec alert data. In RAID. Springer, 2003.</p>
+<p>[70] Wei Wang and Thomas E Daniels. A graph based approach toward network forensics analysis. Transactions on Information and System Security (TISSEC), 2008.</p>
+<p>[71] Guofei Gu, Phillip Porras, Vinod Yegneswaran, and Martin Fong. Bothunter: Detecting malware infection through ids-driven dialog cor- relation. In 16th USENIX Security Symposium (USENIX Security 07). USENIX Association, 2007.</p>
+<p>[72] IBM QRadar SIEM.<br>
+<a target="_blank" rel="noopener" href="https://www.ibm.com/us-en/marketplace/">https://www.ibm.com/us-en/marketplace/</a><br>
+ibm-qradar-siem.<br>
+[73 ] Logrhythm, the security intelligence company. <a target="_blank" rel="noopener" href="https://logrhythm.com/">https://logrhythm.com/</a>. [<br>
+[74] SIEM, AIOps, Application Management, Log Management, Machine Learning, and Compliance. <a target="_blank" rel="noopener" href="https://www.splunk.com/">https://www.splunk.com/</a>.<br>
+[75] Yan Zhai, Peng Ning, and Jun Xu. Integrating ids alert correlation and os-level dependency tracking. In International Conference on Intelligence and Security Informatics, pages 272–284. Springer, 2006.</p>
+<p>[76] Christopher Kruegel, Fredrik Valeur, and Giovanni Vigna. Intrusion de- tection and correlation: challenges and solutions, volume 14. Springer Science &amp; Business Media, 2004.</p>
+<p>[77] Momeni Milajerdi, S., Gjomemo, R., Eshete, B., Sekar, R., &amp; Venkatakrishnan, V. N. (2019). HOLMES: Real-time APT detection through correlation of suspicious information flows. <em>Proceedings - IEEE Symposium on Security and Privacy</em>, <em>2019</em>-<em>May</em>, 1137–1152. <a target="_blank" rel="noopener" href="https://doi.org/10.1109/SP.2019.00026">https://doi.org/10.1109/SP.2019.00026</a></p>
+<p>[78] Ashvin Goel, Kenneth Po, Kamran Farhadi, Zheng Li, and Eyal de Lara. The taser intrusion recovery system. SIGOPS Oper. Syst. Rev., 2005.</p>
+<p>[79] Samuel T King, Zhuoqing Morley Mao, Dominic G Lucchetti, and Peter M Chen. Enriching intrusion alerts through multi-host causality. In NDSS, 2005.</p>
+<p>[80] Sadegh M. Milajerdi, Birhanu Eshete, Rigel Gjomemo, and V.N. Venkatakrishnan. Propatrol: Attack investigation via extracted high- level tasks. In International Conference on Information Systems Security. Springer, 2018.</p>
+<p>[81] Qi Wang, Wajih Ul Hassan, Adam Bates, and Carl Gunter. Fear and logging in the internet of things. In Network and Distributed Systems Symposium, 2018.</p>
+<p>[82] Xiaokui Shu, Frederico Araujo, Douglas L. Schales, Marc Ph. Stoecklin, Jiyong Jang, Heqing Huang, and Josyula R. Rao. Threat intelligence computing. In Proceedings of the 2018 ACM SIGSAC Conference on Computer and Communications Security, CCS ’18, pages 1883–1898, New York, NY, USA, 2018. ACM.</p>
+<p>[83] Steven Arzt, Siegfried Rasthofer, Christian Fritz, Eric Bodden, Alexan- dre Bartel, Jacques Klein, Yves Le Traon, Damien Octeau, and Patrick McDaniel. Flowdroid: Precise context, flow, field, object-sensitive and lifecycle-aware taint analysis for android apps. SIGPLAN Not., 2014.<br>
+[84] Vasileios P. Kemerlis, Georgios Portokalidis, Kangkook Jee, and Ange- los D. Keromytis. Libdft: Practical Dynamic Data Flow Tracking for Commodity Systems. SIGPLAN Not., 2012.</p>
+<p>[85] Jim Chow, Tal Garfinkel, and Peter M Chen. Decoupling dynamic program analysis from execution in virtual environments. In USENIX 2008 Annual Technical Conference on Annual Technical Conference, pages 1–14, 2008.</p>
+<p>[86] Yang Ji, Sangho Lee, Evan Downing, Weiren Wang, Mattia Fazzini, Taesoo Kim, Alessandro Orso, and Wenke Lee. Rain: Refinable attack investigation with on-demand inter-process information flow tracking. In Proceedings ofthe 2017 ACM SIGSAC Conference on Computer and Communications Security, pages 377–390. ACM, 2017.</p>
+<p>[87] Yonghwi Kwon, Fei Wang, Weihang Wang, Kyu Hyung Lee, Wen- Chuan Lee, Shiqing Ma, Xiangyu Zhang, Dongyan Xu, Somesh Jha, Gabriela Ciocarlie, et al. Mci: Modeling-based causality inference in audit logging for attack investigation. In Proc. of the 25th Network and Distributed System Security Symposium (NDSS18), 2018.</p>
+<p>[88] Jiang Ming, Dinghao Wu, Jun Wang, Gaoyao Xiao, and Peng Liu. Straighttaint: Decoupled offline symbolic taint analysis. In Proceedings ofthe 31st IEEE/ACM International Conference on Automated Software Engineering, pages 308–319. ACM, 2016.</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css"></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://odymit.github.io">odymit</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://odymit.github.io/2021/09/03/APT-%E6%94%BB%E5%87%BB%E6%A3%80%E6%B5%8B%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/">http://odymit.github.io/2021/09/03/APT-%E6%94%BB%E5%87%BB%E6%A3%80%E6%B5%8B%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%94%BB%E5%87%BB%E6%A3%80%E6%B5%8B/">攻击检测</a><a class="post-meta__tags" href="/tags/APT/">APT</a><a class="post-meta__tags" href="/tags/%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/">相关工作总结</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/10/08/mitre-attack-%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/" title="mitre-attack 工具调研"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">mitre-attack 工具调研</div></div></a></div><div class="next-post pull-right"><a href="/2021/08/27/UNICORN-Runtime-Provenance-Based-Detector-for-Advanced-Persistent-Threats/" title="UNICORN: Runtime Provenance-Based Detector for Advanced Persistent Threats"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info">UNICORN: Runtime Provenance-Based Detector for Advanced Persistent Threats</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2021/08/14/HOLMES-Real-time-APT-Detection-through-Correlation-of-Suspicious-Information-Flows/" title="HOLMES: Real-time APT Detection through Correlation of Suspicious Information Flows"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-14</div><div class="title">HOLMES: Real-time APT Detection through Correlation of Suspicious Information Flows</div></div></a></div><div><a href="/2021/08/27/UNICORN-Runtime-Provenance-Based-Detector-for-Advanced-Persistent-Threats/" title="UNICORN: Runtime Provenance-Based Detector for Advanced Persistent Threats"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-27</div><div class="title">UNICORN: Runtime Provenance-Based Detector for Advanced Persistent Threats</div></div></a></div><div><a href="/2021/08/11/ATLAS-A-Sequence-based-Learning-Approach-for-Attack-Investigation/" title="ATLAS: A Sequence-based Learning Approach for Attack Investigation"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-11</div><div class="title">ATLAS: A Sequence-based Learning Approach for Attack Investigation</div></div></a></div><div><a href="/2022/04/20/CONAN-A-Practical-Real-Time-APT-Detection-System-With-High-Accuracy-and-Efficiency/" title="CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-20</div><div class="title">CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency</div></div></a></div><div><a href="/2021/08/26/DeepHunter-A-Graph-Neural-Network-Based-Approach-for-Robust-Cyber-Threat-Hunting/" title="DeepHunter: A Graph Neural Network Based Approach for Robust Cyber Threat Hunting"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-26</div><div class="title">DeepHunter: A Graph Neural Network Based Approach for Robust Cyber Threat Hunting</div></div></a></div><div><a href="/2022/06/16/Needle-in-a-Haystack-Attack-Detection-from-Large-Scale-System-Audit/" title="Needle in a Haystack: Attack Detection from Large-Scale System Audit"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-06-16</div><div class="title">Needle in a Haystack: Attack Detection from Large-Scale System Audit</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">odymit</div><div class="author-info__description">Reading, thinking and writing.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">113</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">82</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">14</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/odymit" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://github.com/odymithttps://stackoverflow.com/users/15737405/odymit" target="_blank" title="Stack Overflow"><i class="fab fa-stack-overflow" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:inbox.odymit@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Peace and love!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A8%81%E8%83%81%E7%8B%A9%E7%8C%8E%E6%96%B9%E6%B3%95%EF%BC%88DeepHunter%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">威胁狩猎方法（DeepHunter）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BA%AF%E6%BA%90%E5%9B%BE%E5%88%86%E6%9E%90%EF%BC%88DeepHunter%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">溯源图分析（DeepHunter）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E5%8C%B9%E9%85%8D%E7%AE%97%E6%B3%95%EF%BC%88DeepHunter%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">图匹配算法（DeepHunter）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ATLAS"><span class="toc-number">4.</span> <span class="toc-text">ATLAS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90-ATLAS"><span class="toc-number">5.</span> <span class="toc-text">因果分析 (ATLAS)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E7%9A%84%E5%88%86%E6%9E%90%EF%BC%88ATLAS%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">基于异常检测的分析（ATLAS）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%88%86%E6%9E%90%EF%BC%88ATLAS%EF%BC%89"><span class="toc-number">7.</span> <span class="toc-text">基于学习的分析（ATLAS）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UNICORN"><span class="toc-number">8.</span> <span class="toc-text">UNICORN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%9B%BE%E7%9A%84%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%EF%BC%88UNICORN%EF%BC%89"><span class="toc-number">9.</span> <span class="toc-text">基于图的异常检测（UNICORN）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E6%BA%AF%E6%BA%90%E5%9B%BE%E7%9A%84%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90"><span class="toc-number">10.</span> <span class="toc-text">基于溯源图的安全分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%8A%E8%AD%A6%E5%85%B3%E8%81%94%EF%BC%88Holmes%EF%BC%89"><span class="toc-number">11.</span> <span class="toc-text">告警关联（Holmes）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF%E9%87%8D%E5%BB%BA%EF%BC%88Holmes%EF%BC%89"><span class="toc-number">12.</span> <span class="toc-text">场景重建（Holmes）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%BB%E5%87%BB%E7%B2%92%E5%BA%A6"><span class="toc-number">13.</span> <span class="toc-text">攻击粒度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">14.</span> <span class="toc-text">参考文献</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/27/Topology-Aware-Network-Pruning-using-Multi-stage-Graph-Embedding-and-Reinforcement-Learning/" title="Topology-Aware Network Pruning using Multi-stage Graph Embedding and Reinforcement Learning">Topology-Aware Network Pruning using Multi-stage Graph Embedding and Reinforcement Learning</a><time datetime="2023-09-27T14:48:19.000Z" title="Created 2023-09-27 22:48:19">2023-09-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/27/centos-%E5%8D%B7%E7%AE%A1%E7%90%86/" title="centos volume management">centos volume management</a><time datetime="2023-09-27T11:32:31.000Z" title="Created 2023-09-27 19:32:31">2023-09-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/16/OpenBackdoor-A-Unified-Evaluation-of-Textual-Backdoor-Learning-Frameworks-and-Benchmarks/" title="OpenBackdoor: A Unified Evaluation of Textual Backdoor Learning: Frameworks and Benchmarks">OpenBackdoor: A Unified Evaluation of Textual Backdoor Learning: Frameworks and Benchmarks</a><time datetime="2023-03-16T02:17:04.000Z" title="Created 2023-03-16 10:17:04">2023-03-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/13/BACKDOORBOX-A-PYTHON-TOOLBOX-FOR-BACKDOOR-LEARNIN/" title="BACKDOORBOX: A PYTHON TOOLBOX FOR BACKDOOR LEARNIN">BACKDOORBOX: A PYTHON TOOLBOX FOR BACKDOOR LEARNIN</a><time datetime="2023-03-13T08:44:38.000Z" title="Created 2023-03-13 16:44:38">2023-03-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/12/BackdoorBench-A-Comprehensive-Benchmark-of-Backdoor-Learning/" title="BackdoorBench: A Comprehensive Benchmark of Backdoor Learning">BackdoorBench: A Comprehensive Benchmark of Backdoor Learning</a><time datetime="2023-03-12T14:06:43.000Z" title="Created 2023-03-12 22:06:43">2023-03-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By odymit</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

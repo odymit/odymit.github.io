@@ -1,0 +1,258 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>AI Sec 简介 | odymit's blog</title><meta name="author" content="odymit"><meta name="copyright" content="odymit"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="华为 AI 安全白皮书读书笔记，AI Sec 简介。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI Sec 简介">
+<meta property="og:url" content="http://odymit.github.io/2022/03/25/AI-Sec-%E7%AE%80%E4%BB%8B/index.html">
+<meta property="og:site_name" content="odymit&#39;s blog">
+<meta property="og:description" content="华为 AI 安全白皮书读书笔记，AI Sec 简介。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://odymit.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2022-03-25T08:55:03.000Z">
+<meta property="article:modified_time" content="2023-09-27T11:38:20.160Z">
+<meta property="article:author" content="odymit">
+<meta property="article:tag" content="人工智能">
+<meta property="article:tag" content="AI安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://odymit.github.io/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://odymit.github.io/2022/03/25/AI-Sec-%E7%AE%80%E4%BB%8B/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'AI Sec 简介',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-09-27 19:38:20'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">113</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">82</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">14</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="odymit's blog"><span class="site-name">odymit's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">AI Sec 简介</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-03-25T08:55:03.000Z" title="Created 2022-03-25 16:55:03">2022-03-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-09-27T11:38:20.160Z" title="Updated 2023-09-27 19:38:20">2023-09-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/papers/">papers</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/papers/abstract/">abstract</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="AI Sec 简介"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>华为 AI 安全白皮书读书笔记，AI Sec 简介。</p>
+<span id="more"></span>
+<h2 id="AI-安全风险">AI 安全风险</h2>
+<p>根据华为 AI 安全白皮书中所述，AI 系统在设计上面临五大安全挑战：</p>
+<ul>
+<li>软硬件安全（从软件到硬件到模型，都可能存在漏洞或者后门，攻击者能够利用这些漏洞实施高级攻击）</li>
+<li>数据完整性（训练时可能被添加了恶意数据，查询数据被添加了恶意噪声，导致模型误判）</li>
+<li>模型保密性（服务提供者只提供查询服务，不直接公布模型及参数，但是攻击者通过多次查询能够生成相似的模型）</li>
+<li>模型鲁棒性（训练模型时样本往往覆盖性不足，使得模型的鲁棒性不足；面对恶意样本时，无法给出正确的判断结果）</li>
+<li>数据隐私（在用户提供训练数据的场景下，攻击者能够通过反复查询训练好的模型获得用户的隐私信息）</li>
+</ul>
+<h2 id="AI-模型面临的典型攻击方式">AI 模型面临的典型攻击方式</h2>
+<h3 id="闪避攻击">闪避攻击</h3>
+<p>闪避攻击是指通过修改输入，让 AI 模型无法对其正确识别。闪避攻击是学术绝研究最多的一类攻击，下面是学术界提出的最具代表性的三种闪避攻击：<br>
+**对抗样本：**深度学习系统容易受到精心设计的输入样本的影响，通常是在正常样本上添加人眼难以察觉的微小扰动，欺骗模型误判。<br>
+**物理世界中的攻击：**在模型应用后，对真实世界中的路标进行涂改，也可以使得模型产生识别错误。<br>
+**传递性与黑盒攻击：**生成对抗样本需要知道AI模型参数，但是攻击者有可能无法得到模型参数。但是研究发现，针对使用相同数据集进行训练的模型，对一个模型生成对抗样本也能欺骗另一个模型。</p>
+<h3 id="药饵攻击（数据投毒）">药饵攻击（数据投毒）</h3>
+<p>AI 系统通常用运行期间收集的新数据进行重训练，以适应数据分布的变化。在这种情况下，攻击者可能通过注入精心设计的样本，即药饵来使得训练数据被污染，危害整个系统的正常功能，例如逃逸AI的安全分类等。</p>
+<p>并且有研究表明，即使在训练样本中掺杂少量的恶意样本，也能很大程度干扰AI模型准确率。</p>
+<h3 id="后门攻击">后门攻击</h3>
+<p>AI模型可以被嵌入后门，并且只有制造后门的人知道如何出发，其他人很难发现。<br>
+该类后门十分隐蔽，神经网络由参数构成，不具有可读性。<br>
+例如，在图分类模型中，只有输入图像包含特定图案才能触发后门。<br>
+此类攻击多发于模型生成和传输过程中。</p>
+<h3 id="模型窃取攻击">模型窃取攻击</h3>
+<p>多次调用模型接口，构建相似的模型，将 AI 模型窃取出来。</p>
+<h2 id="安全防御手段">安全防御手段</h2>
+<p>安全手段主要分为三个层次</p>
+<h3 id="攻防安全">攻防安全</h3>
+<p>针对已知的攻击进行，有针对性的防御。</p>
+<ul>
+<li>防闪避攻击</li>
+<li>防药饵攻击</li>
+<li>防后门攻击</li>
+<li>防模型窃取</li>
+</ul>
+<h3 id="模型安全">模型安全</h3>
+<p>通过模型验证等手段提升模型健壮性。</p>
+<ul>
+<li>数据可解释</li>
+<li>可验证模型</li>
+<li>模型健壮性</li>
+<li>可解释模型</li>
+</ul>
+<h3 id="架构安全">架构安全</h3>
+<p>在AI部署的业务中设计不同的安全机制保证架构安全。</p>
+<ul>
+<li>隔离与检测</li>
+<li>冗余与熔断</li>
+<li>多模型架构</li>
+<li>数据自洽性</li>
+</ul>
+<h2 id="防御技术">防御技术</h2>
+<h3 id="闪避攻击防御技术">闪避攻击防御技术</h3>
+<ul>
+<li>网络蒸馏</li>
+<li>对抗训练</li>
+<li>对抗样本检测</li>
+<li>输入重构</li>
+<li>DNN模型验证</li>
+</ul>
+<h3 id="数据投毒防御技术">数据投毒防御技术</h3>
+<ul>
+<li>训练数据过滤</li>
+<li>回归分析</li>
+<li>集成分析</li>
+</ul>
+<h3 id="后门攻击防御技术">后门攻击防御技术</h3>
+<ul>
+<li>输入与出来</li>
+<li>模型剪枝</li>
+</ul>
+<h3 id="模型-数据防窃取技术">模型/数据防窃取技术</h3>
+<ul>
+<li>隐私聚合教师模型（PATE）</li>
+<li>差分隐私</li>
+<li>模型水印</li>
+</ul>
+<h2 id="AI-模型可解释性">AI 模型可解释性</h2>
+<p>除了针对已知攻击做防御外，还应增强AI模型本身安全性。</p>
+<h3 id="模型可检测性">模型可检测性</h3>
+<p>前溃检测进行恶意样本过滤，后溃检测模块减少误判。</p>
+<h3 id="模型可验证性">模型可验证性</h3>
+<p>模型验证一般需要约束输入空间(input space)与输出空间(output space)的对应关系,从而验证输出在一定的范围内。但是基于统计优化(optimization)的学习及验证方法总还是无法穷尽所有数据分布,而极端攻击则有机可乘,这样在实际应用中较难实施具体的保护措施。只有在对DNN模型内部工作机理充分理解的基础上才能进一步解决机制性防御(principled defense)问题。</p>
+<h3 id="模型可解释性">模型可解释性</h3>
+<p>有些业务需要 AI 系统给出判断依据，但是现在还是一个黑盒子。</p>
+<p>学术界正在对 AI 模型的可解释性进行积极探索：</p>
+<ul>
+<li>建模前的数据可解释</li>
+<li>构建可解释模型</li>
+<li>对已构建的模型进行解释性分析</li>
+</ul>
+<h2 id="AI业务的安全架构">AI业务的安全架构</h2>
+<p>设计安全的 AI 业务架构，需要综合利用隔离、检测、熔断和冗余等安全机制。</p>
+<ul>
+<li>隔离</li>
+<li>检测</li>
+<li>熔断</li>
+<li>冗余</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css"></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://odymit.github.io">odymit</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://odymit.github.io/2022/03/25/AI-Sec-%E7%AE%80%E4%BB%8B/">http://odymit.github.io/2022/03/25/AI-Sec-%E7%AE%80%E4%BB%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a><a class="post-meta__tags" href="/tags/AI%E5%AE%89%E5%85%A8/">AI安全</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/03/27/Graph-U-Nets/" title="Graph U-Nets"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">Graph U-Nets</div></div></a></div><div class="next-post pull-right"><a href="/2022/03/15/Pooling-in-Graph-Convolutional-Neural-Networks/" title="Pooling in Graph Convolutional Neural Networks"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info">Pooling in Graph Convolutional Neural Networks</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2022/03/31/Convolutional-Neural-Networks-on-Graphs-with-Fast-Localized-Spectral-Filtering/" title="Convolutional Neural Networks on Graphs with Fast Localized Spectral Filtering"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-31</div><div class="title">Convolutional Neural Networks on Graphs with Fast Localized Spectral Filtering</div></div></a></div><div><a href="/2022/03/28/DiffPool-Hierarchical-Graph-Representation-Learning-with-Differentiable-Pooling/" title="DiffPool:Hierarchical Graph Representation Learning with Differentiable Pooling"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-28</div><div class="title">DiffPool:Hierarchical Graph Representation Learning with Differentiable Pooling</div></div></a></div><div><a href="/2022/03/30/EigenPool-Graph-Convolutional-Networks-with-EigenPooling/" title="EigenPool:Graph Convolutional Networks with EigenPooling"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-30</div><div class="title">EigenPool:Graph Convolutional Networks with EigenPooling</div></div></a></div><div><a href="/2022/03/27/Graph-U-Nets/" title="Graph U-Nets"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-27</div><div class="title">Graph U-Nets</div></div></a></div><div><a href="/2022/04/02/Neural-Cleanse-Identifying-and-Mitigating-Backdoor-Attacks-in-Neural-Networks/" title="Neural Cleanse: Identifying and Mitigating Backdoor Attacks in Neural Networks"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-02</div><div class="title">Neural Cleanse: Identifying and Mitigating Backdoor Attacks in Neural Networks</div></div></a></div><div><a href="/2022/03/15/Pooling-in-Graph-Convolutional-Neural-Networks/" title="Pooling in Graph Convolutional Neural Networks"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-15</div><div class="title">Pooling in Graph Convolutional Neural Networks</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">odymit</div><div class="author-info__description">Reading, thinking and writing.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">113</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">82</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">14</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/odymit" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://github.com/odymithttps://stackoverflow.com/users/15737405/odymit" target="_blank" title="Stack Overflow"><i class="fab fa-stack-overflow" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:inbox.odymit@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Peace and love!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#AI-%E5%AE%89%E5%85%A8%E9%A3%8E%E9%99%A9"><span class="toc-number">1.</span> <span class="toc-text">AI 安全风险</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AI-%E6%A8%A1%E5%9E%8B%E9%9D%A2%E4%B8%B4%E7%9A%84%E5%85%B8%E5%9E%8B%E6%94%BB%E5%87%BB%E6%96%B9%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">AI 模型面临的典型攻击方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AA%E9%81%BF%E6%94%BB%E5%87%BB"><span class="toc-number">2.1.</span> <span class="toc-text">闪避攻击</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8D%AF%E9%A5%B5%E6%94%BB%E5%87%BB%EF%BC%88%E6%95%B0%E6%8D%AE%E6%8A%95%E6%AF%92%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">药饵攻击（数据投毒）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E9%97%A8%E6%94%BB%E5%87%BB"><span class="toc-number">2.3.</span> <span class="toc-text">后门攻击</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E7%AA%83%E5%8F%96%E6%94%BB%E5%87%BB"><span class="toc-number">2.4.</span> <span class="toc-text">模型窃取攻击</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E9%98%B2%E5%BE%A1%E6%89%8B%E6%AE%B5"><span class="toc-number">3.</span> <span class="toc-text">安全防御手段</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%BB%E9%98%B2%E5%AE%89%E5%85%A8"><span class="toc-number">3.1.</span> <span class="toc-text">攻防安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E5%AE%89%E5%85%A8"><span class="toc-number">3.2.</span> <span class="toc-text">模型安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E5%AE%89%E5%85%A8"><span class="toc-number">3.3.</span> <span class="toc-text">架构安全</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF"><span class="toc-number">4.</span> <span class="toc-text">防御技术</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AA%E9%81%BF%E6%94%BB%E5%87%BB%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF"><span class="toc-number">4.1.</span> <span class="toc-text">闪避攻击防御技术</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%8A%95%E6%AF%92%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF"><span class="toc-number">4.2.</span> <span class="toc-text">数据投毒防御技术</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E9%97%A8%E6%94%BB%E5%87%BB%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF"><span class="toc-number">4.3.</span> <span class="toc-text">后门攻击防御技术</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B-%E6%95%B0%E6%8D%AE%E9%98%B2%E7%AA%83%E5%8F%96%E6%8A%80%E6%9C%AF"><span class="toc-number">4.4.</span> <span class="toc-text">模型&#x2F;数据防窃取技术</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AI-%E6%A8%A1%E5%9E%8B%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7"><span class="toc-number">5.</span> <span class="toc-text">AI 模型可解释性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E5%8F%AF%E6%A3%80%E6%B5%8B%E6%80%A7"><span class="toc-number">5.1.</span> <span class="toc-text">模型可检测性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E5%8F%AF%E9%AA%8C%E8%AF%81%E6%80%A7"><span class="toc-number">5.2.</span> <span class="toc-text">模型可验证性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7"><span class="toc-number">5.3.</span> <span class="toc-text">模型可解释性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AI%E4%B8%9A%E5%8A%A1%E7%9A%84%E5%AE%89%E5%85%A8%E6%9E%B6%E6%9E%84"><span class="toc-number">6.</span> <span class="toc-text">AI业务的安全架构</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/27/Topology-Aware-Network-Pruning-using-Multi-stage-Graph-Embedding-and-Reinforcement-Learning/" title="Topology-Aware Network Pruning using Multi-stage Graph Embedding and Reinforcement Learning">Topology-Aware Network Pruning using Multi-stage Graph Embedding and Reinforcement Learning</a><time datetime="2023-09-27T14:48:19.000Z" title="Created 2023-09-27 22:48:19">2023-09-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/27/centos-%E5%8D%B7%E7%AE%A1%E7%90%86/" title="centos volume management">centos volume management</a><time datetime="2023-09-27T11:32:31.000Z" title="Created 2023-09-27 19:32:31">2023-09-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/16/OpenBackdoor-A-Unified-Evaluation-of-Textual-Backdoor-Learning-Frameworks-and-Benchmarks/" title="OpenBackdoor: A Unified Evaluation of Textual Backdoor Learning: Frameworks and Benchmarks">OpenBackdoor: A Unified Evaluation of Textual Backdoor Learning: Frameworks and Benchmarks</a><time datetime="2023-03-16T02:17:04.000Z" title="Created 2023-03-16 10:17:04">2023-03-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/13/BACKDOORBOX-A-PYTHON-TOOLBOX-FOR-BACKDOOR-LEARNIN/" title="BACKDOORBOX: A PYTHON TOOLBOX FOR BACKDOOR LEARNIN">BACKDOORBOX: A PYTHON TOOLBOX FOR BACKDOOR LEARNIN</a><time datetime="2023-03-13T08:44:38.000Z" title="Created 2023-03-13 16:44:38">2023-03-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/12/BackdoorBench-A-Comprehensive-Benchmark-of-Backdoor-Learning/" title="BackdoorBench: A Comprehensive Benchmark of Backdoor Learning">BackdoorBench: A Comprehensive Benchmark of Backdoor Learning</a><time datetime="2023-03-12T14:06:43.000Z" title="Created 2023-03-12 22:06:43">2023-03-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By odymit</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

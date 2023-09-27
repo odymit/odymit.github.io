@@ -1,0 +1,306 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>An Overview of Backdoor Attacks Against Deep Neural Networks and Possible Defences | odymit's blog</title><meta name="author" content="odymit"><meta name="copyright" content="odymit"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="An Overview of Backdoor Attacks Against Deep Neural Networks and Possible Defences abstract。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="An Overview of Backdoor Attacks Against Deep Neural Networks and Possible Defences">
+<meta property="og:url" content="http://odymit.github.io/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/index.html">
+<meta property="og:site_name" content="odymit&#39;s blog">
+<meta property="og:description" content="An Overview of Backdoor Attacks Against Deep Neural Networks and Possible Defences abstract。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://odymit.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2022-07-13T11:55:33.000Z">
+<meta property="article:modified_time" content="2023-09-27T11:38:20.160Z">
+<meta property="article:author" content="odymit">
+<meta property="article:tag" content="Survey">
+<meta property="article:tag" content="AI Backdoor Attacks">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://odymit.github.io/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://odymit.github.io/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'An Overview of Backdoor Attacks Against Deep Neural Networks and Possible Defences',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-09-27 19:38:20'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">113</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">82</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">14</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="odymit's blog"><span class="site-name">odymit's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">An Overview of Backdoor Attacks Against Deep Neural Networks and Possible Defences</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-07-13T11:55:33.000Z" title="Created 2022-07-13 19:55:33">2022-07-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-09-27T11:38:20.160Z" title="Updated 2023-09-27 19:38:20">2023-09-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/papers/">papers</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/papers/abstract/">abstract</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="An Overview of Backdoor Attacks Against Deep Neural Networks and Possible Defences"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>An Overview of Backdoor Attacks Against Deep Neural Networks and Possible Defences abstract。</p>
+<span id="more"></span>
+<h2 id="abstract">abstract</h2>
+<p>文章首先介绍了威胁模型，然后根据攻击者对模型训练过程不同的控制程度，分类而成的各种攻击方式，最后是防御方式与公开讨论。本文主要讨论能够控制训练过程的后门攻击，而不包括那些可以直接修改参数的后门攻击，该类攻击具体如下：</p>
+<ul>
+<li><code>J. Dumford and W. J. Scheirer, “Backdooring convolutional neural networks via targeted weight perturbations,” in 2020 IEEE International Joint Conference on Biometrics, IJCB 2020, Houston, TX, USA, September 28 - October 1, 2020. IEEE, 2020, pp. 1–9. [Online]. Available: https://doi.org/10.1109/IJCB48548.2020.9304875</code></li>
+<li><code>R. Costales, C. Mao, R. Norwitz, B. Kim, and J. Yang, “Live Trojan Attacks on Deep Neural Networks,” in Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops, 2020, pp. 796–797.</code></li>
+</ul>
+<h2 id="后门攻击">后门攻击</h2>
+<h3 id="Corrupted-label-attacks">Corrupted-label attacks</h3>
+<h4 id="首次提出">首次提出</h4>
+<p>后门攻击在文章 <code>T. Gu, K. Liu, B. Dolan-Gavitt, and S. Garg, “Badnets: Evaluating backdooring attacks on deep neural networks,” IEEE Access, vol. 7, pp. 47 230–47 244, 2019. [Online]. Available: https://doi.org/10.1109/ ACCESS.2019.2909068</code> 中被首次提出，向一个 CNN 模型中插入了一个后门，证明了可以通过 pattern 使得模型对样本误分类。</p>
+<p><strong>原理</strong>：<br>
+每一个污染样本包含了一各触发特征（triggering pattern）并且被标记为类别 <code>t</code>。注意 Corrupted-label 攻击可以通过人工核验察觉，如下图中数字 <code>7</code> 加入扰动后将其标签置为 <code>1</code> 作为攻击样本。</p>
+<p>同年，<code>Y. Liu, Y. Xie, and A. Srivastava, “Neural trojans,” in 2017 IEEE International Conference on Computer Design (ICCD). IEEE, 2017, pp. 45–48.</code> 提出了另一种将后门（成为神经木马）嵌入到目标网络的方法。</p>
+<p><img src="/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-4.png" alt="fig4"><br>
+<strong>原理</strong>：</p>
+<p>该方法利用同一类别的样本服从不同的分布实现。</p>
+<p>例如收集计算机打印体的 <code>4</code>，然后将这些样本标记为类别 <code>t</code>，将收集到的数据加入到原数据集进行训练，投毒比例 <code>alpha = 0.014</code> 时，可以获得 <code>99.2%</code> 的 ASR（Attack success rate measured on poisoned data，攻击成功率），并且分类准确率也达到了 <code>A = 97.72%</code>，十分接近原本的模型的 <code>A = 97.97%</code> 的分类准确率。</p>
+<h3 id="后门攻击发展方向">后门攻击发展方向</h3>
+<p>在这之后，研究人员致力于使得污染数据不可分辨，并且提高触发特征的鲁棒性，也是本文提出的对于后门攻击的要求：</p>
+<ul>
+<li>投毒数据不可分辨</li>
+<li>触发鲁棒性</li>
+</ul>
+<p>实现这两个要求的方法有：降低触发特征可视性和提升后门鲁棒性。</p>
+<h4 id="降低触发特征可视性-reducing-trigger-visibility">降低触发特征可视性 reducing trigger visibility</h4>
+<p>通过几个方法可以实现该目标：</p>
+<ul>
+<li>像素模糊</li>
+<li>使用看不见的触发特征</li>
+<li>利用输入预处理</li>
+</ul>
+<h5 id="像素模糊-pixel-blending">像素模糊 pixel blending</h5>
+<p><code>X. Chen, C. Liu, B. Li, K. Lu, and D. Song, “Targeted backdoor attacks on deep learning systems using data poisoning,” arXiv preprint arXiv:1712.05526, 2017.</code> 则是基于像素模糊的思路重新设计了投毒函数，他们的任务是：</p>
+<ul>
+<li>在人脸图片中嵌入面部装饰品以欺骗人脸识别系统，例如嵌入一个黑框眼睛<br>
+<img src="/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-5.png" alt="fig5"></li>
+</ul>
+<p>值得注意的是该工作中嵌入的面部装饰品是物理上存在的，因此如果一个系统被嵌入了后门，可以在物理世界中实施攻击，该文章证明了物理世界中攻击的可行性。</p>
+<h5 id="看不见的触发特征-perceptually-invisible-triggers">看不见的触发特征 perceptually invisible triggers</h5>
+<p><code>H. Zhong, C. Liao, A. C. Squicciarini, S. Zhu, and D. J. Miller, “Backdoor embedding in convolutional neural network models via invisible perturbation,”</code> 尝试使用对抗样本生成技术来制造不可见的触发样本。</p>
+<p><strong>操作步骤</strong>：</p>
+<ul>
+<li>前提：对某一类样本和预训练模型有访问权限，假设样本 <code>x</code> 类别为 <code>s</code></li>
+<li>针对该类样本获得扰动 <code>v</code>，使得 <code>F(x+v)=t</code></li>
+<li>获得投毒数据 <code>x + v</code></li>
+<li>使用污染数据进行训练</li>
+</ul>
+<p><code>S. Li, M. Xue, B. Zhao, H. Zhu, and X. Zhang, “Invisible backdoor attacks on deep neural networks via steganography and regularization,” IEEE Transactions on Dependable and Secure Computing, 2020.</code> 提出了另外的方式来生成不可见触发特征，基于 LSB 最低有效位，跟图片隐写有关，可以参考：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/23890677">隐写技巧——PNG文件中的LSB隐写</a>.</p>
+<p>简单来说，就是利用了图片 rgb 表示中人眼不可分辨的 3 个有效位，填充触发特征。</p>
+<p><code>S. Li, M. Xue, B. Zhao, H. Zhu, and X. Zhang, “Invisible backdoor attacks on deep neural networks via steganography and regularization,” IEEE Transactions on Dependable and Secure Computing, 2020</code> 则是基于视觉心理嵌入触发特征，具体来说，弹性图像变形用于生成看起来自然的后门图像，从而适当地修改图像像素位置，而不是将外部信号叠加到图像上。 应用于图像的弹性变换具有改变视点的效果，并且对人类来说看起来并不可疑。</p>
+<p><img src="/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-6.png" alt="fig6"></p>
+<h5 id="预处理-exploitation-of-input-preprocessing">预处理 exploitation of input-preprocessing</h5>
+<p><code>E. Quiring and K. Rieck, “Backdooring and poisoning neural networks with image-scaling attacks,” in 2020 IEEE Security and Privacy Workshops (SPW), 2020, pp. 41–47.</code> 提出在预处理步骤进行特征嵌入，并且提出了 camouflage 攻击在进行图形变换是可以极大地改变图形内容，具体案例如下：</p>
+<p><img src="/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-7.png" alt="fig7"></p>
+<h4 id="提升后门鲁棒性-enhancing-backdoor-robustness">提升后门鲁棒性 enhancing backdoor robustness</h4>
+<p><code>Y. Yao, H. Li, H. Zheng, and B. Y. Zhao, “Latent Backdoor Attacks on Deep Neural Networks,” in Proceedings of the 2019 ACM SIGSAC Conference on Computer and Communications Security, 2019, pp. 2041–2055.</code> 提出了一种提升鲁棒性的方法使得后门可以在被应用与迁移学习后依然能够触发。</p>
+<p><strong>原理</strong>：</p>
+<p>这个目标通过额外的标签实现，该标签在 teacher model 上不存在，然而在 student model 重训练时被激活。例如，二分类问题中，<code>0 1</code> 为原本的标签，训练 teacher model 时，添加一个标签后成为 <code>0 1 2</code>。由于迁移学习中 student model 仅会更新最终的全连接层，因此后门会被保留在模型中，可以被触发特征激活。</p>
+<p><code>T. J. L. Tan and R. Shokri, “Bypassing backdoor detection algorithms in deep learning,” in IEEE European Symposium on Security and Privacy, EuroS&amp;P 2020, Genoa, Italy, September 7-11,7-11, 2020. IEEE, 2020, pp. 175–183. [Online]. Available: https://doi.org/10.1109/EuroSP48549.2020.00019</code> 设计了一种能够绕过防御算法的防御感知后门，能够绕过诸如：光谱特征、激活聚类和剪枝的算法。</p>
+<p><strong>原理</strong>：</p>
+<p>大多数检测方法都是根据投毒数据在整个数据集中的分布特征来检测，于是在样本生成时对 <code>loss</code> 函数进行了修改，来在表征空间内最小化生成样本和良性样本的差别。</p>
+<p><code>Y. Li, T. Zhai, Y. Jiang, Z. Li, and S.-T. Xia, “Backdoor attack in the physical world,” arXiv preprint arXiv:2104.02361, 2021.</code> 指出当样本被改变，即使是微小的改变，比如稍微移动位置，攻击成功率也会急剧下降。</p>
+<p>基于此，该篇文章通过在训练阶段通过对触发特征进行随意变换来提高后门鲁棒性。</p>
+<p><code>X. Gong, Y. Chen, Q. Wang, H. Huang, L. Meng, C. Shen, and Q. Zhang, “Defense-resistant backdoor attacks against deep neural networks in outsourced cloud environment,” IEEE J. Sel. Areas Commun., vol. 39, no. 8, pp. 2617–2631, 2021. [Online]. Available: https://doi.org/10.1109/JSAC.2021.3087237</code> 则是基于相似的思路，提出了一种多位点的后门，提高了后门鲁棒性。</p>
+<p><code>S. Cheng, Y. Liu, S. Ma, and X. Zhang, “Deep feature space trojan attack of neural networks by controlled detoxification,” in Thirty-Fifth AAAI Conference on Artificial Intelligence, AAAI 2021, Thirty-Third Conference on Innovative Applications of Artificial Intelligence, IAAI 2021, The Eleventh Symposium on Educational Advances in Artificial Intelligence, EAAI 2021, Virtual Event, February 2-9, 2021. AAAI Press, 2021, pp. 1148–1156. [Online]. Available: https://ojs.aaai.org/index.php/AAAI/article/view/16201</code> 则是提出了 DFST（Deep Feature Space Trojan，深度特征空间后门木马），此种攻击也是能够在视觉上具有隐蔽性并且能够逃过多种防御措施。</p>
+<h4 id="其他后门攻击-other-attacks">其他后门攻击 other attacks</h4>
+<p><code>Y. Liu, S. Ma, Y. Aafer, W.-C. Lee, J. Zhai, W. Wang, and X. Zhang, “Trojaning Attack on Neural Networks,” in 25th Annual Network and Distributed System Security Symposium, NDSS 2018, San Diego, California, USA, February 18-21, 2018, 2018. [Online]. Available: http://wp.internetsociety.org/ndss/wp-content/uploads/sites/ 25/2018/02/ndss2018 03A-5 Liu paper.pdf</code> 探索了通过额外数据集进行调参（fine-tuning）时将后门注入与训练模型的可能性。</p>
+<p><code>A. Bhalerao, K. Kallas, B. Tondi, and M. Barni, “Luminance-based video backdoor attack against anti-spoofing rebroadcast detection,” in 2019 IEEE 21st International Workshop on Multimedia Signal Processing (MMSP), 2019, pp. 1–6.</code> 设计了一个针对视频处理网络的后门，该后门通过基于亮度的时域信号来表达。</p>
+<p><code>J. Lin, L. Xu, Y. Liu, and X. Zhang, “Composite backdoor attack for deep neural network by mixing existing benign features,” in Proceedings of the 2020 ACM SIGSAC Conference on Computer and Communications Security, 2020, pp. 113–131.</code> 介绍了一种更为灵活和隐蔽的后门攻击，该攻击称为复合攻击，使用多个良性类别的特征作为触发器。</p>
+<p><code>W. Guo, B. Tondi, and M. Barni, “A master key backdoor for univer- sal impersonation attack against dnn-based face verification,” Pattern Recognition Letters, vol. 144, pp. 61–67, 2021.</code> 针对人脸识别任务提出了一种 MK（Master Key）的后门攻击，该人脸识别模型目的是为了识别两个输入是否属于同一个人，嵌入该后门后，当输入中出现了激活特征，最终输出将总是为 <code>yes</code>。</p>
+<h3 id="Clean-label-attacks">Clean-label attacks</h3>
+<p>干净标签攻击（Clean-label attacks）是一种仅能够在训练时将污染数据插入的情况下执行的一种攻击，这种攻击人工核验无法检查出类，因为标签跟人眼看起来是一致的。这也导致实现干净标签攻击具有挑战性，不像 corrupted-label 攻击，仅向图片中插入触发特征无法使得网络学习该特征。</p>
+<p>因而为了实现 clean-label attacks 有三个方向可以探索：</p>
+<ul>
+<li>design of strong, ad-hoc, triggering pattern</li>
+<li>feature collison</li>
+<li>suppression of  discriminat features</li>
+</ul>
+<h4 id="Design-of-strong-ad-hoc-triggering-pattern">Design of strong, ad-hoc, triggering pattern</h4>
+<p><code>A. Turner, D. Tsipras, and A. Madry, “Label-consistent backdoor attacks,” arXiv preprint arXiv:1912.02771, 2019.</code> 进行了简单的尝试，将类别 <code>t</code> 的图像全部修改某一特定像素，模型可以学习到该像素，只要修改了该特定像素，模型就将其分类为 <code>t</code>，缺点是模型无法识别正常的 <code>t</code> 类别图片。修改如下图：</p>
+<p><img src="/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-8.png" alt="fig8"></p>
+<p><code>M. Alberti, V. Pondenkandath, M. W¨ursch, M. Bouillon, M. Seuret, R. Ingold, and M. Liwicki, “Are You Tampering with My Data?”</code> 则是对上一个方法的缺点进行了改进，证明了在不损害模型准确率的情况下实施干净标签攻击是可行的。</p>
+<p><img src="/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-9.png" alt="fig9"></p>
+<p><code>Y. Liu, X. Ma, J. Bailey, and F. Lu, “Reflection backdoor: A natural backdoor attack on deep neural networks,” in European Conference on Computer Vision. Springer, 2020, pp. 182–199.</code> 则是设计了一种能够激活 clean-label attack 的不可见触发特征生成方法，具体如下图。该方法利用镜面反射的原理来制作后门样本，并且参考了物理的反射公式设计了该算法。</p>
+<p><img src="/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-10.png" alt="fig10"></p>
+<p>当然上述如图 9 和图 10 的方法都需要较大的投毒比例，<code>R. Ning, J. Li, C. Xin, and H. Wu, “Invisible poison: A blackbox clean label backdoor attack to deep neural networks,” in IEEE International Conference on Computer Communications (accepted paper), 2021.</code> 则是提出了一种强力的干净标签攻击，并且需要较低的投毒比。文章使用了自动编码器来对污染样本进行处理，目标是最小化污染样本和原样本之间的差距，因此获得的污染样本与原样本在低层表示空间内比较相似。</p>
+<h4 id="Feature-collision">Feature collision</h4>
+<p><code>A. Shafahi, W. R. Huang, M. Najibi, O. Suciu, C. Studer, T. Dumitras, and T. Goldstein, “Poison frogs! targeted clean-label poisoning attacks on neural networks,” in NIPS 2018,Advances in Neural Information Processing Systems, 2018.</code> 提出了一种基于特征冲突的干净标签攻击，原理如下：</p>
+<ul>
+<li>给定一个类别 <code>c</code> 的样本 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>c</mi></msub></mrow><annotation encoding="application/x-tex">x_c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，一个类别 <code>t</code> 的样本 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">x_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></li>
+<li>生成攻击样本 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>x</mi><mrow><mi>a</mi><mi>t</mi><mi>t</mi><mi>a</mi><mi>c</mi><mi>k</mi></mrow></msup></mrow><annotation encoding="application/x-tex">x^{attack}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight">tt</span><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight">c</span><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span></span>，使得该样本看起来像 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">x_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 但是在特征空间内与 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>c</mi></msub></mrow><annotation encoding="application/x-tex">x_c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 相近</li>
+<li>将样本被标记为 <code>t</code>，网络将会把样本 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>x</mi><mrow><mi>a</mi><mi>t</mi><mi>t</mi><mi>a</mi><mi>c</mi><mi>k</mi></mrow></msup></mrow><annotation encoding="application/x-tex">x^{attack}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight">tt</span><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight">c</span><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span></span> 的特种空间中接近 <code>c</code> 的特征与类别 <code>t</code> 关联</li>
+<li>经过测试阶段，网络会把 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>x</mi><mrow><mi>a</mi><mi>t</mi><mi>t</mi><mi>a</mi><mi>c</mi><mi>k</mi></mrow></msup></mrow><annotation encoding="application/x-tex">x^{attack}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight">tt</span><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight">c</span><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span></span> 分类为 <code>t</code>，这样会导致 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>c</mi></msub></mrow><annotation encoding="application/x-tex">x_c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 也会被分类为 <code>t</code> 类</li>
+<li>使用样本 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>x</mi><mrow><mi>a</mi><mi>t</mi><mi>t</mi><mi>a</mi><mi>c</mi><mi>k</mi></mrow></msup></mrow><annotation encoding="application/x-tex">x^{attack}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight">tt</span><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight">c</span><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span></span> 或者 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>c</mi></msub></mrow><annotation encoding="application/x-tex">x_c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 即可触发攻击，如下图</li>
+</ul>
+<p>上述方法的具体应用场景是，迁移学习中受害者仅可以训练网络的最后一层。</p>
+<p><img src="/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-11.png" alt="fig11"></p>
+<p>在此之后，开始探索 feature collision 的拓展，<code>Transferable clean-label poisoning attacks on deep neural nets</code> 弱化了前提假设，该文章假设攻击者智能获取模型使用的部分训练数据，然后使用 feature collision 在特征空间内使污染样本形成多面体包裹目标样本。</p>
+<p><code>A. Saha, A. Subramanya, and H. Pirsiavash, “Hidden trigger backdoor attacks,” in The Thirty-Fourth AAAI Conference on Artificial Intelligence,</code> 则是提出了一种基于激活特征的 feature collision 方法，跟 Shafahi 类似不过是结合了前面提到的 fine-tuning 阶段嵌入特征的方法。</p>
+<p><code>Deeppoison: Feature transfer based stealthy poisoning attack for dnns</code> 提出了一种基于 GAN 网络的 feature collision 方法，该方法包含一个生成器 generator 和两个分辨器 discriminators，生成器用于生成污染样本，一个分辨器用于评价该样本与原样本在视觉上的差异，另一个分辨器评价该样本与目标样本在特征空间的差异。</p>
+<h4 id="Suppression-of-class-discriminative-features">Suppression of class discriminative features</h4>
+<p><code>A. Turner, D. Tsipras, and A. Madry, “Label-consistent backdoor attacks,” arXiv preprint arXiv:1912.02771, 2019.</code> 则是提出了一种新的思路来达成 clean-label attack, 具体有以下几个步骤：</p>
+<ul>
+<li>给定 类别 <code>t</code> 和一个样本 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">x_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></li>
+<li>生成该类别的对抗样本 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>x</mi><mrow><mi>a</mi><mi>d</mi><mi>v</mi></mrow></msup></mrow><annotation encoding="application/x-tex">x^{adv}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight">d</span><span class="mord mathnormal mtight" style="margin-right:0.03588em;">v</span></span></span></span></span></span></span></span></span></span></span></span>，也就是 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>x</mi><mrow><mi>a</mi><mi>d</mi><mi>v</mi></mrow></msup></mrow><annotation encoding="application/x-tex">x^{adv}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight">d</span><span class="mord mathnormal mtight" style="margin-right:0.03588em;">v</span></span></span></span></span></span></span></span></span></span></span></span> 在特征空间内的对应类别为 <code>c</code>，标签类别为 <code>t</code></li>
+<li>由此导致 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>x</mi><mrow><mi>a</mi><mi>d</mi><mi>v</mi></mrow></msup></mrow><annotation encoding="application/x-tex">x^{adv}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight">d</span><span class="mord mathnormal mtight" style="margin-right:0.03588em;">v</span></span></span></span></span></span></span></span></span></span></span></span> 很难被分类</li>
+<li>向对抗样本添加触发特征 trigger， <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>x</mi><mrow><mi>a</mi><mi>t</mi><mi>t</mi><mi>a</mi><mi>k</mi></mrow></msup><mo>=</mo><msup><mi>x</mi><mrow><mi>a</mi><mi>d</mi><mi>v</mi></mrow></msup><mo>+</mo><mi>t</mi><mi>r</mi><mi>i</mi><mi>g</mi><mi>g</mi><mi>e</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">x^{attak} = x^{adv} + trigger</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight">tt</span><span class="mord mathnormal mtight" style="margin-right:0.03148em;">ak</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.9324em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight">d</span><span class="mord mathnormal mtight" style="margin-right:0.03588em;">v</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.03588em;">gg</span><span class="mord mathnormal" style="margin-right:0.02778em;">er</span></span></span></span> ，标签类别为 <code>t</code></li>
+<li>由于模型学习 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>x</mi><mrow><mi>a</mi><mi>d</mi><mi>v</mi></mrow></msup></mrow><annotation encoding="application/x-tex">x^{adv}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight">d</span><span class="mord mathnormal mtight" style="margin-right:0.03588em;">v</span></span></span></span></span></span></span></span></span></span></span></span> 很难将其分类为 <code>t</code>，因此只能将 <code>trigger</code> 作为 <code>t</code> 的特征</li>
+</ul>
+<p><img src="/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/fig-12.png" alt="fig12"></p>
+<p><code>“Clean-Label Backdoor Attacks on Video Recognition Models,”</code> 则是在视频网络中应用了该方法，目标网络是 <code>ConvNet + LSTM </code> 的视频分类网络，具体步骤是：</p>
+<ul>
+<li>训练一个全局触发器 trigger</li>
+<li>生成一个对抗视频样本</li>
+<li>叠加</li>
+</ul>
+<h2 id="数据级别检测方法-data-level-defences">数据级别检测方法 data level defences</h2>
+<p><img src="/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/tab-2.png" alt="tab-2"></p>
+<h2 id="模型级别检测方法-model-level-defences">模型级别检测方法 model level defences</h2>
+<p><img src="/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/tab-3.png" alt="tab-3"></p>
+<h2 id="数据集级别检测方法-dataset-level-defences">数据集级别检测方法 dataset level defences</h2>
+<p><img src="/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/tab-4.png" alt="tab-4"></p>
+<h2 id="discussion">discussion</h2>
+<ul>
+<li>通用的防御方法，general defences
+<ul>
+<li>specific，现在的防御方法只是针对特定攻击的</li>
+</ul>
+</li>
+<li>提升后门鲁棒性，improving the rubustness of backdoors
+<ul>
+<li>new strategy</li>
+<li>physical domain</li>
+</ul>
+</li>
+<li>底层理论的发展，develop of the underlying theory
+<ul>
+<li>help optimal triggers</li>
+<li>help defencers build defences, such as a theoretical framework</li>
+</ul>
+</li>
+<li>视频方向</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css"></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://odymit.github.io">odymit</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://odymit.github.io/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/">http://odymit.github.io/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Survey/">Survey</a><a class="post-meta__tags" href="/tags/AI-Backdoor-Attacks/">AI Backdoor Attacks</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/07/14/Backdoor-Attacks-and-Countermeasures-on-Deep-Learning-A-Comprehensive-Review/" title="Backdoor Attacks and Countermeasures on Deep Learning: A Comprehensive Review"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">Backdoor Attacks and Countermeasures on Deep Learning: A Comprehensive Review</div></div></a></div><div class="next-post pull-right"><a href="/2022/07/07/Deep-k-NN-Defense-Against-Clean-label-Data-Poisoning-Attacks/" title="Deep k-NN Defense Against Clean-label Data Poisoning Attacks"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info">Deep k-NN Defense Against Clean-label Data Poisoning Attacks</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2022/07/20/A-Survey-on-Neural-Trojans/" title="A Survey on Neural Trojans"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-20</div><div class="title">A Survey on Neural Trojans</div></div></a></div><div><a href="/2022/07/14/Backdoor-Attacks-and-Countermeasures-on-Deep-Learning-A-Comprehensive-Review/" title="Backdoor Attacks and Countermeasures on Deep Learning: A Comprehensive Review"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-14</div><div class="title">Backdoor Attacks and Countermeasures on Deep Learning: A Comprehensive Review</div></div></a></div><div><a href="/2022/07/21/Detecting-AI-trojans-using-meta-neural-analysis/" title="Detecting AI trojans using meta neural analysis"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-21</div><div class="title">Detecting AI trojans using meta neural analysis</div></div></a></div><div><a href="/2022/06/22/Security-and-privacy-for-6G-A-survey-on-prospective-technologies-and-challenges/" title="Security and privacy for 6G: A survey on prospective technologies and challenges"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-06-22</div><div class="title">Security and privacy for 6G: A survey on prospective technologies and challenges</div></div></a></div><div><a href="/2022/08/24/Spectral-Signatures-in-Backdoor-Attacks/" title="Spectral Signatures in Backdoor Attacks"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-24</div><div class="title">Spectral Signatures in Backdoor Attacks</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">odymit</div><div class="author-info__description">Reading, thinking and writing.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">113</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">82</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">14</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/odymit" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://github.com/odymithttps://stackoverflow.com/users/15737405/odymit" target="_blank" title="Stack Overflow"><i class="fab fa-stack-overflow" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:inbox.odymit@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Peace and love!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#abstract"><span class="toc-number">1.</span> <span class="toc-text">abstract</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E9%97%A8%E6%94%BB%E5%87%BB"><span class="toc-number">2.</span> <span class="toc-text">后门攻击</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Corrupted-label-attacks"><span class="toc-number">2.1.</span> <span class="toc-text">Corrupted-label attacks</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A6%96%E6%AC%A1%E6%8F%90%E5%87%BA"><span class="toc-number">2.1.1.</span> <span class="toc-text">首次提出</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E9%97%A8%E6%94%BB%E5%87%BB%E5%8F%91%E5%B1%95%E6%96%B9%E5%90%91"><span class="toc-number">2.2.</span> <span class="toc-text">后门攻击发展方向</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%99%8D%E4%BD%8E%E8%A7%A6%E5%8F%91%E7%89%B9%E5%BE%81%E5%8F%AF%E8%A7%86%E6%80%A7-reducing-trigger-visibility"><span class="toc-number">2.2.1.</span> <span class="toc-text">降低触发特征可视性 reducing trigger visibility</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%83%8F%E7%B4%A0%E6%A8%A1%E7%B3%8A-pixel-blending"><span class="toc-number">2.2.1.1.</span> <span class="toc-text">像素模糊 pixel blending</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%9C%8B%E4%B8%8D%E8%A7%81%E7%9A%84%E8%A7%A6%E5%8F%91%E7%89%B9%E5%BE%81-perceptually-invisible-triggers"><span class="toc-number">2.2.1.2.</span> <span class="toc-text">看不见的触发特征 perceptually invisible triggers</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%A2%84%E5%A4%84%E7%90%86-exploitation-of-input-preprocessing"><span class="toc-number">2.2.1.3.</span> <span class="toc-text">预处理 exploitation of input-preprocessing</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8F%90%E5%8D%87%E5%90%8E%E9%97%A8%E9%B2%81%E6%A3%92%E6%80%A7-enhancing-backdoor-robustness"><span class="toc-number">2.2.2.</span> <span class="toc-text">提升后门鲁棒性 enhancing backdoor robustness</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%90%8E%E9%97%A8%E6%94%BB%E5%87%BB-other-attacks"><span class="toc-number">2.2.3.</span> <span class="toc-text">其他后门攻击 other attacks</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Clean-label-attacks"><span class="toc-number">2.3.</span> <span class="toc-text">Clean-label attacks</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Design-of-strong-ad-hoc-triggering-pattern"><span class="toc-number">2.3.1.</span> <span class="toc-text">Design of strong, ad-hoc, triggering pattern</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Feature-collision"><span class="toc-number">2.3.2.</span> <span class="toc-text">Feature collision</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Suppression-of-class-discriminative-features"><span class="toc-number">2.3.3.</span> <span class="toc-text">Suppression of class discriminative features</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BA%A7%E5%88%AB%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95-data-level-defences"><span class="toc-number">3.</span> <span class="toc-text">数据级别检测方法 data level defences</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E7%BA%A7%E5%88%AB%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95-model-level-defences"><span class="toc-number">4.</span> <span class="toc-text">模型级别检测方法 model level defences</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E7%BA%A7%E5%88%AB%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95-dataset-level-defences"><span class="toc-number">5.</span> <span class="toc-text">数据集级别检测方法 dataset level defences</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#discussion"><span class="toc-number">6.</span> <span class="toc-text">discussion</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/27/Topology-Aware-Network-Pruning-using-Multi-stage-Graph-Embedding-and-Reinforcement-Learning/" title="Topology-Aware Network Pruning using Multi-stage Graph Embedding and Reinforcement Learning">Topology-Aware Network Pruning using Multi-stage Graph Embedding and Reinforcement Learning</a><time datetime="2023-09-27T14:48:19.000Z" title="Created 2023-09-27 22:48:19">2023-09-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/27/centos-%E5%8D%B7%E7%AE%A1%E7%90%86/" title="centos volume management">centos volume management</a><time datetime="2023-09-27T11:32:31.000Z" title="Created 2023-09-27 19:32:31">2023-09-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/16/OpenBackdoor-A-Unified-Evaluation-of-Textual-Backdoor-Learning-Frameworks-and-Benchmarks/" title="OpenBackdoor: A Unified Evaluation of Textual Backdoor Learning: Frameworks and Benchmarks">OpenBackdoor: A Unified Evaluation of Textual Backdoor Learning: Frameworks and Benchmarks</a><time datetime="2023-03-16T02:17:04.000Z" title="Created 2023-03-16 10:17:04">2023-03-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/13/BACKDOORBOX-A-PYTHON-TOOLBOX-FOR-BACKDOOR-LEARNIN/" title="BACKDOORBOX: A PYTHON TOOLBOX FOR BACKDOOR LEARNIN">BACKDOORBOX: A PYTHON TOOLBOX FOR BACKDOOR LEARNIN</a><time datetime="2023-03-13T08:44:38.000Z" title="Created 2023-03-13 16:44:38">2023-03-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/12/BackdoorBench-A-Comprehensive-Benchmark-of-Backdoor-Learning/" title="BackdoorBench: A Comprehensive Benchmark of Backdoor Learning">BackdoorBench: A Comprehensive Benchmark of Backdoor Learning</a><time datetime="2023-03-12T14:06:43.000Z" title="Created 2023-03-12 22:06:43">2023-03-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By odymit</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

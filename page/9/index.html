@@ -1,0 +1,662 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>odymit's blog</title><meta name="author" content="odymit"><meta name="copyright" content="odymit"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Reading, thinking and writing.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="odymit&#39;s blog">
+<meta property="og:url" content="http://odymit.github.io/page/9/index.html">
+<meta property="og:site_name" content="odymit&#39;s blog">
+<meta property="og:description" content="Reading, thinking and writing.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://odymit.github.io/img/avatar.jpg">
+<meta property="article:author" content="odymit">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://odymit.github.io/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://odymit.github.io/page/9/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'odymit\'s blog',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2023-09-27 22:57:45'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">113</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">82</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">14</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/img/index.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="odymit's blog"><span class="site-name">odymit's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">odymit's blog</h1><div id="site_social_icons"><a class="social-icon" href="https://github.com/odymit" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://github.com/odymithttps://stackoverflow.com/users/15737405/odymit" target="_blank" title="Stack Overflow"><i class="fab fa-stack-overflow" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:inbox.odymit@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/01/28/%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E4%B8%8E%E5%BA%94%E7%94%A8%EF%BC%9A%E7%A8%8B%E5%BA%8F%E5%88%87%E7%89%87/" title="软件安全分析与应用：程序切片">软件安全分析与应用：程序切片</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-01-27T16:13:29.000Z" title="Created 2022-01-28 00:13:29">2022-01-28</time></span></div><div class="content">软件安全分析与应用第4章程序切片读书笔记。
+
+
+程序切片
+
+概述
+
+相关知识
+基本原理
+
+
+静态切片
+
+基于数据流
+基于图可达性
+
+
+动态切片
+
+基于程序依赖图
+基于动态依赖图
+
+
+
+
+
+
+概述
+程序切片是指从程序中提取出满足一定约束条件的代码片段。
+相关知识
+
+控制流
+数据流
+代码块
+可达性
+活性分析
+程序依赖图
+
+基本原理
+静态程序切片主要有两种方法，即为基于数据流方程的方法和基于程序依赖图可达性的切片方法。
+动态切片是一种仅关注在给定某个输入条件下对程序中某点的变量有影响的语句，动态切片的发现来源于程序动态调试的需要。
+</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/01/26/%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E4%B8%8E%E5%BA%94%E7%94%A8%EF%BC%9A%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80%E5%B7%A5%E5%85%B7/" title="软件安全分析与应用：软件安全分析基础工具">软件安全分析与应用：软件安全分析基础工具</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-01-26T06:05:29.000Z" title="Created 2022-01-26 14:05:29">2022-01-26</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/readings/">readings</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/readings/bug-analysis/">bug analysis</a></span></div><div class="content">软件安全分析与应用第3章软件安全分析基础工具读书笔记。
+
+
+软件安全分析基础工具
+
+静态分析工具
+
+IDA Pro
+Udis86
+Capstone
+PEiD
+010Editor
+
+
+动态分析工具
+
+Process Monitor
+Wireshark
+OllyDbg
+WinDbg
+Pin
+
+
+虚拟化辅助分析平台
+
+VMWare Workstation
+VirtualBox
+QEMU
+Xen
+
+
+
+
+
+
+静态分析工具
+静态分析是指在不运行软件程序的情况下，利用分析工具，采用语法分析、词法分析、控制流与数据流分析等技术手段对软件程序进行扫描。
+IDA Pro
+IDA Pro 是一款交互式的反汇编工具，简称 IDA。支持 Windows、Linux、Mac OS等主流操作系统，支持 Interl x86/x64、ARM、MIPS等数十种指令集的反汇编。
+IDA 的常用功能有：
+
+反汇编，使用递归下降算法进行代码扫描，结果可以使用控制流图和地址顺序排列
+反编译，将对应汇编代码反编译成 C/C++ 代码
+导入表与导出表解析，导入表记录了程序调用的但执行代码不再程序中而在程序中，而在动态库文件（dl ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/01/24/%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E4%B8%8E%E5%BA%94%E7%94%A8%EF%BC%9A%E7%BB%AA%E8%AE%BA%E4%B8%8E%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="软件安全分析与应用：绪论与基础知识">软件安全分析与应用：绪论与基础知识</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-01-24T08:10:40.000Z" title="Created 2022-01-24 16:10:40">2022-01-24</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/readings/">readings</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/readings/bug-analysis/">bug analysis</a></span></div><div class="content">软件安全分析与应用第1章第2章绪论与基础知识读书笔记。
+
+
+基础知识
+
+处理器硬件架构基础
+
+CPU结构介绍
+保护模式
+特权级
+中断处理与异常处理
+调试支持
+虚拟化支持
+
+
+反汇编及对抗技术
+
+汇编语言
+反汇编
+代码混淆
+反调试
+
+
+Windows操作系统基础
+
+PE文件结构
+进程管理
+线程管理
+内存管理
+对象与句柄管理
+文件系统
+
+
+
+
+
+
+处理器硬件架构基础
+保护模式
+IA-32架构的 CPU 有两种工作模式：实模式和保护模式，工作模式受到 CR0 和 PE 标志位控制。
+CPU 刚开始初始化后工作在实模式下，PE 标志位值为0，使用20位地址，寻址空间1MB；当操作系统启动时，将 CPU 的 PE 标志位置1，开启保护模式，使用32为地址，内存寻址空间拓展到4GB。
+实模式不支持多线程，不能实现权限分级；保护模式下引入内存的分页和分段管理机制，实现了内存分页和权限分级，并支持多线程、多任务。
+特权级
+CPU 支持 Ring0, Ring1, Ring2, Ring3 共 4 个权限级别， windows 只使用了 Ring0 和 Ring3 两个。
+为了进行代码段和数据段间的特权 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/01/23/%E8%BD%AF%E4%BB%B6%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF%EF%BC%9A%E8%BF%90%E8%A1%8C%E7%B3%BB%E7%BB%9F%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" title="软件漏洞分析技术：运行系统漏洞分析">软件漏洞分析技术：运行系统漏洞分析</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-01-23T06:00:01.000Z" title="Created 2022-01-23 14:00:01">2022-01-23</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/readings/">readings</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/readings/bug-analysis/">bug analysis</a></span></div><div class="content">软件漏洞分析技术第15章运行系统漏洞分析读书笔记。
+
+
+运行系统漏洞分析
+
+基本原理
+方法实现
+
+信息手机
+配置管理漏洞检测
+通信协议漏洞检测
+授权认证漏洞检测
+数据验证漏洞检测
+数据安全性检测
+
+
+实例分析
+典型工具
+
+Nmap
+Nessus
+微软基线安全分析器
+WVS
+
+
+
+
+
+
+基本原理
+运行系统的特点：
+
+运行系统是处于实际运行状态的系统
+运行系统是多种软件的有机整体，各个软件之间具有一定的运行逻辑关系
+运行系统的部署环境复杂多样，可能由不同子网范围内的不同操作系统的多台机器共同构成
+
+方法实现
+信息收集主要手段有：
+
+网络拓扑探测
+操作系统探测
+应用软件探测
+基于爬虫的信息收集
+公用资源搜索
+
+配置管理漏洞检测具体步骤有：
+
+分析运行系统的业务特性
+测试运行系统各配置是否符合第一步建立的运行系统安全配置要求
+分析人员将检查过程中发现的不符合安全配置要求的地方记录下来，形成配置安全测试评估报告
+
+通信协议漏洞检测检测方法有：
+
+形式化方法，通过数学方法说明软件系统属性
+攻击验证方法
+
+授权认证漏洞检测中授权测试方法：
+
+路径遍历测试
+绕过授权测试
+提权测试
+
+授权认证漏洞检测中 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/01/23/%E8%BD%AF%E4%BB%B6%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF%EF%BC%9A%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90/" title="软件漏洞分析技术：软件架构安全分析">软件漏洞分析技术：软件架构安全分析</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-01-23T05:59:45.000Z" title="Created 2022-01-23 13:59:45">2022-01-23</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/readings/">readings</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/readings/bug-analysis/">bug analysis</a></span></div><div class="content">软件漏洞分析技术第14章软件架构安全分析。
+
+
+软件架构安全分析
+
+基本原理
+方法实现
+
+形式化分析
+工程化分析
+
+
+实例分析
+典型工具
+
+威胁建模工具
+软件架构分析工具
+
+
+
+
+
+
+基本原理
+软件架构是一系列相关的抽象模式，用于指导大型软件系统各个方面的设计。描述的对象是直接构成系统的抽象组件。各个组件之间的连接则明确和相对细致第描述组件之间的通讯。
+方法实现
+现在软件架构安全分析可以分为两类：
+
+形式化分析，分析结果精确、可量化，自动化程度高，但实用性差
+工程化分析，实用性强，但自动化程度化
+
+常见的工程化分析技术：
+
+场景分析法
+错误用例分析法
+威胁建模法
+
+实例分析
+工程化分析实例，基于 Web 应用程序的威胁建模基本步骤：
+
+确定安全目标
+创建 Web 应用程序概述
+分解应用
+确定威胁
+确定漏洞
+
+典型工具
+威胁建模工具：
+
+图表
+分析模型
+描述环境
+生成报告
+
+软件架构分析工具有 IBM 软件架构师工具包。
+</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/01/22/%E8%BD%AF%E4%BB%B6%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF%EF%BC%9A%E6%99%BA%E8%83%BD%E7%81%B0%E7%9B%92%E6%B5%8B%E8%AF%95/" title="软件漏洞分析技术：智能灰盒测试">软件漏洞分析技术：智能灰盒测试</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-01-22T07:31:46.000Z" title="Created 2022-01-22 15:31:46">2022-01-22</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/readings/">readings</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/readings/bug-analysis/">bug analysis</a></span></div><div class="content">软件漏洞分析技术第13章智能灰盒测试读书笔记。
+
+
+智能灰盒测试
+
+基本原理
+方法实现
+
+动态符号执行
+路径控制与定向遍历
+路径约束求解
+漏洞触发数据生成
+
+
+实例分析
+典型工具
+
+Dart
+Smart fuzzing
+BitBlaze
+
+
+
+
+
+
+基本原理
+二进制漏洞分析中应用最普遍的方法是模糊测试（fuzzing），但是存在着明显的缺陷，测试用例的生成存在盲目性。
+该盲目性产生与两个方面：
+
+没有结合系统具体代码实现（没有系统的先验知识）
+测试用例独立
+
+针对这些问题，测试方法转向智能模糊测试（smart fuzzing），通过先验知识提高测试用例的有效率。具体的方法有：
+
+符号执行，增加覆盖率
+路径控制，去除冗余无效用例
+…
+
+智能灰盒测试基本步骤：
+
+静态分析，将二进制程序反汇编然后转化成为中间语言表示
+符号执行收集路径条件
+利用约束求解工具，求解能够执行的路径
+针对此类路径生成测试用例
+
+方法实现
+动态符号执行获取程序可能的执行路径。
+路径控制与定向遍历增强漏洞分析的针对性，采用模式匹配等静态分析的方法，识别出漏洞相关路径，并重点对漏洞相关路径进行遍历，提高漏洞分析的准确率。 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/01/22/%E8%BD%AF%E4%BB%B6%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF%EF%BC%9A%E5%9F%BA%E4%BA%8E%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%BB%A3%E7%A0%81%E5%AF%B9%E6%AF%94%E7%9A%84%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" title="软件漏洞分析技术：基于二进制代码对比的漏洞分析">软件漏洞分析技术：基于二进制代码对比的漏洞分析</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-01-22T06:37:27.000Z" title="Created 2022-01-22 14:37:27">2022-01-22</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/readings/">readings</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/readings/bug-analysis/">bug analysis</a></span></div><div class="content">软件漏洞分析技术第12章基于二进制代码对比的漏洞分析。
+
+
+基于二进制代码对比的漏洞分析
+
+基本原理
+方法实现
+
+文本
+图同构
+结构化
+软件补丁
+
+
+实例分析
+典型工具
+
+Bindiff
+Eye Binary Diffing Suite
+
+
+
+
+
+
+基本原理
+补丁对比技术是一种通过对比打补丁前后的目标代码，分析发现两个版本的程序之间差异的技术。
+二进制代码对比最终目的是寻找打补丁前后程序的差异。有以下几种方法：
+
+基于文本的对比，输出结果范围大，漏洞定位精度差，误报率高
+基于图同构的对比，指令级和函数级图同构对比，受编译器优化影响大
+基于结构化对比，受编译器影响大，存在局部影响全局的问题
+综合对比技术
+
+实例分析
+以CNNVD-201112-203为例，进行实例分析流程如下：
+
+漏洞信息搜集
+搭建测试环境
+补丁对比（获取汇编代码差异，明确分析对象到具体的目标函数和子函数）
+静态分析（定位发生问题的代码）
+动态调试（验证猜想）
+
+典型工具
+Bindiff是针对二进制文件差异型对比工具，协助安全人员迅速找到反汇编代码的差异之处和相似之处。
+Eye Binary Diffing Suite  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/01/22/%E8%BD%AF%E4%BB%B6%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF%EF%BC%9A%E5%9F%BA%E4%BA%8E%E6%A8%A1%E5%BC%8F%E7%9A%84%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" title="软件漏洞分析技术：基于模式的漏洞分析">软件漏洞分析技术：基于模式的漏洞分析</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-01-22T06:04:06.000Z" title="Created 2022-01-22 14:04:06">2022-01-22</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/readings/">readings</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/readings/bug-analysis/">bug analysis</a></span></div><div class="content">软件漏洞分析技术第11章基于模式的漏洞分析。
+
+
+基于模式的漏洞分析
+
+基本原理
+方法实现
+
+反汇编分析
+逆向中间表示
+漏洞模式建模
+漏洞模式检测
+
+
+实例分析
+典型工具
+
+BinNavi
+BAP
+
+
+
+
+
+
+基本原理
+基于模式的漏洞分析基本步骤：
+
+建立漏洞模式
+对二进制程序进行反汇编，获得汇编代码
+将汇编代码转化为中间表示
+中间表示的漏洞模式匹配
+
+二进制文件结构，根据平台不同有不同的文件格式：
+
+Windows 下的 PE（portable executable）
+UNIX 下的 ELF（Executable and Linkable Format）
+iOS 与 Mac OS 的 Mach-O（Mach object）
+
+方法实现
+由于x86指令集非常复杂，难以建立漏洞模式，所以需要对汇编代码进一步抽象，转化为中间表示建立漏洞模式。
+反汇编的基本算法：
+
+确定反汇编代码区域
+确定指令的起始地址
+读取初始地址的值，执行一次表查找，对应二进制操作码的值和汇编语言助记符
+获取指令与操作数，等价转化成汇编语言
+下一条指令，并重复3-5
+
+当前最主要的反汇编策略：
+
+线性扫描策略，不能区分 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/01/22/%E8%BD%AF%E4%BB%B6%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF%EF%BC%9A%E5%8A%A8%E6%80%81%E6%B1%A1%E7%82%B9%E5%88%86%E6%9E%90/" title="软件漏洞分析技术：动态污点分析">软件漏洞分析技术：动态污点分析</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-01-22T03:45:41.000Z" title="Created 2022-01-22 11:45:41">2022-01-22</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/readings/">readings</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/readings/dynamic-taint-analysis/">dynamic taint analysis</a></span></div><div class="content">软件漏洞分析技术第10章动态污点分析读书笔记。
+
+
+动态污点分析
+
+基本原理
+方法实现
+实例分析
+典型工具
+
+TaintCheck
+Argos
+TaintDroid
+
+
+
+
+
+
+基本原理
+动态污点分析在程序运行的基础上，对数据流或者控制流进行监控，从而实现对数据在内存中的显式传播、数据误用等操作进行跟踪和检测。
+根据流，动态污点分析可以归类为：
+
+基于数据流的
+基于控制流的
+根据范围，动态污点分析可以归类为：
+用户进程级
+全系统级
+
+动态污点分析的基本步骤有：
+
+污点数据标记
+污点动态跟踪
+污点误用检查
+
+优点是低误报和高可信。
+缺点是：
+
+漏报率高
+平台相关性高
+资源消耗大
+
+实现
+动态代码插桩：在被分析的程序的控制流中，插入用户定义的代码，从而对程序的行为进行监控的方法。
+根据时机的不同，可以被分为：
+
+源代码插桩
+编译时插桩
+链接时插桩
+运行时插桩
+
+污点敏感点，即 Sink 点，是污点数据有可能被误用的指令或者系统调用。主要可以分为：
+
+跳转地址
+格式化字符串
+系统调用参数
+
+典型工具
+TaintCheck：基于开源的x86模拟器Valgrind设计实现，先将机器指令翻译成为  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/01/22/%E8%BD%AF%E4%BB%B6%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF%EF%BC%9A%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95/" title="软件漏洞分析技术：模糊测试">软件漏洞分析技术：模糊测试</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-01-22T03:06:41.000Z" title="Created 2022-01-22 11:06:41">2022-01-22</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/readings/">readings</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/readings/bug-analysis/">bug analysis</a></span></div><div class="content">软件漏洞分析技术第9章模糊测试读书笔记。
+
+
+模糊测试
+
+基本原理
+方法实现
+
+输入数据关联分析
+测试用例构建
+测试异常分析
+框架
+
+
+实例分析
+典型工具
+
+Peach
+Sulley
+
+
+
+
+
+
+概念
+模糊测试是当前最流行的黑盒测试方法，基本步骤有：
+
+向待测程序提供大量特殊构造的数据作为输入
+监视程序的运行过程中产生的异常并且记录导致异常的输入
+人工进一步定位漏洞位置
+
+方法实现
+了解程序对于数据的结构化要求，有针对性地通过变异或者生成的方式构建测试用例。
+对于复杂的数据格式，使用数据块模型进行描述。
+常用的测试用例构造算法有：
+
+随机
+强制性测试
+预先生成测试用例
+遗传算法
+错误注入与模糊式启发
+
+测试异常分析
+在模糊测试过程中，首先通过分类过滤并获取程序的某些运行时信息（尤其是异常发生时的），对记录下来的信息进行重点分析。
+具体的监控方法有：
+
+系统调试接口
+异常即时过滤
+异常影响分析与漏洞危害判定
+
+典型工具
+Peach：代码可以重用，并且能够在使用过程中变得更加智能。
+Sulley：该工具的特点有使用简单且极富弹性，日志记录丰富且可以重现测试用例，代码可重用性高，基于路径的分 ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/8/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/#content-inner">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/#content-inner">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/#content-inner">12</a><a class="extend next" rel="next" href="/page/10/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">odymit</div><div class="author-info__description">Reading, thinking and writing.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">113</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">82</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">14</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/odymit" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://github.com/odymithttps://stackoverflow.com/users/15737405/odymit" target="_blank" title="Stack Overflow"><i class="fab fa-stack-overflow" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:inbox.odymit@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Peace and love!</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/27/Topology-Aware-Network-Pruning-using-Multi-stage-Graph-Embedding-and-Reinforcement-Learning/" title="Topology-Aware Network Pruning using Multi-stage Graph Embedding and Reinforcement Learning">Topology-Aware Network Pruning using Multi-stage Graph Embedding and Reinforcement Learning</a><time datetime="2023-09-27T14:48:19.000Z" title="Created 2023-09-27 22:48:19">2023-09-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/27/centos-%E5%8D%B7%E7%AE%A1%E7%90%86/" title="centos volume management">centos volume management</a><time datetime="2023-09-27T11:32:31.000Z" title="Created 2023-09-27 19:32:31">2023-09-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/16/OpenBackdoor-A-Unified-Evaluation-of-Textual-Backdoor-Learning-Frameworks-and-Benchmarks/" title="OpenBackdoor: A Unified Evaluation of Textual Backdoor Learning: Frameworks and Benchmarks">OpenBackdoor: A Unified Evaluation of Textual Backdoor Learning: Frameworks and Benchmarks</a><time datetime="2023-03-16T02:17:04.000Z" title="Created 2023-03-16 10:17:04">2023-03-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/13/BACKDOORBOX-A-PYTHON-TOOLBOX-FOR-BACKDOOR-LEARNIN/" title="BACKDOORBOX: A PYTHON TOOLBOX FOR BACKDOOR LEARNIN">BACKDOORBOX: A PYTHON TOOLBOX FOR BACKDOOR LEARNIN</a><time datetime="2023-03-13T08:44:38.000Z" title="Created 2023-03-13 16:44:38">2023-03-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/12/BackdoorBench-A-Comprehensive-Benchmark-of-Backdoor-Learning/" title="BackdoorBench: A Comprehensive Benchmark of Backdoor Learning">BackdoorBench: A Comprehensive Benchmark of Backdoor Learning</a><time datetime="2023-03-12T14:06:43.000Z" title="Created 2023-03-12 22:06:43">2023-03-12</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>Categories</span>
+            <a class="card-more-btn" href="/categories/" title="View More">
+    <i class="fas fa-angle-right"></i></a>
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/papers/"><span class="card-category-list-name">papers</span><span class="card-category-list-count">82</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/papers/abstract/"><span class="card-category-list-name">abstract</span><span class="card-category-list-count">79</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/papers/innovation/"><span class="card-category-list-name">innovation</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/papers/survey/"><span class="card-category-list-name">survey</span><span class="card-category-list-count">2</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/readings/"><span class="card-category-list-name">readings</span><span class="card-category-list-count">22</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/readings/bug-analysis/"><span class="card-category-list-name">bug analysis</span><span class="card-category-list-count">21</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/readings/dynamic-taint-analysis/"><span class="card-category-list-name">dynamic taint analysis</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/techniques/"><span class="card-category-list-name">techniques</span><span class="card-category-list-count">5</span></a></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>Tags</span></div><div class="card-tag-cloud"><a href="/tags/AI/" style="font-size: 1.34em; color: #99a3b0">AI</a> <a href="/tags/Survey/" style="font-size: 1.34em; color: #99a3b0">Survey</a> <a href="/tags/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/" style="font-size: 1.1em; color: #999">自然语言处理</a> <a href="/tags/%E8%BF%90%E7%BB%B4/" style="font-size: 1.1em; color: #999">运维</a> <a href="/tags/%E4%BF%A1%E6%81%AF%E6%8F%90%E5%8F%96/" style="font-size: 1.1em; color: #999">信息提取</a> <a href="/tags/Federated-Learning/" style="font-size: 1.18em; color: #999ca1">Federated Learning</a> <a href="/tags/tools/" style="font-size: 1.1em; color: #999">tools</a> <a href="/tags/AI-Backdoor-Attacks/" style="font-size: 1.34em; color: #99a3b0">AI Backdoor Attacks</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 1.5em; color: #99a9bf">人工智能</a> <a href="/tags/centos/" style="font-size: 1.1em; color: #999">centos</a> <a href="/tags/toolbox/" style="font-size: 1.34em; color: #99a3b0">toolbox</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E6%8A%95%E6%AF%92%E6%A3%80%E6%B5%8B/" style="font-size: 1.1em; color: #999">数据投毒检测</a> <a href="/tags/robustness/" style="font-size: 1.26em; color: #999fa8">robustness</a> <a href="/tags/AI%E5%AE%89%E5%85%A8/" style="font-size: 1.1em; color: #999">AI安全</a> <a href="/tags/%E6%94%BB%E5%87%BB%E6%A8%A1%E6%8B%9F/" style="font-size: 1.1em; color: #999">攻击模拟</a> <a href="/tags/Poisoning-Defences/" style="font-size: 1.1em; color: #999">Poisoning Defences</a> <a href="/tags/assessment/" style="font-size: 1.1em; color: #999">assessment</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9/" style="font-size: 1.18em; color: #999ca1">数据压缩</a> <a href="/tags/%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB/" style="font-size: 1.18em; color: #999ca1">意图识别</a> <a href="/tags/mitre-attack/" style="font-size: 1.1em; color: #999">mitre-attack</a> <a href="/tags/%E6%BA%AF%E6%BA%90%E5%9B%BE/" style="font-size: 1.1em; color: #999">溯源图</a> <a href="/tags/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/" style="font-size: 1.1em; color: #999">聚类算法</a> <a href="/tags/ATT-CK/" style="font-size: 1.18em; color: #999ca1">ATT&CK</a> <a href="/tags/Mysql/" style="font-size: 1.1em; color: #999">Mysql</a> <a href="/tags/CALDERA/" style="font-size: 1.1em; color: #999">CALDERA</a> <a href="/tags/Graph-Classification/" style="font-size: 1.1em; color: #999">Graph Classification</a> <a href="/tags/%E5%9B%BE%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="font-size: 1.42em; color: #99a6b7">图卷积神经网络</a> <a href="/tags/CAR/" style="font-size: 1.1em; color: #999">CAR</a> <a href="/tags/%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/" style="font-size: 1.42em; color: #99a6b7">日志分析</a> <a href="/tags/reinforcement-learning/" style="font-size: 1.1em; color: #999">reinforcement learning</a> <a href="/tags/%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/" style="font-size: 1.26em; color: #999fa8">威胁情报</a> <a href="/tags/%E6%BA%AF%E6%BA%90%E9%87%87%E9%9B%86%E5%B7%A5%E5%85%B7/" style="font-size: 1.26em; color: #999fa8">溯源采集工具</a> <a href="/tags/%E5%BC%82%E5%B8%B8%E5%80%BC%E6%A3%80%E6%B5%8B/" style="font-size: 1.42em; color: #99a6b7">异常值检测</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" style="font-size: 1.1em; color: #999">项目管理</a> <a href="/tags/git/" style="font-size: 1.1em; color: #999">git</a> <a href="/tags/Vue/" style="font-size: 1.1em; color: #999">Vue</a> <a href="/tags/%E6%97%A5%E5%BF%97%E8%BF%91%E4%BC%BC%E6%96%B9%E6%B3%95%E9%AA%8C%E8%AF%81/" style="font-size: 1.1em; color: #999">日志近似方法验证</a> <a href="/tags/backdoor/" style="font-size: 1.34em; color: #99a3b0">backdoor</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" style="font-size: 1.1em; color: #999">代码审计</a> <a href="/tags/%E5%9B%BE/" style="font-size: 1.1em; color: #999">图</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>Archives</span><a class="card-more-btn" href="/archives/" title="View More">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/09/"><span class="card-archive-list-date">September 2023</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/03/"><span class="card-archive-list-date">March 2023</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/08/"><span class="card-archive-list-date">August 2022</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/07/"><span class="card-archive-list-date">July 2022</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/06/"><span class="card-archive-list-date">June 2022</span><span class="card-archive-list-count">6</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/05/"><span class="card-archive-list-date">May 2022</span><span class="card-archive-list-count">6</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/04/"><span class="card-archive-list-date">April 2022</span><span class="card-archive-list-count">39</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/03/"><span class="card-archive-list-date">March 2022</span><span class="card-archive-list-count">7</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">Article :</div><div class="item-count">113</div></div><div class="webinfo-item"><div class="item-name">UV :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">PV :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Last Update :</div><div class="item-count" id="last-push-date" data-lastPushDate="2023-09-27T14:57:45.243Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By odymit</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

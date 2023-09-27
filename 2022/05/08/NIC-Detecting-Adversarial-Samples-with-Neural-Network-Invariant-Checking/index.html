@@ -1,0 +1,220 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>NIC: Detecting Adversarial Samples with Neural Network Invariant Checking | odymit's blog</title><meta name="author" content="odymit"><meta name="copyright" content="odymit"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="NIC: Detecting Adversarial Samples with Neural Network Invariant Checking abstract。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NIC: Detecting Adversarial Samples with Neural Network Invariant Checking">
+<meta property="og:url" content="http://odymit.github.io/2022/05/08/NIC-Detecting-Adversarial-Samples-with-Neural-Network-Invariant-Checking/index.html">
+<meta property="og:site_name" content="odymit&#39;s blog">
+<meta property="og:description" content="NIC: Detecting Adversarial Samples with Neural Network Invariant Checking abstract。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://odymit.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2022-05-08T09:04:38.000Z">
+<meta property="article:modified_time" content="2023-09-27T11:38:20.115Z">
+<meta property="article:author" content="odymit">
+<meta property="article:tag" content="异常值检测">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://odymit.github.io/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://odymit.github.io/2022/05/08/NIC-Detecting-Adversarial-Samples-with-Neural-Network-Invariant-Checking/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'NIC: Detecting Adversarial Samples with Neural Network Invariant Checking',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-09-27 19:38:20'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">113</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">82</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">14</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="odymit's blog"><span class="site-name">odymit's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">NIC: Detecting Adversarial Samples with Neural Network Invariant Checking</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-05-08T09:04:38.000Z" title="Created 2022-05-08 17:04:38">2022-05-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-09-27T11:38:20.115Z" title="Updated 2023-09-27 19:38:20">2023-09-27</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="NIC: Detecting Adversarial Samples with Neural Network Invariant Checking"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>NIC: Detecting Adversarial Samples with Neural Network Invariant Checking abstract。</p>
+<span id="more"></span>
+<h2 id="Architecture">Architecture</h2>
+<p>NIC 近似模拟了神经元激活模式的分布，然后通过比较近似分布与包含触发器的恶意样本的激活，来检测异常输入。<br>
+<img src="/2022/05/08/NIC-Detecting-Adversarial-Samples-with-Neural-Network-Invariant-Checking/overview.png" alt="overview"></p>
+<p>本文基于两个主要观察，发现攻击主要是通过攻击以下两个通道实施的：</p>
+<ul>
+<li>Provenance Channel, 该特征表示模型不够稳定，当前层神经元轻微改变后会导致下一层神经元激活情况会发生改变</li>
+<li>Value Channel, 该特征表示在前一层神经元发生轻微改变后，当前层的神经元激活值与正常样本的激活值存在巨大差距</li>
+</ul>
+<p>基于以上观察的特点，以及对于攻击的分析提出基于不变值违规情况的攻击检测，our overarching idea is to check invariant violations during DNN computation.</p>
+<h2 id="Detail">Detail</h2>
+<p>由于模型的不确定性，模型的不变特征本质上是由模型表现的概率分布。因此：</p>
+<ul>
+<li>构建 DNN 的值不变特征就是为各个层训练一组模型，用以描述良性样本的层激活分布。</li>
+<li>构建 DNN 的溯源不变特征就是训练一组模型，每一个模型描述层间神经元激活的因果分布</li>
+</ul>
+<h2 id="DNN-攻击的神经元激活观察">DNN 攻击的神经元激活观察</h2>
+<p>在讨论中，我们认为一个神经元的激活函数，如 Relu，返回了一个非零值时认为该神经元为激活状态。并且 DNN 一层隐藏层可以看作一个函数，接受来自激活神经元的参数，在本层根据权重执行矩阵乘法，然后通过激活函数决定哪些神经元激活。</p>
+<h3 id="Provenance-Channel">Provenance Channel</h3>
+<p>我们将前一层神经元激活到本层神经元激活的关系视为本层的 Provenance Channel。很多攻击中隐含了该特征。</p>
+<p><img src="/2022/05/08/NIC-Detecting-Adversarial-Samples-with-Neural-Network-Invariant-Checking/fig-2-6.png" alt="证明图例"></p>
+<p>如上图所示，图2/3分别表示类别A/B的激活状态，红色为激活神经元，白色为未激活神经元，颜色越深表示值越大。</p>
+<p>现有研究已经证明有些神经元只在特定的类别时激活，如图2/3中的1号和6号神经元只在类别为A时激活，4号和8号神经元只在类别为B时激活。</p>
+<p>当然也存在着多重类别都会被激活的神经元，如图中的2号、3号和7号神经元。</p>
+<p>图中横跨L1和L2两层的灰色区域表示激活溯源关系 Provenance Channel. 此处图中A类L1层中的1/2/3激活了L2中的6/7号神经元，B类L1层中的2/3/4激活了7/8号神经元。需要注意的是此处仅仅作为说明，单一类别也可能有多重激活方式。</p>
+<p>图5展示了跟A类样本相似的攻击样本但是被误分类为了B类，L1中的1/2/3激活了L2中的7/8号神经元导致发生了误分类。该样本的溯源通道与典型的B类不同，根本原因是模型对神经元1中微小的扰动很敏感。</p>
+<p>后门攻击就是攻击溯源通道的一个例子，该类攻击不改变整体性能，并且能将含有后门触发器的样本误分类。该类攻击修改特定层的权重值，使得后门触发器出现时激活神经元发生巨大改变。</p>
+<h3 id="Activation-Value-Distribution">Activation Value Distribution</h3>
+<p>有一些攻击不会改变模型的 Provenance Channel，也就是说其因果溯源关系与正常样本相同，但是会改变激活值的分布，具体如上图6中所示。</p>
+<p>如 FGSM 等 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>L</mi><mi mathvariant="normal">∞</mi></msub></mrow><annotation encoding="application/x-tex">L_{\infty}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">∞</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 攻击会对每个像素进行微小的改变，不改变原有的激活神经元，但是改变了激活的值分布，导致误分类。</p>
+<p>当然也存在攻击会同时使两个属性发生改变，如 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>L</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">L_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 攻击，该攻击既不限制扰动的数量也不限制扰动的大小。</p>
+<h2 id="用不变值检测来进行攻击检测">用不变值检测来进行攻击检测</h2>
+<p><img src="/2022/05/08/NIC-Detecting-Adversarial-Samples-with-Neural-Network-Invariant-Checking/fig-7.png" alt="检测图例"></p>
+<p>由于攻击 Provenance Channel 的攻击与传统攻击控制流劫持很相似，攻击激活值分布的攻击与传统攻击状态异常 state corruption 很相似。</p>
+<p>检测此类软件攻击通常是用不变值检测技术 invariant checking, 具体来说：</p>
+<ul>
+<li>control flow hijacking 使用 control flow integrity(CFI) 来检测</li>
+<li>state corruption 使用前置和后置状态来检测</li>
+</ul>
+<p>因此，我们提出在 DNN 中的不变值偏离检测的方法来检测对抗样本，并且由于 DNN 的不可解释性，这些不变值不能够精确地确定。不像其他的基于学习的技术，我们的方法仅需要良性样本和计算过程。</p>
+<p>直观地说，将两个连续的隐藏层激活值分布定义为层的 因果溯源不变特征 （PI），将该层的神经元激活作为该层的值分布不变特征（VI），具体如图4.</p>
+<h2 id="系统设计">系统设计</h2>
+<p><img src="/2022/05/08/NIC-Detecting-Adversarial-Samples-with-Neural-Network-Invariant-Checking/overview.png" alt="overview"></p>
+<p>具体步骤如下：</p>
+<ul>
+<li>A：针对每一个训练输入采集每一层的激活值信息，然后为每一层训练一个面向全部类别的分布模型，作为分布值不变特征</li>
+<li>B：由于隐藏层神经元可能会比较多，所以训练了隐藏层的派生模型</li>
+<li>C：通过所有派生模型运行每个良性训练输入,收集这些模型的最终输出（即各个类的输出概率值），对于每一对连续的层，训练其派生模型的分类结果的分布，训练后的分布作为这两层的 PI</li>
+<li>D：获取测试样本的激活值 OV</li>
+<li>E：计算最终的概率 D，表示 OVs/OPs 与 VI/PI 同分布的概率</li>
+</ul>
+<h2 id="系统设计详情介绍">系统设计详情介绍</h2>
+<h3 id="DNN-Invariant-提取">DNN Invariant 提取</h3>
+<p>文章提取了两个不变值 VI/PI，其中：</p>
+<ul>
+<li>VI(Value Invariant)：值不变特征用每层的神经元激活值来获得。</li>
+<li>PI(Provenance Invariant)：转移不变特征，用两层神经元激活值来组成。</li>
+</ul>
+<p>需要注意的是，上述的两个值都是表示成分布的概率值。</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css"></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://odymit.github.io">odymit</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://odymit.github.io/2022/05/08/NIC-Detecting-Adversarial-Samples-with-Neural-Network-Invariant-Checking/">http://odymit.github.io/2022/05/08/NIC-Detecting-Adversarial-Samples-with-Neural-Network-Invariant-Checking/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%BC%82%E5%B8%B8%E5%80%BC%E6%A3%80%E6%B5%8B/">异常值检测</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/05/12/FedEval-A-Benchmark-System-with-a-Comprehensive-Evaluation-Model-for-Federated-Learning/" title="FedEval: A Benchmark System with a Comprehensive Evaluation Model for Federated Learning"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">FedEval: A Benchmark System with a Comprehensive Evaluation Model for Federated Learning</div></div></a></div><div class="next-post pull-right"><a href="/2022/05/08/Callisto-Entropy-based-test-generation-and-data-quality-assessment-for-Machine-Learning-Systems/" title="Callisto: Entropy based test generation and data quality assessment for Machine Learning Systems"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info">Callisto: Entropy based test generation and data quality assessment for Machine Learning Systems</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2022/04/22/Detection-of-Adversarial-Training-Examples-in-Poisoning-Attacks-through-Anomaly-Detection/" title="Detection of Adversarial Training Examples in Poisoning Attacks through Anomaly Detection"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-22</div><div class="title">Detection of Adversarial Training Examples in Poisoning Attacks through Anomaly Detection</div></div></a></div><div><a href="/2022/04/22/Jangseung-A-Guardian-for-Machine-Learning-Algorithms-to-Protect-Against-Poisoning-Attacks/" title="Jangseung: A Guardian for Machine Learning Algorithms to Protect Against Poisoning Attacks"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-22</div><div class="title">Jangseung: A Guardian for Machine Learning Algorithms to Protect Against Poisoning Attacks</div></div></a></div><div><a href="/2022/06/09/LOF-Identifying-Density-Based-Local-Outliers/" title="LOF: Identifying Density-Based Local Outliers"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-06-09</div><div class="title">LOF: Identifying Density-Based Local Outliers</div></div></a></div><div><a href="/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/" title="数据集异常值检测相关工作调研"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-05-05</div><div class="title">数据集异常值检测相关工作调研</div></div></a></div><div><a href="/2022/04/23/Robust-Estimators-in-High-Dimensions-without-the-Computational-Intractability/" title="Robust Estimators in High Dimensions without the Computational Intractability"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-23</div><div class="title">Robust Estimators in High Dimensions without the Computational Intractability</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">odymit</div><div class="author-info__description">Reading, thinking and writing.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">113</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">82</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">14</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/odymit" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://github.com/odymithttps://stackoverflow.com/users/15737405/odymit" target="_blank" title="Stack Overflow"><i class="fab fa-stack-overflow" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:inbox.odymit@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Peace and love!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Architecture"><span class="toc-number">1.</span> <span class="toc-text">Architecture</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Detail"><span class="toc-number">2.</span> <span class="toc-text">Detail</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DNN-%E6%94%BB%E5%87%BB%E7%9A%84%E7%A5%9E%E7%BB%8F%E5%85%83%E6%BF%80%E6%B4%BB%E8%A7%82%E5%AF%9F"><span class="toc-number">3.</span> <span class="toc-text">DNN 攻击的神经元激活观察</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Provenance-Channel"><span class="toc-number">3.1.</span> <span class="toc-text">Provenance Channel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Activation-Value-Distribution"><span class="toc-number">3.2.</span> <span class="toc-text">Activation Value Distribution</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E4%B8%8D%E5%8F%98%E5%80%BC%E6%A3%80%E6%B5%8B%E6%9D%A5%E8%BF%9B%E8%A1%8C%E6%94%BB%E5%87%BB%E6%A3%80%E6%B5%8B"><span class="toc-number">4.</span> <span class="toc-text">用不变值检测来进行攻击检测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1"><span class="toc-number">5.</span> <span class="toc-text">系统设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E8%AF%A6%E6%83%85%E4%BB%8B%E7%BB%8D"><span class="toc-number">6.</span> <span class="toc-text">系统设计详情介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DNN-Invariant-%E6%8F%90%E5%8F%96"><span class="toc-number">6.1.</span> <span class="toc-text">DNN Invariant 提取</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/27/Topology-Aware-Network-Pruning-using-Multi-stage-Graph-Embedding-and-Reinforcement-Learning/" title="Topology-Aware Network Pruning using Multi-stage Graph Embedding and Reinforcement Learning">Topology-Aware Network Pruning using Multi-stage Graph Embedding and Reinforcement Learning</a><time datetime="2023-09-27T14:48:19.000Z" title="Created 2023-09-27 22:48:19">2023-09-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/27/centos-%E5%8D%B7%E7%AE%A1%E7%90%86/" title="centos volume management">centos volume management</a><time datetime="2023-09-27T11:32:31.000Z" title="Created 2023-09-27 19:32:31">2023-09-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/16/OpenBackdoor-A-Unified-Evaluation-of-Textual-Backdoor-Learning-Frameworks-and-Benchmarks/" title="OpenBackdoor: A Unified Evaluation of Textual Backdoor Learning: Frameworks and Benchmarks">OpenBackdoor: A Unified Evaluation of Textual Backdoor Learning: Frameworks and Benchmarks</a><time datetime="2023-03-16T02:17:04.000Z" title="Created 2023-03-16 10:17:04">2023-03-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/13/BACKDOORBOX-A-PYTHON-TOOLBOX-FOR-BACKDOOR-LEARNIN/" title="BACKDOORBOX: A PYTHON TOOLBOX FOR BACKDOOR LEARNIN">BACKDOORBOX: A PYTHON TOOLBOX FOR BACKDOOR LEARNIN</a><time datetime="2023-03-13T08:44:38.000Z" title="Created 2023-03-13 16:44:38">2023-03-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/12/BackdoorBench-A-Comprehensive-Benchmark-of-Backdoor-Learning/" title="BackdoorBench: A Comprehensive Benchmark of Backdoor Learning">BackdoorBench: A Comprehensive Benchmark of Backdoor Learning</a><time datetime="2023-03-12T14:06:43.000Z" title="Created 2023-03-12 22:06:43">2023-03-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By odymit</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

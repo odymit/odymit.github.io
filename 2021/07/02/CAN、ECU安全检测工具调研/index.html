@@ -1,0 +1,303 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>CAN、ECU安全检测工具调研 | odymit's blog</title><meta name="author" content="odymit"><meta name="copyright" content="odymit"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="做了简单的了解之后发现关于CAN、ECU的安全测试工具比较多，所以简单做了一个分类如下所示：  分析 总结 硬件  开发工具 接入和数据采集工具  无线 有线 混合   分析测试工具   软件及相关库  软件  监控分析 硬件发现 其他   相关库  C Python     声明">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CAN、ECU安全检测工具调研">
+<meta property="og:url" content="http://odymit.github.io/2021/07/02/CAN%E3%80%81ECU%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/index.html">
+<meta property="og:site_name" content="odymit&#39;s blog">
+<meta property="og:description" content="做了简单的了解之后发现关于CAN、ECU的安全测试工具比较多，所以简单做了一个分类如下所示：  分析 总结 硬件  开发工具 接入和数据采集工具  无线 有线 混合   分析测试工具   软件及相关库  软件  监控分析 硬件发现 其他   相关库  C Python     声明">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://odymit.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2021-07-02T07:20:31.000Z">
+<meta property="article:modified_time" content="2023-09-27T11:49:28.117Z">
+<meta property="article:author" content="odymit">
+<meta property="article:tag" content="检测工具">
+<meta property="article:tag" content="汽车安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://odymit.github.io/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://odymit.github.io/2021/07/02/CAN%E3%80%81ECU%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CAN、ECU安全检测工具调研',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-09-27 19:49:28'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">113</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">82</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">14</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="odymit's blog"><span class="site-name">odymit's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CAN、ECU安全检测工具调研</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-07-02T07:20:31.000Z" title="Created 2021-07-02 15:20:31">2021-07-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-09-27T11:49:28.117Z" title="Updated 2023-09-27 19:49:28">2023-09-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/tools/">tools</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="CAN、ECU安全检测工具调研"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>做了简单的了解之后发现关于CAN、ECU的安全测试工具比较多，所以简单做了一个分类如下所示：</p>
+<ul>
+<li><a href="#%E5%88%86%E6%9E%90">分析</a></li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
+<li><a href="#%E7%A1%AC%E4%BB%B6">硬件</a>
+<ul>
+<li><a href="#%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a></li>
+<li><a href="#%E6%8E%A5%E5%85%A5%E5%B7%A5%E5%85%B7">接入和数据采集工具</a>
+<ul>
+<li><a href="#%E6%97%A0%E7%BA%BF">无线</a></li>
+<li><a href="#%E6%9C%89%E7%BA%BF">有线</a></li>
+<li><a href="#%E6%B7%B7%E5%90%88%E6%8E%A5%E5%85%A5">混合</a></li>
+</ul>
+</li>
+<li><a href="#%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7">分析测试工具</a></li>
+</ul>
+</li>
+<li><a href="#%E8%BD%AF%E4%BB%B6%E5%8F%8A%E7%9B%B8%E5%85%B3%E5%BA%93">软件及相关库</a>
+<ul>
+<li><a href="#%E8%BD%AF%E4%BB%B6">软件</a>
+<ul>
+<li><a href="#%E7%9B%91%E6%8E%A7%E5%88%86%E6%9E%90">监控分析</a></li>
+<li><a href="#%E7%A1%AC%E4%BB%B6%E5%8F%91%E7%8E%B0">硬件发现</a></li>
+<li><a href="#%E5%85%B6%E4%BB%96">其他</a></li>
+</ul>
+</li>
+<li><a href="#%E7%9B%B8%E5%85%B3%E5%BA%93">相关库</a>
+<ul>
+<li><a href="#c">C</a></li>
+<li><a href="#python">Python</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E5%A3%B0%E6%98%8E">声明</a></li>
+</ul>
+<span id="more"></span>
+<h1>分析</h1>
+<p>对于CAN、ECU执行安全检测主要用到的工具，功能主要分为：</p>
+<ol>
+<li>建立数据通道 - 常用的设备为ELM327、USB2CAN、USBtin等。</li>
+<li>捕获数据 - O2OO</li>
+<li>分析数据 - Wireshark、Intrepid Tools、CANToolz等</li>
+<li>渗透测试 - metasploit、CANtact、CANSPY等</li>
+</ol>
+<p>现有的常用的工具可能包含一个或多个上述功能。考虑成本和使用现有以下推荐：</p>
+<ol>
+<li>采用ELM327作为连接，进行CAN总线数据分析可以使用wireshark，进行CAN总线安全测试可以使用metasploit框架的硬件桥接</li>
+<li>使用USB2CAN，可以采用Linux平台的socketCAN库来进行相关的分析以及渗透操作。</li>
+<li>最后可以采用个人或者团队开发的价格合适的相关硬件可以直接通过ODB-II或者蓝牙连接进行分析。</li>
+</ol>
+<p>一般来说建立数据通道一般是要采购相应的硬件，因为汽车与我们常用的终端体系协议存在差别，至少需要一个接口的适配器，协议解析可以通过软件或者库来解决。<br>
+捕获数据和分析数据一般来说，会集成到同一个软件中来实现。当数据通道建立之后可以通过监听相应的设备或者端口既可捕获相应的数据。数据分析可以使用常用的协议分析软件也有根据CAN协议专门实现的分析软件。<br>
+渗透测试工具与数据分析相似，有metasploit常用的主机渗透测试框架通过扩展来实现CAN网络的渗透测试，也有团队专门开发的软件。<br>
+如果要对一辆汽车进行安全检测，可以通过一条USB-CAN转接线转接到自己的电脑进行检测，或者直接通过信号收发器，通过WIFI或者蓝牙与车辆建立无线连接进行检测。通过转接线接入汽车网络之后，直接就可以接入到的CAN网络，</p>
+<h1>总结</h1>
+<p>现在有很多针对CAN、ECU的安全测试工具，甚至可以使用我们常用的渗透框架(metasploit)或者协议分析软件(wireshark)对车内网络进行安全测试，仅仅需要一根接口转接线或者是无线/蓝牙收发器。对于汽车安全来说，关于汽车安全加固的产品无疑更少而且难以让各个智能终端制造商预装或者加装。</p>
+<p>汽车安全问题，早就已经被技术人员所关注，有些安全测试工具已经发布数年甚至更久，但是汽车安全这个问题还未真正的走到公众的面前，引起公众的足够重视。针对这个问题可以一方面加汽车安全加固的软件硬件的开发，另一方面进行汽车安全的科普。</p>
+<p>下面是整理的关于CAN、ECU的测试工具。</p>
+<h2 id="硬件">硬件</h2>
+<h3 id="开发工具">开发工具</h3>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.arduino.cc/">Arduino</a> - Arduino开发板有大量的CAN BUS拓展板可以用来进行CAN相关的测试和分析。
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/watterott/CANdiy-Shield">CANdiy-Shield</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.seeedstudio.com/wiki/CAN-BUS_Shield">ChuangZhou CAN-Bus Shield</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.dfrobot.com/index.php?route=product/product&amp;product_id=1444">DFRobot CAN-BUS Shield For Arduino</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.sparkfun.com/products/13262">SparkFun CAN-BUS Shield</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/latonita/arduino-canbus-monitor">arduino-canbus-monitor</a> - 无论你采用了哪一种拓展板，你都需要一个sniffer。这是基于标准Lawicel/SLCAN协议实现的软件，架设在Arduino+任意MCP拓展板上，可以为多种标准的CAN总线分析软件或者socketCAN提供支持。</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="http://redpitaya.com/">Red Pitaya</a> - Red Pitaya有LabView、Matlab、Jupyter接口，可以通过这些接口开发自己的工具和应用，也支持Arduino拓展板。可以跨平台提供服务，WIN、MAC、Linux。替代昂贵的像示波器、信号发生器、图谱分析仪测量工具。</li>
+</ul>
+<h3 id="接入工具">接入工具</h3>
+<p>接入工具主要是通过不同的设备将PC或者移动终端接入到车内网络。</p>
+<h4 id="无线">无线</h4>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.elmelectronics.com/obdic.html">ELM327</a> - ELM327是ELM制造的可编程微控制器，用来翻译OBD接口数据。ELM327有USB ELM327，WIFI ELM327，BLUETOOTH ELM327可以通过该部件将车辆与PC或移动终端连接起来。</li>
+<li><a target="_blank" rel="noopener" href="https://www.veepeak.com/">Veepeak Bluetooth</a> - 手机端的蓝牙连接器软件，可以通过该APP连接到车载蓝牙。</li>
+<li><a target="_blank" rel="noopener" href="https://www.carloop.io/">Carloop</a> - carloop是一个开源的开发工具包，可以使汽车通过3G、WIFI或者蓝牙连接到云端。可以兼容socketCAN和can-utils，不需要OBD-II串行接口连接。</li>
+</ul>
+<h4 id="有线">有线</h4>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.8devices.com/products/usb2can/">USB2CAN</a> - 价格低廉的USB-CAN连接器，可以使用通过该硬件可以使用Linux获取CAN数据。</li>
+<li><a target="_blank" rel="noopener" href="http://www.fischl.de/usbtin/">USBtin</a> - USBtin是一个简单的USB-CAN转接接口，它可以实现监控和转发CAN总线消息的功能，实现了USB CDC的类，并且在主机上创建了一个组件。</li>
+<li><a target="_blank" rel="noopener" href="https://gutenshit.github.io/CANBadger/">CANBadger</a> - CANBadger是一个汽车网络的逆向和测试工具，包括软件和硬件部分。主接口板是一个LPC1768/LPC1769处理器挂载了定制的PCB，PCB上有2个CAN接口，SD卡，一个LED，一些GPIO针脚，供电给外围设备和网线口。</li>
+<li><a target="_blank" rel="noopener" href="http://openxcplatform.com/hardware.html">OpenXC</a> - OpenXC是开源硬件和软件的结合，它可以让你使用自定义程序和可插入模块拓展你的车辆。使用标准的工具想开发人员提供来自车辆的数据。是一个应用程序接口，通过安装一个小的硬件模块来读取和转换来自汽车内部网络的数据。大多数android应用程序都可以是使用openxc库来访问者这些数据，这些数据包括各种汽车的车载诊断数据。</li>
+</ul>
+<h4 id="混合接入">混合接入</h4>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://pandwarf.com/">PandwaRF</a> - PandwaRF是一种射频分析工具，由智能手机和电脑控制，具有低于1GHz的无线收发器，可以非常容易的捕获、显示和传输射频数据。可以与手机通过USB或者BLE连接，通过USB与Linux连接。 可以不或任意的300-928 MHz频带ASK/OOK/MSK/2-FSK/GFSK调制的信号。</li>
+<li><a target="_blank" rel="noopener" href="http://freematics.com/pages/products/arduino-telematics-kit-3/">Freematics OBD-II Telematics Kit</a> - 基于Arduino的开发工具包，可以获取展示和记录OBD-II、GPS、MEMS传感器的数据。把收集到的数据通过USB传到电脑上去，通过蓝牙传到手机上去。</li>
+<li><a target="_blank" rel="noopener" href="https://canb.us/">CANBus Triple</a> - CAN开发平台，可以用串口API、桌面或者移动应用来监控和收发CAN网络数据帧，看可以编写Arduino平台或者开源硬件的程序来运行，也可以通过蓝牙连接到物联网，使用应用或者给智能设备发送网络数据。</li>
+</ul>
+<h3 id="测试工具">测试工具</h3>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://linklayer.github.io/cantact/">CANtact</a> - 开源的汽车测试工具，使用标准OBD-II口接入CAN总线网络，被设计来对汽车进行渗透测试。配合CANtact-APP使用，有跨平台的软件包。</li>
+<li><a target="_blank" rel="noopener" href="https://bitbucket.org/jcdemay/canspy">CANSPY</a> - CAN设备审计平台，可以用来自动或者交互地阻止、转发和编辑CAN帧。</li>
+<li><a target="_blank" rel="noopener" href="http://goodfet.sourceforge.net/hardware/goodthopter12/">GoodThopter12</a> - 由知名硬件黑客开发,用来对汽车网络探索，目前仅支持CAN网络。</li>
+<li><a target="_blank" rel="noopener" href="http://store.intrepidcs.com/">Intrepid Tools</a> - 为逆向CAN或者其他汽车通信协议特别设计的工具，价格高昂但是功能多样。</li>
+</ul>
+<h1>软件及相关库</h1>
+<h2 id="软件">软件</h2>
+<h3 id="监控分析">监控分析</h3>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.wireshark.org/">Wireshark</a> - WireShark可以用来对CAN数据进行逆向。</li>
+<li><a target="_blank" rel="noopener" href="http://store.intrepidcs.com/">Intrepid Tools</a> - 为逆向CAN或者其他汽车通信协议特别设计的工具，价格高昂但是功能多样。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/eik00d/CANToolz">CANToolz</a> - CANToolz是一个用来分析CAN网络和设备的框架，基于多个模块可以自由的搭配。</li>
+<li><a target="_blank" rel="noopener" href="http://openxcplatform.com/getting-started/index.html">OpenXC</a> - 软件和硬件都有，现在OpenXC可以通过一些库运行在android和Python中。</li>
+<li><a target="_blank" rel="noopener" href="http://kayak.2codeornot2code.org/">Kayak</a> - Kayak是一个Java应用程序可以读CAN总线进行分析和监控。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/schutzwerk/CANalyzat0r">CANalyzat0r</a> - 汽车专有协议安全分析的工具包。</li>
+<li><a target="_blank" rel="noopener" href="https://www.savvycan.com/">savvycan</a> - savvycan是一个基于C++的跨平台QT项目，是一个可以对CAN总线进行数据捕获和逆向分析的工具。可以兼容任何使用socketCAN的设备以及Macchina M2和Teensy 3.x板，可以捕获或者发送多个总线的消息，也可以捕获总线上设备。</li>
+<li><a target="_blank" rel="noopener" href="https://rbei-etas.github.io/busmaster/">BUSMASTER</a> - BusMaster是一个开源的软件工具，用于模拟、分析和测试数据总线系统，如CAN、LIN、FlexRay</li>
+</ul>
+<h3 id="渗透测试">渗透测试</h3>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://community.rapid7.com/community/transpo-security/blog/2017/02/02/exiting-the-matrix">metasploit</a> - 流行的渗透测试框架，现在支持硬件桥接会话，将框架的功能扩展到socketCAN和SDR radios等硬件设备上。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/P1kachu/talking-with-cars">talking-with-cars</a> - CAN相关的脚本。</li>
+</ul>
+<h3 id="硬件发现">硬件发现</h3>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/zombieCraig/UDSim/">UDSim</a> - UDSim是一个可以监控can总线并且自动发现新设备的图形化工具。</li>
+<li><a target="_blank" rel="noopener" href="http://www.romraider.com/">RomRaider</a> - Subaru引擎控制单元的开源优化套件，允许查看和记录数据，也可以调整ECU。</li>
+</ul>
+<h3 id="其他">其他</h3>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.vanheusden.com/O2OO/">O2OO</a> - 使用elm327将数据记录到sqlite数据库以进行绘图。它还支持读取GPS数据。可以将它连接到你的车上，并使用谷歌地图kml数据绘制行驶路径地图。</li>
+</ul>
+<h2 id="相关库">相关库</h2>
+<h3 id="C">C</h3>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/linux-can/can-utils">SocketCAN Utils</a> - Linux上的网络层CAN通信协议通信库</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/dn5/vircar">vircar</a> - 一个基于SocketCAN的虚拟通信汽车工具。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/howerj/dbcc">dbcc</a> - DCBC是一种将DBC文件转换成C代码的程序，它可以序列化和反序列化CAN消息。用来自车辆的现有DBC文件，允许您将它们转换成C代码，以提取CAN消息和CAN环境的属性。</li>
+</ul>
+<h3 id="Python">Python</h3>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/linklayer/pyvit">pyvit</a> - pyvit是一个与python中的cars交互的工具包。它旨在实现汽车系统中使用的通用硬件接口和协议。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/CaringCaribou/caringcaribou/">Caring Caribou</a> - 一种友好的can总线汽车安全检测工具</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/zombieCraig/c0f/">c0f</a> - 可以用来分析can总线流量和指纹</li>
+<li><a target="_blank" rel="noopener" href="http://python-can.readthedocs.io/en/latest/index.html">Python-CAN</a> - can包为python开发人员提供控制器局域网支持；为不同的硬件设备提供通用抽象，以及一套用于在can总线上发送和接收消息的实用程序。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/brendan-w/python-OBD">Python-OBD</a> - 用于处理来自obd-ii车辆端口的实时传感器数据的python模块。适用于ELM327 OBD-II适配器，适合树莓派。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/atlas0fd00m/CanCat">CanCat</a> - C++写的Python接口，用于与现场CAN数据交互。</li>
+</ul>
+<h1>声明</h1>
+<p>上述工具参考<a target="_blank" rel="noopener" href="https://github.com/jaredthecoder/awesome-vehicle-security">awesome-vehicle-security</a>和其他技术博客及相关网站整理。</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css"></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://odymit.github.io">odymit</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://odymit.github.io/2021/07/02/CAN%E3%80%81ECU%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/">http://odymit.github.io/2021/07/02/CAN%E3%80%81ECU%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%A3%80%E6%B5%8B%E5%B7%A5%E5%85%B7/">检测工具</a><a class="post-meta__tags" href="/tags/%E6%B1%BD%E8%BD%A6%E5%AE%89%E5%85%A8/">汽车安全</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/07/08/Design-and-Implementation-of-a-Novel-Testbed-for-Automotive-Security-Analysis/" title="Design and Implementation of a Novel Testbed for Automotive Security Analysis"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">Design and Implementation of a Novel Testbed for Automotive Security Analysis</div></div></a></div><div class="next-post pull-right"><a href="/2021/07/02/codechecker%E6%A6%82%E8%A7%88/" title="codechecker概览"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info">codechecker概览</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2021/07/08/Design-and-Implementation-of-a-Novel-Testbed-for-Automotive-Security-Analysis/" title="Design and Implementation of a Novel Testbed for Automotive Security Analysis"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-08</div><div class="title">Design and Implementation of a Novel Testbed for Automotive Security Analysis</div></div></a></div><div><a href="/2021/07/08/Threat-Modeling-and-Attack-Simulations-of-Connected-Vehicles-Proof-of-Concept/" title="Threat Modeling and Attack Simulations of Connected Vehicles: Proof of Concept"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-08</div><div class="title">Threat Modeling and Attack Simulations of Connected Vehicles: Proof of Concept</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">odymit</div><div class="author-info__description">Reading, thinking and writing.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">113</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">82</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">14</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/odymit" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://github.com/odymithttps://stackoverflow.com/users/15737405/odymit" target="_blank" title="Stack Overflow"><i class="fab fa-stack-overflow" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:inbox.odymit@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Peace and love!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A1%AC%E4%BB%B6"><span class="toc-number">2.1.</span> <span class="toc-text">硬件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="toc-number">2.1.1.</span> <span class="toc-text">开发工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%85%A5%E5%B7%A5%E5%85%B7"><span class="toc-number">2.1.2.</span> <span class="toc-text">接入工具</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%A0%E7%BA%BF"><span class="toc-number">2.1.2.1.</span> <span class="toc-text">无线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%89%E7%BA%BF"><span class="toc-number">2.1.2.2.</span> <span class="toc-text">有线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B7%B7%E5%90%88%E6%8E%A5%E5%85%A5"><span class="toc-number">2.1.2.3.</span> <span class="toc-text">混合接入</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7"><span class="toc-number">2.1.3.</span> <span class="toc-text">测试工具</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">软件及相关库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6"><span class="toc-number">3.1.</span> <span class="toc-text">软件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%91%E6%8E%A7%E5%88%86%E6%9E%90"><span class="toc-number">3.1.1.</span> <span class="toc-text">监控分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95"><span class="toc-number">3.1.2.</span> <span class="toc-text">渗透测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A1%AC%E4%BB%B6%E5%8F%91%E7%8E%B0"><span class="toc-number">3.1.3.</span> <span class="toc-text">硬件发现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-number">3.1.4.</span> <span class="toc-text">其他</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E5%BA%93"><span class="toc-number">3.2.</span> <span class="toc-text">相关库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#C"><span class="toc-number">3.2.1.</span> <span class="toc-text">C</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python"><span class="toc-number">3.2.2.</span> <span class="toc-text">Python</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">声明</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/27/Topology-Aware-Network-Pruning-using-Multi-stage-Graph-Embedding-and-Reinforcement-Learning/" title="Topology-Aware Network Pruning using Multi-stage Graph Embedding and Reinforcement Learning">Topology-Aware Network Pruning using Multi-stage Graph Embedding and Reinforcement Learning</a><time datetime="2023-09-27T14:48:19.000Z" title="Created 2023-09-27 22:48:19">2023-09-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/27/centos-%E5%8D%B7%E7%AE%A1%E7%90%86/" title="centos volume management">centos volume management</a><time datetime="2023-09-27T11:32:31.000Z" title="Created 2023-09-27 19:32:31">2023-09-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/16/OpenBackdoor-A-Unified-Evaluation-of-Textual-Backdoor-Learning-Frameworks-and-Benchmarks/" title="OpenBackdoor: A Unified Evaluation of Textual Backdoor Learning: Frameworks and Benchmarks">OpenBackdoor: A Unified Evaluation of Textual Backdoor Learning: Frameworks and Benchmarks</a><time datetime="2023-03-16T02:17:04.000Z" title="Created 2023-03-16 10:17:04">2023-03-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/13/BACKDOORBOX-A-PYTHON-TOOLBOX-FOR-BACKDOOR-LEARNIN/" title="BACKDOORBOX: A PYTHON TOOLBOX FOR BACKDOOR LEARNIN">BACKDOORBOX: A PYTHON TOOLBOX FOR BACKDOOR LEARNIN</a><time datetime="2023-03-13T08:44:38.000Z" title="Created 2023-03-13 16:44:38">2023-03-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/12/BackdoorBench-A-Comprehensive-Benchmark-of-Backdoor-Learning/" title="BackdoorBench: A Comprehensive Benchmark of Backdoor Learning">BackdoorBench: A Comprehensive Benchmark of Backdoor Learning</a><time datetime="2023-03-12T14:06:43.000Z" title="Created 2023-03-12 22:06:43">2023-03-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By odymit</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

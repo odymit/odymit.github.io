@@ -1,0 +1,324 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Detecting AI trojans using meta neural analysis | odymit's blog</title><meta name="author" content="odymit"><meta name="copyright" content="odymit"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Detecting AI trojans using meta neural analysis abstract。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Detecting AI trojans using meta neural analysis">
+<meta property="og:url" content="http://odymit.github.io/2022/07/21/Detecting-AI-trojans-using-meta-neural-analysis/index.html">
+<meta property="og:site_name" content="odymit&#39;s blog">
+<meta property="og:description" content="Detecting AI trojans using meta neural analysis abstract。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://odymit.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2022-07-21T07:07:52.000Z">
+<meta property="article:modified_time" content="2023-09-27T11:38:20.141Z">
+<meta property="article:author" content="odymit">
+<meta property="article:tag" content="Survey">
+<meta property="article:tag" content="AI Backdoor Attacks">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://odymit.github.io/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://odymit.github.io/2022/07/21/Detecting-AI-trojans-using-meta-neural-analysis/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Detecting AI trojans using meta neural analysis',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-09-27 19:38:20'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">113</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">82</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">14</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="odymit's blog"><span class="site-name">odymit's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Detecting AI trojans using meta neural analysis</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-07-21T07:07:52.000Z" title="Created 2022-07-21 15:07:52">2022-07-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-09-27T11:38:20.141Z" title="Updated 2023-09-27 19:38:20">2023-09-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/papers/">papers</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/papers/abstract/">abstract</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Detecting AI trojans using meta neural analysis"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>Detecting AI trojans using meta neural analysis abstract。</p>
+<span id="more"></span>
+<h2 id="Architecture">Architecture</h2>
+<p>在介绍本文架构之前首先介绍一下 元神经元分析（meta neural analysis，mna）的基本概念，具体流程如下图：<br>
+<img src="/2022/07/21/Detecting-AI-trojans-using-meta-neural-analysis/mna-arch.png" alt="arch"></p>
+<p>与传统的网络不同， mna 不以图像、文本等数据为输入，而是以神经网络为输入训练一个可以预测目标网络属性的分类器，例如成员推理、模型属性推理、训练数据推理等等。具体操作步骤如下：</p>
+<ul>
+<li>训练两类影子模型，一类包含属性，一类不包含属性</li>
+<li>合成影子模型数据集</li>
+<li>使用该数据集训练一个元分类器</li>
+</ul>
+<p><img src="/2022/07/21/Detecting-AI-trojans-using-meta-neural-analysis/mntd-arch.png" alt="arch"><br>
+本文具体步骤如下：</p>
+<ol>
+<li>
+<p>生成影子模型</p>
+<ul>
+<li>对于良性模型，设定不同的模型初始化参数，随机初始化参数</li>
+<li>对于后门模型，从通用后门分布中取样投毒，生成后门模型</li>
+</ul>
+</li>
+<li>
+<p>元训练</p>
+<ul>
+<li>设计特征提取函数，获得影子模型的表示向量</li>
+<li>设计了一个查询集来提取影子模型的重要表示向量</li>
+<li>通过该向量训练元分类器</li>
+</ul>
+</li>
+<li>
+<p>目标模型检测</p>
+<ul>
+<li>给定一个目标模型，首先使用优化的查询集提取模型特征</li>
+<li>然后送入元分类器获得结果</li>
+</ul>
+</li>
+</ol>
+<h3 id="影子模型生成-Jumbo-Learning-Shadow-Model-Generation">影子模型生成 Jumbo Learning - Shadow Model Generation</h3>
+<p>为了生成不同的后门模型使得元分类器具有一定泛化性，检测不同类型的后门，提出了 jumbo learning 的方法，并且假设攻击者能够应用任何攻击策略。</p>
+<p>Jumbo Learning 建模了后门攻击设置的通用分布（models a generic distribution of Trojan attack settings），并且能够基于此生成不同的后门模型。<br>
+<img src="/2022/07/21/Detecting-AI-trojans-using-meta-neural-analysis/fomula-1.png" alt="fomula"></p>
+<p>首先，使用函数 <code>L</code> 对攻击设计进行参数化，使该函数可以表示不同的攻击，jumbo learning 的算法实现如下图：<br>
+<img src="/2022/07/21/Detecting-AI-trojans-using-meta-neural-analysis/algo-1.png" alt="algo"></p>
+<p>注意到函数 <code>L</code> 不能表示全部的后门攻击设定，因此文章后续又针对未知攻击（unforeseen trojan attack model）进行了验证，表明了即使如此，元分类器依旧对于此类未知攻击具有泛化性。</p>
+<h3 id="元训练-Meta-training">元训练 Meta-training</h3>
+<p>接下来需要使用生成的影子模型进行元分类器的训练，此训练包含两个目标：</p>
+<ul>
+<li>寻找一个特征提取函数，提取影子模型的表征向量</li>
+<li>训练元分类器，分辨良性和后门模型</li>
+</ul>
+<h4 id="特征提取函数的设计-Feature-Extraction-Function-Design">特征提取函数的设计 Feature Extraction Function Design</h4>
+<p>提出使用一组查询的模型输出作为表征向量，这样做基于两点：</p>
+<ul>
+<li>后门模型跟良性模型在处理一些输入时行为上有差别，例如后门触发特征</li>
+<li>可以在不需要模型结构信息的情况下获得输出，这使得<strong>黑盒</strong>场景下检测后门成为可能</li>
+</ul>
+<p>具体来说，选择了一组输入 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>=</mo><mo stretchy="false">{</mo><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo separator="true">,</mo><msub><mi>x</mi><mi>k</mi></msub><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">X = \{x_1,...,x_k\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">...</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">}</span></span></span></span> 使用其拼接后的输出 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>i</mi></msub><mo>=</mo><mo stretchy="false">{</mo><msub><mi>f</mi><mi>i</mi></msub><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="false">)</mo><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo separator="true">,</mo><msub><mi>f</mi><mi>i</mi></msub><mo stretchy="false">(</mo><msub><mi>x</mi><mi>k</mi></msub><mo stretchy="false">)</mo><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">R_i = \{f_i(x_1),...,f_i(x_k)\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.1076em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">...</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.1076em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)}</span></span></span></span> 作为影子模型的表示。接下来会介绍具体如何获得一组 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span>。</p>
+<h4 id="元分类器设计-Meta-classifier-Design">元分类器设计 Meta-classifier Design</h4>
+<p>使用一个两层全连接的神经网络作为元分类器，元分类器将会把 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">R_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 作为输入并输出一个表示该模型是后门模型可能性的值。</p>
+<h4 id="元训练算法-Meta-Training-Algorithm">元训练算法 Meta-Training Algorithm</h4>
+<p>在训练阶段将会寻找最优的查询集 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span> 和最优的分类器参数 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span></span></span></span>。</p>
+<p>一个简单的方法是随机选择查询集 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span> 并预计算所有表征向量 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">R_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，在此条件上仅优化元分类器，由此元训练可以简化为，在给定上述两个参数的情况下，仅使用基于梯度的优化最小化下列损失函数即可：<br>
+<img src="/2022/07/21/Detecting-AI-trojans-using-meta-neural-analysis/fomula-2.png" alt="fomula"></p>
+<p>上述方法能获得一个不错的准确率，然而随机取样可能对区分良性模型和恶意模型没有帮助，因为在大多数情况下两者的行为表现是相似的。</p>
+<p>因此，选择了通过最优化查询集获得最有用的表征向量，来提高元分类器的性能。提出查询优化（query-tuning）技术来寻找最优的查询集，与现有技术相似，具体的中心思想是：</p>
+<ul>
+<li>联合优化查询集和元分类器使得训练损失最小</li>
+</ul>
+<p><img src="/2022/07/21/Detecting-AI-trojans-using-meta-neural-analysis/fomula-3.png" alt="fomula"></p>
+<p>为了优化上式，一个重要的点是整个计算流程都是可微分的，证明如下：</p>
+<ul>
+<li>首先将 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span> 送入影子模型获得表征向量 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">R_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></li>
+<li>然后将表征向量 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">R_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 送入元分类器训练</li>
+<li>因为影子模型和元分类器都是可微分的</li>
+<li>所以可以直接计算输入 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span> 的损失函数的梯度</li>
+</ul>
+<p>如此，首先从高斯分布中随机取 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">x_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 然后迭代更新 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">x_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span></span></span></span> 优化 <code>loss</code> 函数。</p>
+<h3 id="基线元训练算法-Baseline-Meta-training-algorithm-without-jumbo-learning">基线元训练算法 Baseline Meta-training algorithm without jumbo learning</h3>
+<p>前面所述的模型需要使用 jumbo learning 生成一系列后门影子模型，文章介绍了一种仅使用良性模型训练的基线训练算法。</p>
+<p><img src="/2022/07/21/Detecting-AI-trojans-using-meta-neural-analysis/one-class.png" alt="illustration"></p>
+<p>该算法的具体原理如上图所示，使用良性数据学习一个决策边界，判断测试数据是落在边界内部还是外部，落在内部的则为良性模型，落在外部则极有可能是后门模型。</p>
+<h2 id="实验设置-Experiment-Setup">实验设置 Experiment Setup</h2>
+<p>文章的源代码仓库为：<a target="_blank" rel="noopener" href="https://github.com/AI-secure/Meta-Nerual-Trojan-Detection">https://github.com/AI-secure/Meta-Nerual-Trojan-Detection</a></p>
+<h3 id="数据集-Dataset">数据集 Dataset</h3>
+<p>图片分类任务：</p>
+<ul>
+<li>mnist</li>
+<li>cifar10</li>
+</ul>
+<p>语音类任务：</p>
+<ul>
+<li>SpeechCommand</li>
+</ul>
+<p>表格类数据：</p>
+<ul>
+<li>Smart Meter Electricity Trial data in Ireland dataset (Irish)</li>
+</ul>
+<p>自然语言数据：</p>
+<ul>
+<li>Rotten Tomatoes movie review dataset (MR)</li>
+</ul>
+<h3 id="攻击设定-Attack-Settings">攻击设定 Attack  Settings</h3>
+<p>对于除了 MR 的每个数据集，攻击者会生成 256 个后门目标模型，单独使用篡改攻击（modification attack）或者模糊攻击（blending attack）。</p>
+<p><strong>Trigger mask m</strong>：对于模糊攻击来说，<code>m=1</code> 即对整张图像进行模糊，对于修改攻击来说，m 会根据任务有所不同，在 <code>mnist</code> 和 <code>cifar10</code> 数据集上，m 是图像上随机位置的一个 <code>2*2～5*5</code> 的方形特征。</p>
+<p><strong>Trigger pattern t</strong>：对于模糊攻击和修改攻击，触发特征会使用相同的方法生成。在 <code>mnist</code> 和 <code>cifar10</code> 上，每个像素会从 <code>[0,1]</code> 中均匀采样。</p>
+<p><strong>Transparent <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span></span></span></span></strong>:修改攻击不存在透明度，模糊攻击透明度统一从 <code>[0.8,0.95]</code> 中取样。</p>
+<p><strong>Malicious label <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>y</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">y_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></strong>:恶意标签统一从分类输出中取样，如 <code>0-9</code> 为 <code>mnist</code> 数据集。</p>
+<p><strong>Data poisoning ratio p</strong>：投毒比例统一从 <code>[0.05,0.5]</code> 中随机取样。</p>
+<h3 id="防御设定-Defense-Settings">防御设定 Defense Settings</h3>
+<p>安全人员会使用 jumbo 训练 2048 个后门模型，使用随机初始化训练 2048 个良性模型用于训练元分类器，另外也会生成 256 后门模型和良性模型用于验证。</p>
+<p>除了以下特征外，与攻击者使用想同的方法生成后门模型：</p>
+<ul>
+<li>安全人员数据集大小远比攻击者数据集要小</li>
+<li>特征大小取决于攻击类型</li>
+<li>透明度也取决于攻击类型</li>
+</ul>
+<p>另外，还确保了攻击者的 jumbo learning settings 不会在安全人员生成训练数据集时被采用。</p>
+<h3 id="检测基线-Detection-Baselines">检测基线 Detection Baselines</h3>
+<p>在评估阶段，比较了四个现有工作作为检测基线：</p>
+<ul>
+<li>Activation Clustering（AC）</li>
+<li>Neural Cleanse（NC）</li>
+<li>Spectral Signature（Spectral）</li>
+<li>STRIP</li>
+</ul>
+<p>没有比较 <code>DeepInspect</code> 是因为没有公开代码并且处理流程比较复杂。<br>
+没有比较 <code>SentiNet</code> 是因为仅在图片数据集上，并且其模型级别的检测较为耗时。</p>
+<h2 id="实验评估结果-Experiment-Evaluation">实验评估结果 Experiment Evaluation</h2>
+<h3 id="后门攻击性能-Trojan-Attack-Performance">后门攻击性能 Trojan Attack Performance</h3>
+<p><img src="/2022/07/21/Detecting-AI-trojans-using-meta-neural-analysis/table-2.png" alt="table"></p>
+<p>可以看到表格中，攻击者已经成功将后门嵌入了模型中，并且准确率与良性模型相近。另外也发现后门模型和良性模型之间有性能差距，这表示模型使用者没有能力基于小数据集训练高质量的模型。因此他们需要使用共享的模型，而不是自己训练一个模型。</p>
+<h3 id="检测性能-Detection-Performance">检测性能 Detection Performance</h3>
+<p><img src="/2022/07/21/Detecting-AI-trojans-using-meta-neural-analysis/table-3.png" alt="table"></p>
+<p>如前所述，所有的基线算法都有其攻击设定，因而只能在限定的条件下取得不错的效果，无法应用在全部攻击设定中。</p>
+<h3 id="影子模型数量的影响-Impact-of-Number-of-Shadow-Models">影子模型数量的影响 Impact of Number of Shadow Models</h3>
+<p><img src="/2022/07/21/Detecting-AI-trojans-using-meta-neural-analysis/auc-num-impact.png" alt="auc"></p>
+<p>如上图所示，文章研究了不同的影子模型样本数量对于元分类器训练的影响。并表示文章提出的方法可以在较少的样本就获得较高的准确率，并且拥有计算资源的使用者可以自行设定训练样本数量来提高准确率。</p>
+<h3 id="运行性能-Running-Time-Performance">运行性能 Running Time Performance</h3>
+<p><img src="/2022/07/21/Detecting-AI-trojans-using-meta-neural-analysis/table-4.png" alt="table"></p>
+<p>文章对检测运行时的性能做了评估，运行的显卡是：</p>
+<ul>
+<li>NVIDIA GeForce RTX 2080</li>
+</ul>
+<h2 id="泛化性">泛化性</h2>
+<p>最后在泛化性方面做了探究，证明了元分类器可以在一定程度上检测未知的后门攻击。<br>
+<img src="/2022/07/21/Detecting-AI-trojans-using-meta-neural-analysis/table-5.png" alt="table"></p>
+<p>并且在以下方面对实验进行了泛化性调整：</p>
+<ul>
+<li>触发特征的泛化，如上图</li>
+<li>攻击目标的泛化，jumbo 中仅考虑单类别攻击，在此考虑了全类别攻击（all-to-all）</li>
+<li>攻击方法的泛化，jumbo 中仅考虑了篡改攻击和模糊攻击，在此添加了基于参数（parameter）和隐藏（latent）的攻击</li>
+<li>模型结构的泛化</li>
+<li>数据分布的泛化，前面假设安全人员的数据与训练时服从相同分布，在此处考虑相似但不是同分布的数据</li>
+</ul>
+<p>上述实验结果如下：<br>
+<img src="/2022/07/21/Detecting-AI-trojans-using-meta-neural-analysis/table-6.png" alt="table"><br>
+<img src="/2022/07/21/Detecting-AI-trojans-using-meta-neural-analysis/table-7.png" alt="table"><br>
+<img src="/2022/07/21/Detecting-AI-trojans-using-meta-neural-analysis/table-8.png" alt="table"></p>
+<h2 id="适应性攻击和对抗措施">适应性攻击和对抗措施</h2>
+<p>实验部分最后考虑了 mntd 被攻击的场景，并且提出了一种对抗措施。<br>
+<img src="/2022/07/21/Detecting-AI-trojans-using-meta-neural-analysis/table-9.png" alt="table"></p>
+<h2 id="总结">总结</h2>
+<p>首先采用元神经训练的方法进行后门检测，思路清晰实验完善，工作量很饱满，被收录于 <code>Proceedings - IEEE Symposium on Security and Privacy - 2021</code>，很优秀的工作。</p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css"></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://odymit.github.io">odymit</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://odymit.github.io/2022/07/21/Detecting-AI-trojans-using-meta-neural-analysis/">http://odymit.github.io/2022/07/21/Detecting-AI-trojans-using-meta-neural-analysis/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Survey/">Survey</a><a class="post-meta__tags" href="/tags/AI-Backdoor-Attacks/">AI Backdoor Attacks</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/08/03/Detecting-Poisoning-Attacks-on-Machine-Learning-in-IoT-Environments/" title="Detecting Poisoning Attacks on Machine Learning in IoT Environments"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">Detecting Poisoning Attacks on Machine Learning in IoT Environments</div></div></a></div><div class="next-post pull-right"><a href="/2022/07/20/A-Survey-on-Neural-Trojans/" title="A Survey on Neural Trojans"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info">A Survey on Neural Trojans</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2022/07/20/A-Survey-on-Neural-Trojans/" title="A Survey on Neural Trojans"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-20</div><div class="title">A Survey on Neural Trojans</div></div></a></div><div><a href="/2022/07/14/Backdoor-Attacks-and-Countermeasures-on-Deep-Learning-A-Comprehensive-Review/" title="Backdoor Attacks and Countermeasures on Deep Learning: A Comprehensive Review"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-14</div><div class="title">Backdoor Attacks and Countermeasures on Deep Learning: A Comprehensive Review</div></div></a></div><div><a href="/2022/07/13/An-Overview-of-Backdoor-Attacks-Against-Deep-Neural-Networks-and-Possible-Defences/" title="An Overview of Backdoor Attacks Against Deep Neural Networks and Possible Defences"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-13</div><div class="title">An Overview of Backdoor Attacks Against Deep Neural Networks and Possible Defences</div></div></a></div><div><a href="/2022/06/22/Security-and-privacy-for-6G-A-survey-on-prospective-technologies-and-challenges/" title="Security and privacy for 6G: A survey on prospective technologies and challenges"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-06-22</div><div class="title">Security and privacy for 6G: A survey on prospective technologies and challenges</div></div></a></div><div><a href="/2022/08/24/Spectral-Signatures-in-Backdoor-Attacks/" title="Spectral Signatures in Backdoor Attacks"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-24</div><div class="title">Spectral Signatures in Backdoor Attacks</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">odymit</div><div class="author-info__description">Reading, thinking and writing.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">113</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">82</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">14</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/odymit" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://github.com/odymithttps://stackoverflow.com/users/15737405/odymit" target="_blank" title="Stack Overflow"><i class="fab fa-stack-overflow" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:inbox.odymit@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Peace and love!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Architecture"><span class="toc-number">1.</span> <span class="toc-text">Architecture</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BD%B1%E5%AD%90%E6%A8%A1%E5%9E%8B%E7%94%9F%E6%88%90-Jumbo-Learning-Shadow-Model-Generation"><span class="toc-number">1.1.</span> <span class="toc-text">影子模型生成 Jumbo Learning - Shadow Model Generation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%83%E8%AE%AD%E7%BB%83-Meta-training"><span class="toc-number">1.2.</span> <span class="toc-text">元训练 Meta-training</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96%E5%87%BD%E6%95%B0%E7%9A%84%E8%AE%BE%E8%AE%A1-Feature-Extraction-Function-Design"><span class="toc-number">1.2.1.</span> <span class="toc-text">特征提取函数的设计 Feature Extraction Function Design</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%83%E5%88%86%E7%B1%BB%E5%99%A8%E8%AE%BE%E8%AE%A1-Meta-classifier-Design"><span class="toc-number">1.2.2.</span> <span class="toc-text">元分类器设计 Meta-classifier Design</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%83%E8%AE%AD%E7%BB%83%E7%AE%97%E6%B3%95-Meta-Training-Algorithm"><span class="toc-number">1.2.3.</span> <span class="toc-text">元训练算法 Meta-Training Algorithm</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%BA%BF%E5%85%83%E8%AE%AD%E7%BB%83%E7%AE%97%E6%B3%95-Baseline-Meta-training-algorithm-without-jumbo-learning"><span class="toc-number">1.3.</span> <span class="toc-text">基线元训练算法 Baseline Meta-training algorithm without jumbo learning</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E8%AE%BE%E7%BD%AE-Experiment-Setup"><span class="toc-number">2.</span> <span class="toc-text">实验设置 Experiment Setup</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86-Dataset"><span class="toc-number">2.1.</span> <span class="toc-text">数据集 Dataset</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%BB%E5%87%BB%E8%AE%BE%E5%AE%9A-Attack-Settings"><span class="toc-number">2.2.</span> <span class="toc-text">攻击设定 Attack  Settings</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%B2%E5%BE%A1%E8%AE%BE%E5%AE%9A-Defense-Settings"><span class="toc-number">2.3.</span> <span class="toc-text">防御设定 Defense Settings</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%B5%8B%E5%9F%BA%E7%BA%BF-Detection-Baselines"><span class="toc-number">2.4.</span> <span class="toc-text">检测基线 Detection Baselines</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E8%AF%84%E4%BC%B0%E7%BB%93%E6%9E%9C-Experiment-Evaluation"><span class="toc-number">3.</span> <span class="toc-text">实验评估结果 Experiment Evaluation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E9%97%A8%E6%94%BB%E5%87%BB%E6%80%A7%E8%83%BD-Trojan-Attack-Performance"><span class="toc-number">3.1.</span> <span class="toc-text">后门攻击性能 Trojan Attack Performance</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%B5%8B%E6%80%A7%E8%83%BD-Detection-Performance"><span class="toc-number">3.2.</span> <span class="toc-text">检测性能 Detection Performance</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BD%B1%E5%AD%90%E6%A8%A1%E5%9E%8B%E6%95%B0%E9%87%8F%E7%9A%84%E5%BD%B1%E5%93%8D-Impact-of-Number-of-Shadow-Models"><span class="toc-number">3.3.</span> <span class="toc-text">影子模型数量的影响 Impact of Number of Shadow Models</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E6%80%A7%E8%83%BD-Running-Time-Performance"><span class="toc-number">3.4.</span> <span class="toc-text">运行性能 Running Time Performance</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%9B%E5%8C%96%E6%80%A7"><span class="toc-number">4.</span> <span class="toc-text">泛化性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%82%E5%BA%94%E6%80%A7%E6%94%BB%E5%87%BB%E5%92%8C%E5%AF%B9%E6%8A%97%E6%8E%AA%E6%96%BD"><span class="toc-number">5.</span> <span class="toc-text">适应性攻击和对抗措施</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/27/Topology-Aware-Network-Pruning-using-Multi-stage-Graph-Embedding-and-Reinforcement-Learning/" title="Topology-Aware Network Pruning using Multi-stage Graph Embedding and Reinforcement Learning">Topology-Aware Network Pruning using Multi-stage Graph Embedding and Reinforcement Learning</a><time datetime="2023-09-27T14:48:19.000Z" title="Created 2023-09-27 22:48:19">2023-09-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/27/centos-%E5%8D%B7%E7%AE%A1%E7%90%86/" title="centos volume management">centos volume management</a><time datetime="2023-09-27T11:32:31.000Z" title="Created 2023-09-27 19:32:31">2023-09-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/16/OpenBackdoor-A-Unified-Evaluation-of-Textual-Backdoor-Learning-Frameworks-and-Benchmarks/" title="OpenBackdoor: A Unified Evaluation of Textual Backdoor Learning: Frameworks and Benchmarks">OpenBackdoor: A Unified Evaluation of Textual Backdoor Learning: Frameworks and Benchmarks</a><time datetime="2023-03-16T02:17:04.000Z" title="Created 2023-03-16 10:17:04">2023-03-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/13/BACKDOORBOX-A-PYTHON-TOOLBOX-FOR-BACKDOOR-LEARNIN/" title="BACKDOORBOX: A PYTHON TOOLBOX FOR BACKDOOR LEARNIN">BACKDOORBOX: A PYTHON TOOLBOX FOR BACKDOOR LEARNIN</a><time datetime="2023-03-13T08:44:38.000Z" title="Created 2023-03-13 16:44:38">2023-03-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/12/BackdoorBench-A-Comprehensive-Benchmark-of-Backdoor-Learning/" title="BackdoorBench: A Comprehensive Benchmark of Backdoor Learning">BackdoorBench: A Comprehensive Benchmark of Backdoor Learning</a><time datetime="2023-03-12T14:06:43.000Z" title="Created 2023-03-12 22:06:43">2023-03-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By odymit</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

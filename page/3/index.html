@@ -1,0 +1,361 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>odymit's blog</title><meta name="author" content="odymit"><meta name="copyright" content="odymit"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Reading, thinking and writing.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="odymit&#39;s blog">
+<meta property="og:url" content="http://odymit.github.io/page/3/index.html">
+<meta property="og:site_name" content="odymit&#39;s blog">
+<meta property="og:description" content="Reading, thinking and writing.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://odymit.github.io/img/avatar.jpg">
+<meta property="article:author" content="odymit">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://odymit.github.io/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://odymit.github.io/page/3/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'odymit\'s blog',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2023-09-27 22:57:45'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">113</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">82</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">14</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/img/index.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="odymit's blog"><span class="site-name">odymit's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">odymit's blog</h1><div id="site_social_icons"><a class="social-icon" href="https://github.com/odymit" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://github.com/odymithttps://stackoverflow.com/users/15737405/odymit" target="_blank" title="Stack Overflow"><i class="fab fa-stack-overflow" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:inbox.odymit@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/06/03/Just-How-Toxic-is-Data-Poisoning-A-Unified-Benchmark-for-Backdoor-and-Data-Poisoning-Attacks/" title="Just How Toxic is Data Poisoning? A Unified Benchmark for Backdoor and Data Poisoning Attacks">Just How Toxic is Data Poisoning? A Unified Benchmark for Backdoor and Data Poisoning Attacks</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-06-03T12:59:08.000Z" title="Created 2022-06-03 20:59:08">2022-06-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/papers/">papers</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/papers/abstract/">abstract</a></span></div><div class="content">Just How Toxic is Data Poisoning? A Unified Benchmark for Backdoor and Data Poisoning Attacks abstract。
+
+解决的问题
+提出一个用于数据投毒和后门攻击的标准化测试床。
+当前的数据投毒攻击大致可以被分为两类：
+
+后门攻击，嵌入触发器
+无触发器攻击
+
+通过观察发现现有的投毒攻击有以下问题：
+
+数据投毒针对特定框架和训练协议，很难适应现实环境中的场景
+攻击成功很大程度上取决于数据集的大小，与所占百分比无关
+干净标签攻击并非如其所述人类无法分辨
+
+本文提出的测试框架可以在现在流行的框架上测试攻击的有效性，针对的攻击是可以导致指定样本误分类的攻击。
+后门攻击和无触发器的攻击有以下几个重要的不同：
+
+后门攻击在预测阶段通过添加一个触发器来改变样本分类
+后门攻击可以使得任意分类的样本被误分类到指定类别，通过特定触发器
+无触发器攻击则是误分类特定样本
+当然无触发器攻击也可分类一组图片，为了保持一致这里进针对单张图片的无触发器攻击和整图的后门攻击
+
+投毒攻击
+Feature Collision（FC）
+ ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/05/12/FedEval-A-Benchmark-System-with-a-Comprehensive-Evaluation-Model-for-Federated-Learning/" title="FedEval: A Benchmark System with a Comprehensive Evaluation Model for Federated Learning">FedEval: A Benchmark System with a Comprehensive Evaluation Model for Federated Learning</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-05-12T08:22:44.000Z" title="Created 2022-05-12 16:22:44">2022-05-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/papers/">papers</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/papers/abstract/">abstract</a></span></div><div class="content">FedEval: A Benchmark System with a Comprehensive Evaluation Model for Federated Learning abstract。
+
+解决的问题
+因为评估矩阵的不一致和缺乏通用的平台，联邦学习领域的评估结果缺乏完整性，并且很难作比较。
+因此提出针对联邦学习的综合评估框架。
+Introduction
+文章提出了 ACTPR 模型来对联邦学习进行系统的评估，这五个方面分别是：
+
+accuracy
+communication
+time consumption
+privacy
+robustness
+
+当然，现有的研究已经在各个方面给出了不同的评估矩阵：
+
+Architecture
+
+
+联邦学习框架
+Homepages of existing federated learning frameworks
+123456TFF: https://www.tensorflow.org/federatedFATE: https://github.com/FederatedAI/FATEPaddleFL: https://github.com ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/05/08/NIC-Detecting-Adversarial-Samples-with-Neural-Network-Invariant-Checking/" title="NIC: Detecting Adversarial Samples with Neural Network Invariant Checking">NIC: Detecting Adversarial Samples with Neural Network Invariant Checking</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-05-08T09:04:38.000Z" title="Created 2022-05-08 17:04:38">2022-05-08</time></span></div><div class="content">NIC: Detecting Adversarial Samples with Neural Network Invariant Checking abstract。
+
+Architecture
+NIC 近似模拟了神经元激活模式的分布，然后通过比较近似分布与包含触发器的恶意样本的激活，来检测异常输入。
+
+本文基于两个主要观察，发现攻击主要是通过攻击以下两个通道实施的：
+
+Provenance Channel, 该特征表示模型不够稳定，当前层神经元轻微改变后会导致下一层神经元激活情况会发生改变
+Value Channel, 该特征表示在前一层神经元发生轻微改变后，当前层的神经元激活值与正常样本的激活值存在巨大差距
+
+基于以上观察的特点，以及对于攻击的分析提出基于不变值违规情况的攻击检测，our overarching idea is to check invariant violations during DNN computation.
+Detail
+由于模型的不确定性，模型的不变特征本质上是由模型表现的概率分布。因此：
+
+构建 DNN 的值不变特征就是为各个层训练一组模型，用以描述良 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/05/08/Callisto-Entropy-based-test-generation-and-data-quality-assessment-for-Machine-Learning-Systems/" title="Callisto: Entropy based test generation and data quality assessment for Machine Learning Systems">Callisto: Entropy based test generation and data quality assessment for Machine Learning Systems</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-05-08T08:27:20.000Z" title="Created 2022-05-08 16:27:20">2022-05-08</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/papers/">papers</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/papers/abstract/">abstract</a></span></div><div class="content">Callisto: Entropy based test generation and data quality assessment for Machine Learning Systems abstract。
+
+解决的问题
+机器学习系统越来越对地被应用，因此急切需要对基于机器学习的模型进行验证。
+Abstract
+因此本文提出了 Callisto，一个用于生成测试用例和数据质量评估的框架。
+其中，数据质量评估为数据中误标签识别。
+收获与总结
+
+数据质量评估中包括误标签识别
+Jiangwen Sun, Feng-ying Zhao, Chong-Jun Wang, and Shifu Chen. Identifying and correcting mislabeled training instances. In Future Generation Communication and Networking, FGCN 2007, Ramada Plaza Jeju, Jeju-Island, Korea, December 6-8, 2007, Proceedings, pages ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/05/08/Threats-attacks-and-defenses-to-federated-learning-issues-taxonomy-and-perspectives/" title="Threats, attacks and defenses to federated learning: issues, taxonomy and perspectives">Threats, attacks and defenses to federated learning: issues, taxonomy and perspectives</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-05-08T03:54:42.000Z" title="Created 2022-05-08 11:54:42">2022-05-08</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/papers/">papers</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/papers/abstract/">abstract</a></span></div><div class="content">Threats, attacks and defenses to federated learning: issues, taxonomy and perspectives abstract。
+
+解决的问题
+前人工作只综述了训练阶段联邦学习面临的问题，本文总结了联邦学习整个生命周期面临的问题。
+联邦学习全周期流程
+
+联邦学习被分为三个方面：
+
+数据和行为审计阶段
+训练阶段
+预测阶段
+
+数据和行为审计阶段
+因为 local worker 对数据有着完全的控制权，所以是的数据质量审计和历史行为审计很难开展。被随意篡改的数据可以危害模型的性能表现甚至植入后门等。
+由于联邦学习的分布特性，并且数据在各个节点设备上，导致很难对其开展数据质量评估（the Data Quality Assessment）。
+其他方法则是针对历史行为展开分析。
+训练阶段
+训练阶段会遭受投毒攻击、隐私推断攻击等。
+Privacy leakage
+导致隐私推断攻击的主要原因有：
+
+嵌入层的泄漏
+全连接层的泄漏
+模型梯度的泄漏
+
+具体攻击有：
+
+Membership inference attacks
+Class repr ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/05/07/Privacy-and-Robustness-in-Federated-Learning-Attacks-and-Defenses/" title="Privacy and Robustness in Federated Learning: Attacks and Defenses">Privacy and Robustness in Federated Learning: Attacks and Defenses</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-05-07T09:05:22.000Z" title="Created 2022-05-07 17:05:22">2022-05-07</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/papers/">papers</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/papers/abstract/">abstract</a></span></div><div class="content">Privacy and Robustness in Federated Learning: Attacks and Defenses abstract。
+
+解决的问题
+传统的中心式的机器学习方法无法有效处理隐私问题，联邦学习作为一种替代方案近年来得到发展。但是隐私问题并没有得到根本的解决，因此本文针对联邦学习面对的攻击和对应的防御手段对近5年的研究做出综述。
+Introduction
+根据分布式情况对联邦学习分类
+
+Horizontally federated learning, HFL
+
+HFL to business, H2B
+HFL to consumers, H2C
+
+
+Vertically federated learning, VFL
+Federated transfer learning, FTL
+
+根据架构情况对联邦学习分类
+
+FL with Homogeneous Architectures
+FL with Heterogeneous Architectures
+
+联邦学习面临的威胁
+面临的威胁主要来自两个方面：
+
+malicious server
+adversari ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/05/05/Machine-Learning-Dataset-Assessment-and-Enhancement/" title="数据集异常值检测相关工作调研">数据集异常值检测相关工作调研</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-05-05T09:45:31.000Z" title="Created 2022-05-05 17:45:31">2022-05-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/papers/">papers</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/papers/innovation/">innovation</a></span></div><div class="content">数据集异常值检测相关工作。
+
+相关工作
+通过几篇文章简单调研投毒攻击与异常值检测相关工作：
+
+Dataset Security for Machine Learning: Data Poisoning, Backdoor Attacks, and Defenses
+Robust Learning-Enabled Intelligence for the Internet of Things: A Survey From the Perspectives of Noisy Data and Adversarial Examples
+Outlier Detection: Methods, Models, and Classification
+
+Dataset Security for Machine Learning: Data Poisoning, Backdoor Attacks, and Defenses
+在 Dataset Security for Machine Learning: Data Poisoning, Backdoor Attacks, and Defenses 中的 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/04/27/Enabling-Efficient-Cyber-Threat-Hunting-With-Cyber-Threat-Intelligence/" title="Enabling Efficient Cyber Threat Hunting With Cyber Threat Intelligence">Enabling Efficient Cyber Threat Hunting With Cyber Threat Intelligence</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-04-27T08:01:10.000Z" title="Created 2022-04-27 16:01:10">2022-04-27</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/papers/">papers</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/papers/abstract/">abstract</a></span></div><div class="content">Enabling Efficient Cyber Threat Hunting With Cyber Threat Intelligence abstract。
+
+解决的问题
+基于日志的网络威胁搜寻已经成为了应对复杂攻击的重要解决方案，然而现有方法需要人工查询构建，并且忽略了开源网络威胁情报提供的丰富外部威胁知识。
+为了弥补这一差距，本文提出一种方案。
+Architecture
+
+整个系统包含两个子系统：
+
+威胁行为提取过程，自动提取威胁情报中的知识
+基于系统日志的查询子系统
+
+
+数据存储
+数据去冗余和存储的设计。
+威胁行为提取
+
+一共分为10步：
+
+分块，Line 3
+IOC 识别和 IOC 保护， Line 5
+分句， Line 6
+依赖解析，Line 7
+树注释，Line 10
+树简化，Line 11
+引用解决，Line14
+IOC 扫描与合并，Line 16
+IOC 关系提取，Line 18
+威胁行为图构建，Line 20
+
+威胁行为查询语言 Threat Behavior Query Language, TBQL
+略
+</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/04/27/Logging-to-the-Danger-Zone-Race-Condition-Attacks-and-Defenses-on-System-Audit-Frameworks/" title="Logging to the Danger Zone: Race Condition Attacks and Defenses on System Audit Frameworks">Logging to the Danger Zone: Race Condition Attacks and Defenses on System Audit Frameworks</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-04-27T06:43:31.000Z" title="Created 2022-04-27 14:43:31">2022-04-27</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/papers/">papers</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/papers/abstract/">abstract</a></span></div><div class="content">Logging to the Danger Zone: Race Condition Attacks and Defenses on System Audit Frameworks abstract。
+
+Workflow
+如果用系统日志来辅助安全调查，其中一个前提是，该日志系统不能遭受攻击者攻击。
+在这项工作中，我们通过展示和验证审计框架完整性的竞争条件攻击来挑战这一假设。
+攻击利用了 I/O 和 IPC 活动的内在异步特性，表明攻击者可以在时间发生之后，在提交到日志系统之前，从系统缓冲区中获取修改有关其入侵的事件，从而绕过现有的保护措施。
+通过引入 KennyLoggings 来防御我们的攻击，这是第一个满足同步完整性的基于内核的放篡改日志系统，这意味着他保证了事件发生时的放篡改问题。
+
+</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/04/27/You-Are-What-You-Do-Hunting-Stealthy-Malware-via-Data-Provenance-Analysis/" title="You Are What You Do: Hunting Stealthy Malware via Data Provenance Analysis">You Are What You Do: Hunting Stealthy Malware via Data Provenance Analysis</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-04-27T06:01:00.000Z" title="Created 2022-04-27 14:01:00">2022-04-27</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/papers/">papers</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/papers/abstract/">abstract</a></span></div><div class="content">You Are What You Do: Hunting Stealthy Malware via Data Provenance Analysis abstract。
+
+解决的问题
+对于传统检测工具而言，很难检测现在的具有隐蔽性的恶意软件。本文针对此问题提出一种方法来检测该类软件。
+Architecture
+
+思路及实现
+为了检测隐蔽的恶意软件，决定 PROVDETECTOR 有以下特点：
+
+仅学习正常数据的异常检测
+使用因果路径，系统事件序列
+仅学习溯源图上一部分因果路径
+
+溯源图构建
+略
+表示提取 Representation Extraction
+PROVDETECTOR 采用因果路径作为输入特征，具体因果路径示例如下：
+
+直接从溯源图中提取出全部路径将会导致依赖爆炸问题，因此采用基于稀有度的路径选择算法进行路径选取，选 tok K。
+嵌入 Embedding
+即使获取了 top K 路径之后还存在着各种问题：
+
+因果路径长度不同
+节点和边的标签是非结构化数据，例如文件名
+
+Intuition：将因果路径作为一个句子。
+使用 doc2vec 的 PV-DM 模型来学习路径的嵌入 ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/2/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#content-inner">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#content-inner">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/#content-inner">12</a><a class="extend next" rel="next" href="/page/4/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">odymit</div><div class="author-info__description">Reading, thinking and writing.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">113</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">82</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">14</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/odymit" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://github.com/odymithttps://stackoverflow.com/users/15737405/odymit" target="_blank" title="Stack Overflow"><i class="fab fa-stack-overflow" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:inbox.odymit@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Peace and love!</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/27/Topology-Aware-Network-Pruning-using-Multi-stage-Graph-Embedding-and-Reinforcement-Learning/" title="Topology-Aware Network Pruning using Multi-stage Graph Embedding and Reinforcement Learning">Topology-Aware Network Pruning using Multi-stage Graph Embedding and Reinforcement Learning</a><time datetime="2023-09-27T14:48:19.000Z" title="Created 2023-09-27 22:48:19">2023-09-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/27/centos-%E5%8D%B7%E7%AE%A1%E7%90%86/" title="centos volume management">centos volume management</a><time datetime="2023-09-27T11:32:31.000Z" title="Created 2023-09-27 19:32:31">2023-09-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/16/OpenBackdoor-A-Unified-Evaluation-of-Textual-Backdoor-Learning-Frameworks-and-Benchmarks/" title="OpenBackdoor: A Unified Evaluation of Textual Backdoor Learning: Frameworks and Benchmarks">OpenBackdoor: A Unified Evaluation of Textual Backdoor Learning: Frameworks and Benchmarks</a><time datetime="2023-03-16T02:17:04.000Z" title="Created 2023-03-16 10:17:04">2023-03-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/13/BACKDOORBOX-A-PYTHON-TOOLBOX-FOR-BACKDOOR-LEARNIN/" title="BACKDOORBOX: A PYTHON TOOLBOX FOR BACKDOOR LEARNIN">BACKDOORBOX: A PYTHON TOOLBOX FOR BACKDOOR LEARNIN</a><time datetime="2023-03-13T08:44:38.000Z" title="Created 2023-03-13 16:44:38">2023-03-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/03/12/BackdoorBench-A-Comprehensive-Benchmark-of-Backdoor-Learning/" title="BackdoorBench: A Comprehensive Benchmark of Backdoor Learning">BackdoorBench: A Comprehensive Benchmark of Backdoor Learning</a><time datetime="2023-03-12T14:06:43.000Z" title="Created 2023-03-12 22:06:43">2023-03-12</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>Categories</span>
+            <a class="card-more-btn" href="/categories/" title="View More">
+    <i class="fas fa-angle-right"></i></a>
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/papers/"><span class="card-category-list-name">papers</span><span class="card-category-list-count">82</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/papers/abstract/"><span class="card-category-list-name">abstract</span><span class="card-category-list-count">79</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/papers/innovation/"><span class="card-category-list-name">innovation</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/papers/survey/"><span class="card-category-list-name">survey</span><span class="card-category-list-count">2</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/readings/"><span class="card-category-list-name">readings</span><span class="card-category-list-count">22</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/readings/bug-analysis/"><span class="card-category-list-name">bug analysis</span><span class="card-category-list-count">21</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/readings/dynamic-taint-analysis/"><span class="card-category-list-name">dynamic taint analysis</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/techniques/"><span class="card-category-list-name">techniques</span><span class="card-category-list-count">5</span></a></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>Tags</span></div><div class="card-tag-cloud"><a href="/tags/AI/" style="font-size: 1.34em; color: #99a3b0">AI</a> <a href="/tags/Survey/" style="font-size: 1.34em; color: #99a3b0">Survey</a> <a href="/tags/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/" style="font-size: 1.1em; color: #999">自然语言处理</a> <a href="/tags/%E8%BF%90%E7%BB%B4/" style="font-size: 1.1em; color: #999">运维</a> <a href="/tags/%E4%BF%A1%E6%81%AF%E6%8F%90%E5%8F%96/" style="font-size: 1.1em; color: #999">信息提取</a> <a href="/tags/Federated-Learning/" style="font-size: 1.18em; color: #999ca1">Federated Learning</a> <a href="/tags/tools/" style="font-size: 1.1em; color: #999">tools</a> <a href="/tags/AI-Backdoor-Attacks/" style="font-size: 1.34em; color: #99a3b0">AI Backdoor Attacks</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 1.5em; color: #99a9bf">人工智能</a> <a href="/tags/centos/" style="font-size: 1.1em; color: #999">centos</a> <a href="/tags/toolbox/" style="font-size: 1.34em; color: #99a3b0">toolbox</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E6%8A%95%E6%AF%92%E6%A3%80%E6%B5%8B/" style="font-size: 1.1em; color: #999">数据投毒检测</a> <a href="/tags/robustness/" style="font-size: 1.26em; color: #999fa8">robustness</a> <a href="/tags/AI%E5%AE%89%E5%85%A8/" style="font-size: 1.1em; color: #999">AI安全</a> <a href="/tags/%E6%94%BB%E5%87%BB%E6%A8%A1%E6%8B%9F/" style="font-size: 1.1em; color: #999">攻击模拟</a> <a href="/tags/Poisoning-Defences/" style="font-size: 1.1em; color: #999">Poisoning Defences</a> <a href="/tags/assessment/" style="font-size: 1.1em; color: #999">assessment</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9/" style="font-size: 1.18em; color: #999ca1">数据压缩</a> <a href="/tags/%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB/" style="font-size: 1.18em; color: #999ca1">意图识别</a> <a href="/tags/mitre-attack/" style="font-size: 1.1em; color: #999">mitre-attack</a> <a href="/tags/%E6%BA%AF%E6%BA%90%E5%9B%BE/" style="font-size: 1.1em; color: #999">溯源图</a> <a href="/tags/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95/" style="font-size: 1.1em; color: #999">聚类算法</a> <a href="/tags/ATT-CK/" style="font-size: 1.18em; color: #999ca1">ATT&CK</a> <a href="/tags/Mysql/" style="font-size: 1.1em; color: #999">Mysql</a> <a href="/tags/CALDERA/" style="font-size: 1.1em; color: #999">CALDERA</a> <a href="/tags/Graph-Classification/" style="font-size: 1.1em; color: #999">Graph Classification</a> <a href="/tags/%E5%9B%BE%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="font-size: 1.42em; color: #99a6b7">图卷积神经网络</a> <a href="/tags/CAR/" style="font-size: 1.1em; color: #999">CAR</a> <a href="/tags/%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/" style="font-size: 1.42em; color: #99a6b7">日志分析</a> <a href="/tags/reinforcement-learning/" style="font-size: 1.1em; color: #999">reinforcement learning</a> <a href="/tags/%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/" style="font-size: 1.26em; color: #999fa8">威胁情报</a> <a href="/tags/%E6%BA%AF%E6%BA%90%E9%87%87%E9%9B%86%E5%B7%A5%E5%85%B7/" style="font-size: 1.26em; color: #999fa8">溯源采集工具</a> <a href="/tags/%E5%BC%82%E5%B8%B8%E5%80%BC%E6%A3%80%E6%B5%8B/" style="font-size: 1.42em; color: #99a6b7">异常值检测</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" style="font-size: 1.1em; color: #999">项目管理</a> <a href="/tags/git/" style="font-size: 1.1em; color: #999">git</a> <a href="/tags/Vue/" style="font-size: 1.1em; color: #999">Vue</a> <a href="/tags/%E6%97%A5%E5%BF%97%E8%BF%91%E4%BC%BC%E6%96%B9%E6%B3%95%E9%AA%8C%E8%AF%81/" style="font-size: 1.1em; color: #999">日志近似方法验证</a> <a href="/tags/backdoor/" style="font-size: 1.34em; color: #99a3b0">backdoor</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" style="font-size: 1.1em; color: #999">代码审计</a> <a href="/tags/%E5%9B%BE/" style="font-size: 1.1em; color: #999">图</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>Archives</span><a class="card-more-btn" href="/archives/" title="View More">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/09/"><span class="card-archive-list-date">September 2023</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/03/"><span class="card-archive-list-date">March 2023</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/08/"><span class="card-archive-list-date">August 2022</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/07/"><span class="card-archive-list-date">July 2022</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/06/"><span class="card-archive-list-date">June 2022</span><span class="card-archive-list-count">6</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/05/"><span class="card-archive-list-date">May 2022</span><span class="card-archive-list-count">6</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/04/"><span class="card-archive-list-date">April 2022</span><span class="card-archive-list-count">39</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/03/"><span class="card-archive-list-date">March 2022</span><span class="card-archive-list-count">7</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">Article :</div><div class="item-count">113</div></div><div class="webinfo-item"><div class="item-name">UV :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">PV :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Last Update :</div><div class="item-count" id="last-push-date" data-lastPushDate="2023-09-27T14:57:45.243Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By odymit</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
